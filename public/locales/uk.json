@@ -1,0 +1,113 @@
+{
+  "market": "Ринок",
+  "favorites": "Обране",
+  "portfolio": " Мої Активи",
+  "friends": "Друзі",
+  "search": "Пошук",
+  "table_header": {
+    "rank": "#",
+    "coin": "Монети",
+    "price": "Ціна",
+    "change": "24г %"
+  },
+  "balance_table_header": {
+    "coin": "Монети",
+    "price": "Ціна / 24г",
+    "value": "Баланс USD"
+  },
+  "dashboard": {
+    "market_cap": "Ринкова капіталізація",
+    "n_a": "Н/Д",
+    "trending": "24г обсяг торгів",
+    "dominance": "Домінування"
+  },
+  "dashboard_balance": {
+    "my_balance": "Мій Баланс",
+    "invested": "Інвестовано USD",
+    "24h": "Прибуток 24г",
+    "over_time": "Прибуток"
+  },
+  "dashboard_friends": {
+    "coin": "Монети"
+  },
+  "empty_favorites": {
+    "no_coins": "Монет ще немає.",
+    "add_first_tap": "Натисніть на",
+    "add_first": "Натисніть на ⭐ у розділі 'Ринок', щоб додати свою першу криптовалюту"
+  },
+  "empty_profile": {
+    "no_invited": "Ви ще нікого не запросили \uD83D\uDE22",
+    "start_inviting": "Почніть запрошувати друзів і отримуйте бали за кожного з них! Чим більше друзів ви запросите, тим вищим буде ваш ранг, що відкриє доступ до ексклюзивних нагород і статусів. ",
+    "share": "Поділіться своєю персональною посиланням нижче, щоб почати!"
+  },
+  "my_portfolio_page": {
+    "edit": "Змінити",
+    "delete": "Видалити",
+    "purchase": "Ціна покупки",
+    "invested": "Інвестовано USD",
+    "over_entry": "Загальний Прибуток",
+    "are_agree": "Вы впевнені?",
+    "agree_btn": "Так",
+    "disagree": "Ні"
+  },
+  "add_crypto": {
+    "add_coin": "Додайте свою монету",
+    "add_coin_desc": "Додайте криптовалюту, якою ви володієте, щоб відстежувати баланс ваших активів в USD і бачити, як змінюється ваш прибуток з оновленнями в реальному часі.",
+    "choose": "Виберіть монету",
+    "quantity": "Кількість",
+    "purchase": "Ціна покупки",
+    "note": "Додайте примітку (необов'язково)",
+    "btn": "Додати"
+  },
+  "edit_crypto": {
+    "edit_coin": "Редагувати вашу монету",
+    "quantity": "Кількість",
+    "btn": "Редагувати"
+  },
+  "crypto_details_popup": {
+    "coins_data": "Дані монети",
+    "coin_data_table": {
+      "market_cap": "Ринкова оцінка",
+      "fdv": "Повна оцінка",
+      "volume_24h": "Обсяг 24г",
+      "circulation_supply": "В обігу",
+      "total_supply": "Пропозиція",
+      "ath": "Максимум"
+    },
+    "markets": "Ринки",
+    "exchange": "Біржи",
+    "volume_24h": "Обсяг 24г",
+    "coingeko_info": {
+      "title": "Дивитися детальніше на Coingecko?",
+      "agree": "Продовжити",
+      "disagree": "Відмінити"
+    }
+  },
+  "input_search": {
+    "search": "Знайти монету...",
+    "cancel": "Скасувати"
+  },
+  "titles": {
+    "Beginner": "Початківець",
+    "Explorer": "Дослідник",
+    "Expert": "Експерт",
+    "Knight": "Лицар",
+    "Leader": "Лідер",
+    "Hero": "Герой",
+    "Master": "Майстер",
+    "Legend": "Легенда",
+    "Titan": "Титан",
+    "Immortal": "Безсмертний",
+    "King": "Король",
+    "Emperor": "Імператор",
+    "Lord": "Лорд",
+    "The Almighty": "Всемогутній"
+  },
+  "CATEGORIES_NAV_ITEMS": {
+    "market": "Ринок",
+    "favorites": "Обране",
+    "pump": "Памп",
+    "dump": "Дамп",
+    "trending": "Популярне"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "market": "Market",
+  "favorites": "Favorites",
+  "portfolio": "My Assets",
+  "friends": "Friends",
+  "search": "Search",
+  "table_header": {
+    "rank": "#",
+    "coin": "Coins",
+    "price": "Price",
+    "change": "24h %"
+  },
+  "balance_table_header": {
+    "coin": "Coins",
+    "price": "Price / 24h",
+    "value": "Balance USD"
+  },
+  "dashboard": {
+    "market_cap": "Market Cap",
+    "n_a": "N/A",
+    "trending": "24h Trading Volume",
+    "dominance": "Dominance"
+  },
+  "dashboard_balance": {
+    "my_balance": "My Balance",
+    "invested": "Invested USD",
+    "24h": "Profit 24h",
+    "over_time": "Total Profit"
+  },
+  "dashboard_friends": {
+    "coin": "Coins"
+  },
+  "empty_favorites": {
+    "no_coins": "No coins yet.",
+    "add_first_tap": "Tap",
+    "add_first": "Tap ⭐ in the Market to add your first cryptocurrency"
+  },
+  "empty_profile": {
+    "no_invited": "You haven't invited anyone yet \uD83D\uDE22",
+    "start_inviting": "Start inviting your friends and earn points for each one! The more friends you invite, the higher your rank will be, unlocking exclusive rewards and status.",
+    "share": "Share your personal link below to get started!"
+  },
+  "my_portfolio_page": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "purchase": "Purchase Price",
+    "invested": "Invested USD",
+    "over_entry": "Total Profit",
+    "are_agree": "Are you sure?",
+    "agree_btn": "Yes",
+    "disagree": "No"
+  },
+  "add_crypto": {
+    "add_coin": "Add your coin",
+    "add_coin_desc": "Add the crypto you own to track your assets balance in USD and see how your profit changes with real-time updates",
+    "choose": "Choose coin",
+    "quantity": "Quantity",
+    "purchase": "Purchase Price",
+    "note": "Add a note (optional)",
+    "btn": "Add"
+  },
+  "edit_crypto": {
+    "edit_coin": "Edit your coin",
+    "quantity": "Quantity",
+    "btn": "Edit"
+  },
+  "crypto_details_popup": {
+    "coins_data": "COINS DATA",
+    "coin_data_table": {
+      "market_cap": "Market Сap",
+      "fdv": "FD Valuation",
+      "volume_24h": "24H Volume",
+      "circulation_supply": "Circulation supply",
+      "total_supply": "Total Supply",
+      "ath": "All Time High"
+    },
+    "markets": "MARKETS",
+    "exchange": "Exchanges",
+    "volume_24h": "Volume 24h",
+    "coingeko_info": {
+      "title": "View details on Coingecko?",
+      "agree": "Continue",
+      "disagree": "Cancel"
+    }
+  },
+  "input_search": {
+    "search": "Search coin...",
+    "cancel": "Cancel"
+  },
+  "titles": {
+    "Beginner": "Beginner",
+    "Explorer": "Explorer",
+    "Expert": "Expert",
+    "Knight": "Knight",
+    "Leader": "Leader",
+    "Hero": "Hero",
+    "Master": "Master",
+    "Legend": "Legend",
+    "Titan": "Titan",
+    "King": "King",
+    "Emperor": "Emperor",
+    "Lord": "Lord",
+    "Immortal": "Immortal"
+  },
+  "CATEGORIES_NAV_ITEMS": {
+    "market": "Market",
+    "favorites": "Favorites",
+    "pump": "Pump",
+    "dump": "Dump",
+    "trending": "Trending"
+  }
+}
