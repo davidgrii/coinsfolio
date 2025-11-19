@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import { cn } from '@/shared/ui/utils'
 import QueryProvider from '@/app/_providers/query-provider'
 import '../core/i18n.types'
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({
   weight: ['200', '300', '400', '500', '600', '700', '800'],
@@ -13,7 +14,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Coin App',
+  title: 'Coins Folio',
   description: 'Developed by | david_gri'
 }
 
@@ -28,8 +29,6 @@ export default function RootLayout(
     <html lang="en">
     <head>
       <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-      <title></title>
     </head>
 
     <body className={cn(`bg-background ${inter.className}`)}>
@@ -37,6 +36,7 @@ export default function RootLayout(
       <QueryProvider>
         {children}
       </QueryProvider>
+    <Analytics />
     {/*</React.StrictMode>*/}
     </body>
     </html>

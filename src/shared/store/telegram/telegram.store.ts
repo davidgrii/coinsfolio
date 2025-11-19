@@ -5,16 +5,13 @@ interface ITelegramStore {
   bot: typeof window.Telegram.WebApp | null
   userId: string
   userLanguage: string
-  hasRecordedVisit: boolean
   initializeBot: () => Promise<void>
-  recordVisit: (userId: string) => Promise<void>
 }
 
 export const useTelegramStore = create<ITelegramStore>((set, get) => ({
   bot: null,
   userId: '',
   userLanguage: 'en',
-  hasRecordedVisit: false,
 
   initializeBot: async () => {
     const isBrowser = typeof window !== 'undefined'
@@ -42,21 +39,4 @@ export const useTelegramStore = create<ITelegramStore>((set, get) => ({
       }
     }
   },
-
-  recordVisit: async (userId: string) => {
-    if (get().hasRecordedVisit) return
-    set({ hasRecordedVisit: true })
-
-    try {
-      await fetch(`https://priceme.store/api/users/${userId}/visits`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId })
-      })
-    } catch (error) {
-      console.error('Ошибка при записи визита:', error)
-    }
-  }
 }))

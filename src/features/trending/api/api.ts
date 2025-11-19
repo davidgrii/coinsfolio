@@ -1,6 +1,8 @@
 import { ITrendingCrypto } from '@/types'
 
-const BASE_URL = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL
+const BASE_URL = process.env.NODE_ENV === "production"
+  ? process.env.NEXT_PUBLIC_PROD_BACKEND_URL
+  : process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL;
 
 export const trendingApi = {
   baseKey: 'trending',

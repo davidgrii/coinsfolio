@@ -38,9 +38,6 @@ const fetchUserData = async (): Promise<ITelegramUser> => {
 
   if (botInstance) {
     botInstance.ready()
-    // bot.setHeaderColor('#000')
-    // bot.setBackgroundColor('#000')
-    // bot.setBottomBarColor('#000')
     botInstance.isVerticalSwipesEnabled = false
 
     if (botInstance.isExpanded) botInstance.expand()

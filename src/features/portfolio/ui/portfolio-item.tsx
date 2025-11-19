@@ -40,13 +40,15 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
         <AccordionTrigger>
           <CardContent className={'p-0 flex w-full justify-between'}>
             <div className={'flex items-center gap-2'}>
-              <Image
-                width={36}
-                height={36}
-                src={item.crypto.image}
-                alt={item.crypto.name}
-                className="h-9 w-9"
-              />
+              <div className='rounded-full overflow-hidden'>
+                <Image
+                  width={36}
+                  height={36}
+                  src={item.crypto.image}
+                  alt={item.crypto.name}
+                  className="h-9 w-9"
+                />
+              </div>
 
               <div className="grid gap-0.5 text-left">
                 <p className="text-sm leading-none">

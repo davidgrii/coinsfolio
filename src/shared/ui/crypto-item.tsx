@@ -62,13 +62,15 @@ export const CryptoItem: React.FC<IProps> = (
         <div className="flex items-center gap-2">
           <span className="w-5 text-sm text-muted-foreground">{index + 1}</span>
 
-          <Image
-            width={36}
-            height={36}
-            className="h-9 w-9"
-            src={crypto.image}
-            alt={crypto.name}
-          />
+          <div className='rounded-full overflow-hidden'>
+            <Image
+              width={36}
+              height={36}
+              className="h-9 w-9"
+              src={crypto.image}
+              alt={crypto.name}
+            />
+          </div>
           <div className="grid gap-0.5">
             <p className="text-sm leading-none">
               {crypto.symbol.toUpperCase()}

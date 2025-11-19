@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useSearchStore } from '@/shared/store'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 
@@ -10,7 +10,6 @@ import { Card, Categories, Container, CryptoItem, CryptoSkeleton, CryptoTableHea
 import { useAddFavorite, useDeleteFavorite, useFavorites } from '@/features/favorites'
 import { LoadMoreIndicator, useCryptoData, useSearchCrypto } from '@/features/crypto-data'
 import { useIntersection } from '@/hooks/use-intersection'
-import { useTelegramStore } from '@/shared/store/telegram/telegram.store'
 
 export default function MarketPage() {
   const { data } = useTelegramUser()
@@ -23,8 +22,6 @@ export default function MarketPage() {
     isFetchingNextPage,
     isLoading
   } = useCryptoData()
-
-  const { recordVisit } = useTelegramStore()
 
   const [searchValue, setSearchValue] = useState('')
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -40,18 +37,6 @@ export default function MarketPage() {
   const cursorRef = useIntersection(async () => {
     await fetchNextPage()
   })
-
-  useEffect(() => {
-    const handleRecordVisit = async () => {
-      if (userId) {
-        await recordVisit(userId)
-      }
-    }
-
-    handleRecordVisit().catch(error => {
-      console.error('Ошибка при записи визита:', error)
-    })
-  }, [userId, recordVisit])
 
   return (
     <Container className={'pt-0 mb-20'}>
