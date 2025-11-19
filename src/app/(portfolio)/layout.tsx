@@ -1,6 +1,5 @@
 import React from 'react'
-import { NavMenu } from '@/widgets/main-nav'
-import { Dashboard } from '@/widgets/dashboard'
+import { AppMenu, Dashboard } from '@/components'
 
 export default function Layout({ children }: {
   children: React.ReactNode;
@@ -10,7 +9,7 @@ export default function Layout({ children }: {
       <div className={'overflow-y-auto h-full pb-[89px]'}>
         <Dashboard variant={'portfolio'} />
         {children}
-        <NavMenu />
+        <AppMenu />
       </div>
     </section>
   )

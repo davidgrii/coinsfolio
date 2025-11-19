@@ -6,7 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle
-} from '@/shared/ui/alert-dialog'
+} from '@/components/ui/alert-dialog'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 

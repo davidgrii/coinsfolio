@@ -1,25 +1,17 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  Separator
-} from '@/shared/ui'
-import { cn } from '@/shared/ui/utils'
-import { usePortfolioStore } from '@/shared/store'
+import { cn } from '@/components/ui/utils'
+import { usePortfolioStore } from 'src/store'
 import { useTranslation } from 'react-i18next'
-import { formatPrice } from '@/shared/utils/formatters'
+import { formatPrice } from '@/lib/utils/formatters'
 import { motion } from 'framer-motion'
 import Autoplay from 'embla-carousel-autoplay'
 import { usePortfolio } from '@/features/portfolio'
 import { useTelegramUser } from '@/hooks/use-telegram-user'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 
 export const PortfolioDashboard = () => {
   const { data } = useTelegramUser()
@@ -69,8 +61,6 @@ export const PortfolioDashboard = () => {
     },
     [calculateTotalInvestedUSD, portfolio, setPortfolio]
   )
-
-  console.log('render')
 
   return (
     <>

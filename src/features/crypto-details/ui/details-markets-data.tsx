@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { formatPrice } from '@/shared/utils/formatters'
+import { formatPrice } from '@/lib/utils/formatters'
 import { useTranslation } from 'react-i18next'
 import { ICoinGlobalMarketsData } from '@/types'
 

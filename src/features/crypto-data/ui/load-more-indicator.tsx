@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { cn } from '@/shared/ui/utils'
-import { Icons } from '@/shared/icons/icons'
+import { cn } from '@/components/ui/utils'
+import { Icons } from '@/components/icons'
 
 interface IProps {
   hasNextPage: boolean

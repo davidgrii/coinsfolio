@@ -6,7 +6,6 @@ export interface INavItems {
   key: 'market' | 'favorites' | 'pump' | 'trending' | 'dump'
 }
 
-
 export interface IPortfolioStore {
   portfolio: IPortfolioItem[]
   initialPortfolio: IPortfolioItem[]

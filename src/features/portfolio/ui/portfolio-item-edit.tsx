@@ -1,6 +1,6 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/ui/dropdown-menu'
-import { Icons } from '@/shared/icons'
-import { Separator } from '@/shared/ui/separator'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Icons } from '@/components/icons'
+import { Separator } from '@/components/ui/separator'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 

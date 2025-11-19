@@ -5,9 +5,14 @@ import React from 'react'
 import { motion } from 'framer-motion'
 
 import { useTelegramUser } from '@/hooks/use-telegram-user'
-import { Card, Categories, Container, CryptoItem, CryptoSkeleton, CryptoTableHeader } from '@/shared/ui'
 import { useAddFavorite, useDeleteFavorite, useFavorites } from '@/features/favorites'
 import { useDumpCryptos } from '@/features/pump-dump/model/use-dump-crypto'
+import { CryptoItem } from '@/components'
+import { CryptoSkeleton } from '@/components/crypto-skeleton'
+import { Card } from '@/components/ui/card'
+import { CryptoTableHeader } from '@/components/crypto-table-header'
+import { Container } from '@/components/container'
+import { Categories } from '@/components/categories'
 
 export default function DumpPage() {
   const { data } = useTelegramUser()
@@ -25,20 +30,17 @@ export default function DumpPage() {
 
       <CryptoTableHeader />
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        <Card className={'bg-background grid gap-8 border-0'}>
-          {isLoading ? (
-            <CryptoSkeleton
-              className={'justify-start'}
-              itemsCount={10}
-            />
-          ) : (
-            dumpCryptos.map((crypto, index) => (
+      {isLoading ? (
+        <CryptoSkeleton itemsCount={10} />
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <Card className={'bg-background grid gap-8 border-0'}>
+            {dumpCryptos.map((crypto, index) => (
               <CryptoItem
                 userId={userId}
                 key={crypto.id}
@@ -48,10 +50,10 @@ export default function DumpPage() {
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
               />
-            ))
-          )}
-        </Card>
-      </motion.div>
+            ))}
+          </Card>
+        </motion.div>
+      )}
     </Container>
   )
 }

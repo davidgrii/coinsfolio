@@ -1,8 +1,8 @@
 import React from 'react'
-import { formatPrice } from '@/shared/utils/formatters'
-import { cn } from '@/shared/ui/utils'
+import { formatPrice } from '@/lib/utils/formatters'
+import { cn } from '@/components/ui/utils'
 import { useTranslation } from 'react-i18next'
-import { Icons } from '@/shared/icons/icons'
+import { Icons } from '@/components/icons'
 
 interface IProps {
   notice?: string
@@ -17,7 +17,7 @@ export const PortfolioItemDetails: React.FC<IProps> = ({notice, purchasePrice, i
   const { t } = useTranslation()
 
   return (
-    <div className={'w-full text-sm font-medium text-muted-foreground mr-9'}>
+    <div className={'w-full text-sm font-medium text-muted-foreground mr-9 select-none'}>
       <div className={'flex justify-between mb-0.5 border-b border-border/30'}>
         <p>{t('my_portfolio_page.purchase')}</p>
         <p className={'text-foreground font-bold'}>

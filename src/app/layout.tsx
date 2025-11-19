@@ -2,9 +2,8 @@ import React from 'react'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { cn } from '@/shared/ui/utils'
+import { cn } from '@/components/ui/utils'
 import QueryProvider from '@/app/_providers/query-provider'
-import '../core/i18n.types'
 import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({

@@ -3,9 +3,8 @@
 import React, { useEffect, useState } from 'react'
 
 import { motion } from 'framer-motion'
-import { usePortfolioStore } from '@/shared/store/portfolio/portfolio.store'
+import { usePortfolioStore } from '@/store/portfolio/portfolio.store'
 
-import { Accordion, Card, Container, CryptoSkeleton } from '@/shared/ui'
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 
 import {
@@ -19,6 +18,10 @@ import {
   usePortfolio,
   useUpdateCrypto
 } from '@/features/portfolio'
+import { Container } from '@/components/container'
+import { CryptoSkeleton } from '@/components/crypto-skeleton'
+import { Card } from '@/components/ui/card'
+import { Accordion } from '@/components/ui/accordion'
 
 export default function PortfolioPage() {
   const { data } = useTelegramUser()
@@ -29,6 +32,7 @@ export default function PortfolioPage() {
   const { handleAdd } = useAddCrypto()
   const { handleUpdate } = useUpdateCrypto()
 
+  const [sortedPortfolio, setSortedPortfolio] = useState(portfolio)
   const [isAddCryptoOpen, setIsAddCryptoOpen] = useState<boolean>(false)
   const [isEditCryptoOpen, setIsEditCryptoOpen] = useState<boolean>(false)
   const [activeCryptoId, setActiveCryptoId] = useState<string | null>(null)
@@ -40,6 +44,9 @@ export default function PortfolioPage() {
     calculateTotalProfitLossPercentage,
     calculateTotalPriceChange24h
   } = usePortfolioStore()
+
+  const handleSortPortfolio = () => {
+  }
 
   const handleAddCrypto = async (cryptoId: string, quantity: number, purchasePrice: number, notice?: string) => {
     const data = {
@@ -114,7 +121,7 @@ export default function PortfolioPage() {
 
   return (
     <Container className={'pt-0'}>
-      <BalanceTableHeader />
+      <BalanceTableHeader onSort={handleSortPortfolio}/>
 
       {isLoading ? (
         <CryptoSkeleton className={'py-4'} itemsCount={10} />

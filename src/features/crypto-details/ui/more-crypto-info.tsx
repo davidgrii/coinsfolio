@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from '@/shared/ui/alert-dialog'
-import { Icons } from '@/shared/icons/icons'
+} from '@/components/ui/alert-dialog'
+import { Icons } from '@/components/icons'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 

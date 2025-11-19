@@ -1,11 +1,11 @@
 'use client'
 
 import React from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/ui/card'
-import { cn } from '@/shared/ui/utils'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { cn } from '@/components/ui/utils'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Carousel, CarouselContent, CarouselItem } from '@/shared/ui/carousel'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import { useGlobalData } from '@/features/global-data/model/use-global-data'
 

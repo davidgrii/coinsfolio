@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Icons } from '@/shared/icons/icons'
-import { usePortfolioStore } from '@/shared/store'
+import { Icons } from '@/components/icons'
 
-export const BalanceTableHeader = () => {
+interface IProps {
+  onSort: () => void
+}
+
+export const BalanceTableHeader = ({ onSort }: IProps) => {
+  const [isSorted, setIsSorted] = useState(false)
 
   const { t } = useTranslation()
 
-  const { sortPortfolio, isSorted } = usePortfolioStore()
-
   const handleSort = async () => {
-    sortPortfolio()
+    onSort()
+    setIsSorted(!isSorted)
   }
 
   return (

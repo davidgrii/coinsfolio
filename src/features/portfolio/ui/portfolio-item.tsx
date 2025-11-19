@@ -1,6 +1,6 @@
-import { CardContent } from '@/shared/ui/card'
-import { formatPrice, formatPriceWithoutDecimals } from '@/shared/utils/formatters'
-import { AccordionContent, AccordionItem, AccordionTrigger } from '@/shared/ui/accordion'
+import { CardContent } from '@/components/ui/card'
+import { formatPrice, formatPriceWithoutDecimals } from '@/lib/utils/formatters'
+import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -38,7 +38,7 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
     >
       <AccordionItem value={item.cryptoId}>
         <AccordionTrigger>
-          <CardContent className={'p-0 flex w-full justify-between'}>
+          <CardContent className={'p-0 flex w-full justify-between select-none'}>
             <div className={'flex items-center gap-2'}>
               <div className='rounded-full overflow-hidden'>
                 <Image

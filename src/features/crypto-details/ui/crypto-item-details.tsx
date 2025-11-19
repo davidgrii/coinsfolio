@@ -1,14 +1,14 @@
 'use client'
 
-import { useCryptoModalStore } from '@/shared/store/crypto/crypto-modal.store'
+import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store'
 import React from 'react'
 import Image from 'next/image'
 import { DetailsCoinsData } from '@/features/crypto-details/ui/details-coins-data'
 import { DetailsMarketsData } from '@/features/crypto-details/ui/details-markets-data'
-import { formatPrice, getDynamicFontSize } from '@/shared/utils/formatters'
-import { Icons } from '@/shared/icons'
+import { formatPrice, getDynamicFontSize } from '@/lib/utils/formatters'
+import { Icons } from '@/components/icons'
 import { MoreCryptoInfo } from '@/features/crypto-details/ui/more-crypto-info'
-import { CryptoModal } from '@/shared/ui/crypto-modal'
+import { CryptoModal } from '@/components/crypto-modal'
 import { useCryptoById } from '@/features/crypto-details/model/use-crypto-by-id'
 
 interface IProps {

@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import { Button } from '@/shared/ui/button'
+import { Button } from '@/components/ui/button'
 import { CirclePlus, X } from 'lucide-react'
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/shared/ui/sheet'
-import { Input } from '@/shared/ui/input'
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { Input } from '@/components/ui/input'
 import { ICrypto } from '@/types'
 import { useTranslation } from 'react-i18next'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { formatNumber } from '@/shared/utils/formatters'
+import { formatNumber } from '@/lib/utils/formatters'
 import { CryptoExample } from '@/features/portfolio'
 import { useSearchCrypto } from '@/features/crypto-data/model/use-search-crypto'
-import { Icons } from '@/shared/icons'
+import { Icons } from '@/components/icons'
 
 interface IProps {
   isOpen: boolean
@@ -109,13 +109,8 @@ export const AddCrypto: React.FC<IProps> = ({ onAddCrypto, isOpen, setIsOpen, is
           >
             <X className="h-5 w-5" />
           </SheetClose>
-          <SheetHeader className={`${searchValue && searchResults.length > 0 && 'mt-16'} text-center`}>
+          <SheetHeader className='text-center'>
             <SheetTitle className={'text-2xl'}>{t('add_crypto.add_coin')}</SheetTitle>
-            {/*{isEmpty &&*/}
-            {/*  <SheetDescription className={'text-sm font-medium mx-auto'}>*/}
-            {/*    {t('add_crypto.add_coin_desc')}*/}
-            {/*  </SheetDescription>*/}
-            {/*}*/}
           </SheetHeader>
           {selectedCrypto ? (
             <div className="flex items-center justify-between w-full py-4 px-4 bg-[#282828] rounded-xl">
@@ -155,7 +150,7 @@ export const AddCrypto: React.FC<IProps> = ({ onAddCrypto, isOpen, setIsOpen, is
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="absolute bottom-full mb-2 w-full z-10">
+                  <div className="absolute -bottom-44 mb-2 w-full z-10">
                     <div className={'bg-[#282828] rounded-xl shadow-md max-h-52 overflow-y-auto'}>
                       {searchResults.slice(0, 4).map((crypto) => (
                         <motion.div

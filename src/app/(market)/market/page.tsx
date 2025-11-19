@@ -1,15 +1,21 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useSearchStore } from '@/shared/store'
+import { useSearchStore } from 'src/store'
 import { useRef, useState } from 'react'
 
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 
-import { Card, Categories, Container, CryptoItem, CryptoSkeleton, CryptoTableHeader, SearchInput } from '@/shared/ui'
 import { useAddFavorite, useDeleteFavorite, useFavorites } from '@/features/favorites'
 import { LoadMoreIndicator, useCryptoData, useSearchCrypto } from '@/features/crypto-data'
 import { useIntersection } from '@/hooks/use-intersection'
+import { Container } from '@/components/container'
+import { Categories } from '@/components/categories'
+import { SearchInput } from '@/components/search'
+import { CryptoTableHeader } from '@/components/crypto-table-header'
+import { CryptoSkeleton } from '@/components/crypto-skeleton'
+import { Card } from '@/components/ui/card'
+import { CryptoItem } from '@/components'
 
 export default function MarketPage() {
   const { data } = useTelegramUser()

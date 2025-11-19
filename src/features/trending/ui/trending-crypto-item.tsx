@@ -1,9 +1,9 @@
 import React from 'react'
-import { CardContent } from '@/shared/ui/card'
-import { Icons } from '@/shared/icons'
+import { CardContent } from '@/components/ui/card'
+import { Icons } from '@/components/icons'
 import Image from 'next/image'
-import { formatPrice, getDynamicFontSize } from '@/shared/utils/formatters'
-import { useCryptoModalStore } from '@/shared/store/crypto/crypto-modal.store'
+import { formatPrice, getDynamicFontSize } from '@/lib/utils/formatters'
+import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store'
 import { CryptoItemDetails } from '@/features/crypto-details/ui/crypto-item-details'
 import { ITrendingCrypto } from '@/types'
 

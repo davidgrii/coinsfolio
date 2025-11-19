@@ -4,8 +4,13 @@ import { motion } from 'framer-motion'
 
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 
-import { Card, Categories, Container, CryptoItem, CryptoSkeleton, CryptoTableHeader } from '@/shared/ui'
 import { EmptyFavorites, useAddFavorite, useDeleteFavorite, useFavorites } from '@/features/favorites'
+import { Container } from '@/components/container'
+import { Categories } from '@/components/categories'
+import { CryptoTableHeader } from '@/components/crypto-table-header'
+import { CryptoSkeleton } from '@/components/crypto-skeleton'
+import { Card } from '@/components/ui/card'
+import { CryptoItem } from '@/components'
 
 export default function FavoritesPage() {
   const { data } = useTelegramUser()

@@ -1,4 +1,5 @@
 import { INavItems } from '@/types'
+import { Icons } from '@/components/icons'
 
 export const CATEGORIES_NAV_ITEMS: INavItems[] = [
   {
@@ -36,4 +37,31 @@ export const CATEGORIES_NAV_ITEMS: INavItems[] = [
     active: true,
     key: 'dump'
   }
+]
+
+export const APP_NAV_ITEMS = [
+  {
+    label: 'Market',
+    href: '/market',
+    exact: false,
+    active: true,
+    id: 'market',
+    Icon: Icons.Market
+  },
+  {
+    label: 'Favorites',
+    href: '/favorites',
+    exact: false,
+    active: true,
+    id: 'favorites',
+    Icon: Icons.Favorites
+  },
+  {
+    label: 'Portfolio',
+    href: '/portfolio',
+    exact: false,
+    active: true,
+    id: 'portfolio',
+    Icon: Icons.Portfolio
+  },
 ]
