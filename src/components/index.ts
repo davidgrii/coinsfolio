@@ -1,6 +1,6 @@
-import { Dashboard } from './dashboard'
+import { AppDashboard } from './dashboard/app-dashboard'
 import { AppMenu } from './app-menu'
 import { CryptoItem } from './crypto-item'
 import { Icons } from './icons'
 
-export { Dashboard,  AppMenu, CryptoItem, Icons }
+export { AppDashboard,  AppMenu, CryptoItem, Icons }

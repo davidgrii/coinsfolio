@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useSearchStore } from 'src/store'
 import { useRef, useState } from 'react'
 
@@ -14,8 +13,9 @@ import { Categories } from '@/components/categories'
 import { SearchInput } from '@/components/search'
 import { CryptoTableHeader } from '@/components/crypto-table-header'
 import { CryptoSkeleton } from '@/components/crypto-skeleton'
-import { Card } from '@/components/ui/card'
 import { CryptoItem } from '@/components'
+import { List } from '@telegram-apps/telegram-ui'
+import { motion } from 'framer-motion'
 
 export default function MarketPage() {
   const { data } = useTelegramUser()
@@ -45,7 +45,7 @@ export default function MarketPage() {
   })
 
   return (
-    <Container className={'pt-0 mb-20'}>
+    <Container back={false} className={'pt-0 mb-20'}>
       <Categories />
 
       {isSearchOpen && (
@@ -65,47 +65,32 @@ export default function MarketPage() {
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: cryptoData.length > 0 ? 1 : 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <Card className={'bg-background grid gap-8 border-0'}>
-            {!searchValue ?
-              cryptoData.map((crypto, index) => (
-                <CryptoItem
-                  userId={userId}
-                  key={crypto.id}
-                  crypto={crypto}
-                  index={index}
-                  favorites={favorites}
-                  addFavorite={addFavorite}
-                  removeFavorite={removeFavorite}
-                />
-              ))
+        <List className={'grid gap-2 overflow-y-auto max-h-screen scrollbar-none'}>
+          {cryptoData.map((crypto, index) => (
+            <CryptoItem
+              userId={userId}
+              key={crypto.id}
+              crypto={crypto}
+              index={index}
+              favorites={favorites}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+            />
+          ))}
 
-              : searchResults.map((crypto, index) => (
-                <CryptoItem
-                  userId={userId}
-                  key={crypto.id}
-                  crypto={crypto}
-                  index={index}
-                  favorites={favorites}
-                  addFavorite={addFavorite}
-                  removeFavorite={removeFavorite}
-                />
-              ))
-            }
-
-            {!searchValue ? (
-              <div ref={cursorRef}>
-                <LoadMoreIndicator
-                  hasNextPage={hasNextPage}
-                  isFetchingNextPage={isFetchingNextPage}
-                />
-              </div>
-            ) : null
-            }
-          </Card>
+          {!searchValue ? (
+            <div ref={cursorRef}>
+              <LoadMoreIndicator
+                hasNextPage={hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+              />
+            </div>
+          ) : null}
+        </List>
         </motion.div>
       )}
 

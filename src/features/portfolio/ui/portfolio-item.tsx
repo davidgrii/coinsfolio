@@ -29,7 +29,7 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
   const currentInvestmentValue = currentPrice * quantity
   const profitLossUSD = currentInvestmentValue - investedUSD
   const profitLossPercentage = ((currentPrice - purchasePrice) / purchasePrice) * 100
-
+  
   return (
     <motion.div
       initial={{ opacity: 0 }}

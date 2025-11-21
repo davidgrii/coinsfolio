@@ -8,9 +8,7 @@ import { usePortfolioStore } from '@/store/portfolio/portfolio.store'
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 
 import {
-  AddCrypto,
   BalanceTableHeader,
-  EditCrypto,
   IUpdatedCrypto,
   PortfolioItem,
   useAddCrypto,
@@ -20,8 +18,8 @@ import {
 } from '@/features/portfolio'
 import { Container } from '@/components/container'
 import { CryptoSkeleton } from '@/components/crypto-skeleton'
-import { Card } from '@/components/ui/card'
 import { Accordion } from '@/components/ui/accordion'
+import { List } from '@telegram-apps/telegram-ui'
 
 export default function PortfolioPage() {
   const { data } = useTelegramUser()
@@ -120,7 +118,7 @@ export default function PortfolioPage() {
   )
 
   return (
-    <Container className={'pt-0'}>
+    <Container back={true} className={'pt-0'}>
       <BalanceTableHeader onSort={handleSortPortfolio}/>
 
       {isLoading ? (
@@ -132,7 +130,7 @@ export default function PortfolioPage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <Card className={'bg-background grid border-0'}>
+          <List className={'grid gap-2 overflow-y-auto max-h-screen  pb-[700px] scrollbar-none'}>
             <Accordion type="single" collapsible className="w-full">
               {portfolio.map((item, index) => (
                 <PortfolioItem
@@ -143,27 +141,27 @@ export default function PortfolioPage() {
                 />
               ))}
             </Accordion>
-          </Card>
+          </List>
         </motion.div>
       )}
 
-      <div className={'flex flex-col items-center justify-center mt-10'}>
-        {activeCryptoId && (
-          <EditCrypto
-            isOpen={isEditCryptoOpen}
-            setIsOpen={setIsEditCryptoOpen}
-            onEditCrypto={(updatedData) => handleUpdateCrypto(userId, updatedData)}
-            item={portfolio.find(crypto => crypto.cryptoId === activeCryptoId)}
-          />
-        )}
+      {/*<div className={'flex flex-col items-center justify-center mt-10'}>*/}
+      {/*  {activeCryptoId && (*/}
+      {/*    <EditCrypto*/}
+      {/*      isOpen={isEditCryptoOpen}*/}
+      {/*      setIsOpen={setIsEditCryptoOpen}*/}
+      {/*      onEditCrypto={(updatedData) => handleUpdateCrypto(userId, updatedData)}*/}
+      {/*      item={portfolio.find(crypto => crypto.cryptoId === activeCryptoId)}*/}
+      {/*    />*/}
+      {/*  )}*/}
 
-        <AddCrypto
-          onAddCrypto={handleAddCrypto}
-          isOpen={isAddCryptoOpen}
-          setIsOpen={setIsAddCryptoOpen}
-          isEmpty={!isLoading && portfolio.length === 0}
-        />
-      </div>
+      {/*  <AddCrypto*/}
+      {/*    onAddCrypto={handleAddCrypto}*/}
+      {/*    isOpen={isAddCryptoOpen}*/}
+      {/*    setIsOpen={setIsAddCryptoOpen}*/}
+      {/*    isEmpty={!isLoading && portfolio.length === 0}*/}
+      {/*  />*/}
+      {/*</div>*/}
     </Container>
   )
 }

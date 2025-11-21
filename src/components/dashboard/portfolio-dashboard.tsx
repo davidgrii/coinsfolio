@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react'
 import { cn } from '@/components/ui/utils'
-import { usePortfolioStore } from 'src/store'
+import { usePortfolioStore } from '@/store'
 import { useTranslation } from 'react-i18next'
 import { formatPrice } from '@/lib/utils/formatters'
 import { motion } from 'framer-motion'

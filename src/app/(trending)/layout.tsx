@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppMenu, Dashboard } from '@/components'
+import { AppDashboard, AppMenu } from '@/components'
 
 
 export default function Layout({ children }: {
@@ -8,7 +8,7 @@ export default function Layout({ children }: {
   return (
     <section className={'h-screen overflow-x-hidden overflow-y-hidden'}>
       <div className={'overflow-y-auto h-full pb-[89px]'}>
-        <Dashboard variant={'public'} />
+        <AppDashboard variant={'public'} />
         {children}
         <AppMenu />
       </div>

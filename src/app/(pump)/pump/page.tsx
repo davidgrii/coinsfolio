@@ -9,9 +9,9 @@ import { usePumpCryptos } from '@/features/pump-dump/model/use-pump-crypto'
 import { Container } from '@/components/container'
 import { Categories } from '@/components/categories'
 import { CryptoTableHeader } from '@/components/crypto-table-header'
-import { Card } from '@/components/ui/card'
 import { CryptoItem } from '@/components'
 import { CryptoSkeleton } from '@/components/crypto-skeleton'
+import { List } from '@telegram-apps/telegram-ui'
 
 export default function PumpPage() {
   const { data } = useTelegramUser()
@@ -24,7 +24,7 @@ export default function PumpPage() {
   const { handleDelete: removeFavorite } = useDeleteFavorite()
 
   return (
-    <Container className={'pt-0'}>
+    <Container back={true} className={'pt-0'}>
       <Categories />
 
       <CryptoTableHeader />
@@ -38,7 +38,7 @@ export default function PumpPage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <Card className={'bg-background grid gap-8 border-0'}>
+          <List className={'grid gap-2 overflow-y-auto max-h-screen scrollbar-none'}>
             {pumpCryptos.map((crypto, index) => (
               <CryptoItem
                 userId={userId}
@@ -50,7 +50,7 @@ export default function PumpPage() {
                 removeFavorite={removeFavorite}
               />
             ))}
-          </Card>
+          </List>
         </motion.div>
       )}
     </Container>

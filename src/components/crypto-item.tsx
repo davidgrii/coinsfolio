@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { AnimatePresence } from 'framer-motion'
 import { ICrypto } from '@/types'
 import { formatPrice, getDynamicFontSize } from '@/lib/utils/formatters'
 import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store'
@@ -54,7 +53,45 @@ export const CryptoItem: React.FC<IProps> = (
   if (!crypto.current_price) return null
 
   return (
-    <AnimatePresence>
+    <>
+      {/*<Cell*/}
+      {/*  className={'select-none !p-0'}*/}
+      {/*  interactiveAnimation='background'*/}
+      {/*  after={*/}
+      {/*    <div className="flex items-center gap-4">*/}
+      {/*      <div className='text-right'>*/}
+      {/*        <p*/}
+      {/*          className={`${getDynamicFontSize(crypto.current_price.toString().length)} text-foreground font-bold whitespace-nowrap`}>*/}
+      {/*          {formatPrice(crypto.current_price)} $*/}
+      {/*        </p>*/}
+
+      {/*        <span*/}
+      {/*          className={`text-[13px] text-right ${isPricePositive ? 'text-primary' : 'text-secondary'}`}*/}
+      {/*        >*/}
+      {/*          {priceChange.toFixed(2)} %*/}
+      {/*        </span>*/}
+      {/*      </div>*/}
+
+
+      {/*      <button*/}
+      {/*        className="p-1 pb-[6px]"*/}
+      {/*        onClick={(e) => handleFavoriteToggle(e, crypto.id)}*/}
+      {/*      >*/}
+      {/*        {isFavorite ?*/}
+      {/*          <Icons.StarFavorite className={'w-4 h-4'} />*/}
+      {/*          :*/}
+      {/*          <Icons.Star className={'w-4 h-4'} />*/}
+      {/*        }*/}
+      {/*      </button>*/}
+      {/*    </div>*/}
+      {/*}*/}
+      {/*  before={<Avatar size={40} src={crypto.image}/>}*/}
+      {/*  subtitle={crypto.name}*/}
+      {/*  onClick={() => openModal(crypto, crypto.market_cap_rank)}*/}
+      {/*>*/}
+      {/*  {crypto.symbol.toUpperCase()}*/}
+      {/*</Cell>*/}
+
       <CardContent
         onClick={() => openModal(crypto, crypto.market_cap_rank)}
         className={'p-0 flex justify-between items-center cursor-pointer select-none'}>
@@ -116,6 +153,6 @@ export const CryptoItem: React.FC<IProps> = (
           index={index}
         />
       }
-    </AnimatePresence>
+    </>
   )
 }

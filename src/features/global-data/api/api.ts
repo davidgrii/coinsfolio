@@ -1,4 +1,4 @@
-import { IGlobalMarketData } from '@/features/global-data'
+import { IGlobalMarketData } from '@/types'
 
 const BASE_URL = process.env.NODE_ENV === "production"
   ? process.env.NEXT_PUBLIC_PROD_BACKEND_URL

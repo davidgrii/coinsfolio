@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppMenu, Dashboard } from '@/components'
+import { AppDashboard, AppMenu } from '@/components'
 
 
 export default function Layout({ children }: {
@@ -8,7 +8,7 @@ export default function Layout({ children }: {
 
   return (
     <>
-      <Dashboard variant={'public'} />
+      <AppDashboard variant={'public'} />
       {children}
       <AppMenu />
     </>
