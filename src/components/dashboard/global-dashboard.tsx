@@ -34,7 +34,7 @@ export const GlobalDashboard = () => {
 
   return (
     <Carousel plugins={[carouselRef.current]} opts={{ loop: true }}>
-      <CarouselContent className={'select-none pb-3'}>
+      <CarouselContent className={'select-none py-2'}>
         <CarouselItem>
           <Card
             className='bg-neutral-04 flex py-4 pl-6 pr-9 items-center cursor-pointer relative justify-between rounded-xl border-0'>

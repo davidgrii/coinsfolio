@@ -131,7 +131,7 @@ export default function PortfolioPage() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none -mt-4'}>
+            <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none -mt-4 !pt-0 !px-0'}>
               <Accordion type="single" collapsible className="w-full">
                 {portfolio.map((crypto, index) => (
                   <PortfolioItem

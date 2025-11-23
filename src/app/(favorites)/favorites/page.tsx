@@ -48,7 +48,7 @@ export default function FavoritesPage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none'}>
+          <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none !pt-0 !px-0'}>
             {showEmptyMessage ? (
               <EmptyFavorites isFavoritesEmpty={true} />
             ) : (
