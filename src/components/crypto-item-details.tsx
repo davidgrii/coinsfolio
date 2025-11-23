@@ -59,7 +59,7 @@ export const CryptoItemModal = () => {
       <Modal
         open={isOpen}
         onOpenChange={setIsOpen}
-        header={<ModalHeader>Only iOS header</ModalHeader>}
+        header={<ModalHeader/>}
         className='min-h-[60vh]'
       >
         {!crypto || !selectedCrypto || isLoading ? (
@@ -124,8 +124,8 @@ export const CryptoItemModal = () => {
               <DetailsMarketsData cryptoMarketsData={crypto.markets} />
             ) : null}
 
-            <FixedLayout className="px-3">
-              <Button size="l" stretched>
+            <FixedLayout className="px-3 !pb-3">
+              <Button size="l" stretched mode='filled'>
                 See more details
               </Button>
             </FixedLayout>

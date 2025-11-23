@@ -12,7 +12,7 @@ interface IProps {
 
 export const CryptoSkeletonList: React.FC<IProps> = ({ itemsCount = 10, isPortfolio = false }) => {
   return (
-    <List className={'w-full grid gap-2 overflow-y-auto max-h-screen scrollbar-none'}>
+    <List className={'w-full grid gap-2 overflow-y-auto max-h-screen scrollbar-none !pt-0 !px-0'}>
       {Array.from({ length: itemsCount }).map((_, index) => (
         <div key={index} className={'flex w-full items-center space-x-3'}>
           {!isPortfolio && (

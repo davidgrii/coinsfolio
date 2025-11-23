@@ -97,7 +97,7 @@ export const AddCrypto: React.FC<IProps> = ({ onAddCrypto, isOpen, setIsOpen, is
       <Modal
         open={isOpen}
         onOpenChange={setIsOpen}
-        header={<ModalHeader>Only iOS header</ModalHeader>}
+        header={<ModalHeader/>}
         trigger={
         <FixedLayout  vertical='bottom' className='flex justify-center !w-full !bottom-[100px]'>
           <Button size="m"><CirclePlus className={'w-9 h-9 cursor-pointer text-foreground transition-colors'} /></Button>

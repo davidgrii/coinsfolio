@@ -32,7 +32,7 @@ export default function RootLayout(
       <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
     </head>
 
-    <body className={cn(`overflow-hidden ${inter.className}`)}>
+    <body className={cn(`bg-base-background overflow-hidden ${inter.className}`)}>
     <QueryProvider>
       <TelegramProvider>
         {children}
