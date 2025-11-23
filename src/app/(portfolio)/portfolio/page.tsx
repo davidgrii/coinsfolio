@@ -7,28 +7,27 @@ import { usePortfolioStore } from '@/store/portfolio/portfolio.store'
 
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 
-import {
-  BalanceTableHeader,
-  IUpdatedCrypto,
-  PortfolioItem,
-  useAddCrypto,
-  useDeleteCrypto,
-  usePortfolio,
-  useUpdateCrypto
-} from '@/features/portfolio'
 import { Container } from '@/components/container'
-import { CryptoSkeleton } from '@/components/crypto-skeleton'
 import { Accordion } from '@/components/ui/accordion'
 import { List } from '@telegram-apps/telegram-ui'
+import { BalanceTableHeader } from '@/components/portfolio/balance-table-header'
+import { CryptoSkeletonList } from '@/components/crypto-skeleton'
+import { PortfolioItem } from '@/components/portfolio/portfolio-item'
+import type { IUpdatedCrypto } from '@/types'
+import { usePortfolio } from '@/hooks/queries/use-portfolio'
+import { useAddCrypto, useDeleteCrypto, useUpdateCrypto } from '@/hooks/queries/use-portfolio-mutation'
+import { EditCrypto } from '@/components/portfolio/edit-crypto'
+import { AddCrypto } from '@/components/portfolio/add-crypto'
 
 export default function PortfolioPage() {
   const { data } = useTelegramUser()
   const userId = data?.userId || ''
 
-  const { portfolioData: portfolio, isLoading } = usePortfolio(userId)
-  const { handleDelete } = useDeleteCrypto()
-  const { handleAdd } = useAddCrypto()
-  const { handleUpdate } = useUpdateCrypto()
+  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio(userId)
+  const { mutate: deleteCrypto } = useDeleteCrypto()
+  const { mutate: addCrypto } = useAddCrypto()
+  const { mutate: updateCrypto } = useUpdateCrypto()
+
 
   const [sortedPortfolio, setSortedPortfolio] = useState(portfolio)
   const [isAddCryptoOpen, setIsAddCryptoOpen] = useState<boolean>(false)
@@ -54,7 +53,7 @@ export default function PortfolioPage() {
       notice
     }
 
-    await handleAdd({ userId, data })
+    addCrypto({ userId, data })
 
     calculateTotalBalance()
     calculateTotalProfitLoss()
@@ -65,8 +64,7 @@ export default function PortfolioPage() {
   }
 
   const handleUpdateCrypto = async (userId: string, updatedData: IUpdatedCrypto) => {
-
-    await handleUpdate({ userId, updatedData })
+    updateCrypto({ userId, data: updatedData })
 
     calculateTotalBalance()
     calculateTotalProfitLoss()
@@ -76,7 +74,7 @@ export default function PortfolioPage() {
   }
 
   const handleDeleteCrypto = async (cryptoId: string) => {
-    await handleDelete({ cryptoId, userId })
+    deleteCrypto({ cryptoId, userId })
 
     if (activeCryptoId === cryptoId) {
       setActiveCryptoId(null)
@@ -91,7 +89,7 @@ export default function PortfolioPage() {
   }
 
   const handleEditCrypto = (cryptoId: string) => {
-    const cryptoToEdit = portfolio.find(crypto => crypto.cryptoId === cryptoId)
+    const cryptoToEdit = portfolio?.find(crypto => crypto.cryptoId === cryptoId)
 
     if (cryptoToEdit) {
       setActiveCryptoId(cryptoToEdit.cryptoId)
@@ -100,7 +98,7 @@ export default function PortfolioPage() {
   }
 
   useEffect(() => {
-      if (portfolio.length > 0) {
+      if ((portfolio?.length || 0) > 0) {
         calculateTotalBalance()
         calculateTotalProfitLoss()
         calculateTotalProfitLossPercentage()
@@ -117,51 +115,55 @@ export default function PortfolioPage() {
     ]
   )
 
+
+
   return (
     <Container back={true} className={'pt-0'}>
       <BalanceTableHeader onSort={handleSortPortfolio}/>
 
-      {isLoading ? (
-        <CryptoSkeleton className={'py-4'} itemsCount={10} />
+      {!portfolio || isPortfolioLoading ? (
+        <CryptoSkeletonList isPortfolio={true} itemsCount={10} />
       ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          <List className={'grid gap-2 overflow-y-auto max-h-screen  pb-[700px] scrollbar-none'}>
-            <Accordion type="single" collapsible className="w-full">
-              {portfolio.map((item, index) => (
-                <PortfolioItem
-                  key={index}
-                  item={item}
-                  onEdit={handleEditCrypto}
-                  onDelete={handleDeleteCrypto}
-                />
-              ))}
-            </Accordion>
-          </List>
-        </motion.div>
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none -mt-4'}>
+              <Accordion type="single" collapsible className="w-full">
+                {portfolio.map((crypto, index) => (
+                  <PortfolioItem
+                    key={index}
+                    item={crypto}
+                    onEdit={handleEditCrypto}
+                    onDelete={handleDeleteCrypto}
+                  />
+                ))}
+              </Accordion>
+
+              <AddCrypto
+                onAddCrypto={handleAddCrypto}
+                isOpen={isAddCryptoOpen}
+                setIsOpen={setIsAddCryptoOpen}
+                isEmpty={!isPortfolioLoading && portfolio.length === 0}
+              />
+            </List>
+          </motion.div>
+
+          <div className={'flex flex-col items-center justify-center'}>
+            {activeCryptoId && (
+              <EditCrypto
+                isOpen={isEditCryptoOpen}
+                setIsOpen={setIsEditCryptoOpen}
+                onEditCrypto={(updatedData) => handleUpdateCrypto(userId, updatedData)}
+                item={portfolio.find(crypto => crypto.cryptoId === activeCryptoId)}
+              />
+            )}
+          </div>
+        </>
       )}
-
-      {/*<div className={'flex flex-col items-center justify-center mt-10'}>*/}
-      {/*  {activeCryptoId && (*/}
-      {/*    <EditCrypto*/}
-      {/*      isOpen={isEditCryptoOpen}*/}
-      {/*      setIsOpen={setIsEditCryptoOpen}*/}
-      {/*      onEditCrypto={(updatedData) => handleUpdateCrypto(userId, updatedData)}*/}
-      {/*      item={portfolio.find(crypto => crypto.cryptoId === activeCryptoId)}*/}
-      {/*    />*/}
-      {/*  )}*/}
-
-      {/*  <AddCrypto*/}
-      {/*    onAddCrypto={handleAddCrypto}*/}
-      {/*    isOpen={isAddCryptoOpen}*/}
-      {/*    setIsOpen={setIsAddCryptoOpen}*/}
-      {/*    isEmpty={!isLoading && portfolio.length === 0}*/}
-      {/*  />*/}
-      {/*</div>*/}
     </Container>
   )
 }

@@ -4,32 +4,43 @@ import { motion } from 'framer-motion'
 
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 
-import { EmptyFavorites, useAddFavorite, useDeleteFavorite, useFavorites } from '@/features/favorites'
 import { Container } from '@/components/container'
 import { Categories } from '@/components/categories'
 import { CryptoTableHeader } from '@/components/crypto-table-header'
-import { CryptoSkeleton } from '@/components/crypto-skeleton'
+import { CryptoSkeletonList } from '@/components/crypto-skeleton'
 import { CryptoItem } from '@/components'
 import { List } from '@telegram-apps/telegram-ui'
+import { useFavorites } from '@/hooks/queries/use-crypto'
+import { useAddFavorite, useDeleteFavorite } from '@/hooks/queries/use-favorite-mutation'
+import { EmptyFavorites } from '@/components/empty-favorites'
 
 export default function FavoritesPage() {
   const { data } = useTelegramUser()
   const userId = data?.userId || ''
 
-  const { cryptoData: favoritesCryptoData, favorites, isLoading } = useFavorites(userId)
-  const { handleDelete: removeFavorite } = useDeleteFavorite()
-  const { handleAdd: addFavorite } = useAddFavorite()
+  const { data: favoriteCryptos, isLoading: isFavoriteCryptoLoading } = useFavorites()
+  const { mutate: deleteFavorite } = useDeleteFavorite()
+  const { mutate: addFavorite } = useAddFavorite()
 
-  const showEmptyMessage = !isLoading && favoritesCryptoData.length === 0
-  
+  const showEmptyMessage = !isFavoriteCryptoLoading && favoriteCryptos?.data.length === 0
+
+  const handleFavoriteToggle = async (cryptoId: string) => {
+    if (favoriteCryptos?.favorites.includes(cryptoId)) {
+      deleteFavorite({ userId, cryptoId })
+    } else {
+      addFavorite({ userId, cryptoId })
+    }
+  }
+
+
   return (
     <Container back={true} className={'pt-0'}>
       <Categories />
 
       <CryptoTableHeader />
 
-      {isLoading ? (
-        <CryptoSkeleton itemsCount={10} />
+      {!favoriteCryptos || isFavoriteCryptoLoading ? (
+        <CryptoSkeletonList itemsCount={10} />
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
@@ -37,19 +48,18 @@ export default function FavoritesPage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <List className={'grid gap-2 overflow-y-auto max-h-screen scrollbar-none'}>
+          <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none'}>
             {showEmptyMessage ? (
               <EmptyFavorites isFavoritesEmpty={true} />
             ) : (
-              favoritesCryptoData.map((crypto, index) => (
+              favoriteCryptos.data.map((crypto, index) => (
                 <CryptoItem
                   userId={userId}
                   key={crypto.id}
                   crypto={crypto}
                   index={index}
-                  favorites={favorites}
-                  addFavorite={addFavorite}
-                  removeFavorite={removeFavorite}
+                  favorites={favoriteCryptos.favorites}
+                  onToggleFavorite={handleFavoriteToggle}
                 />
               ))
             )}

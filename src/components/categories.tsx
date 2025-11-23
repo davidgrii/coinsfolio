@@ -2,15 +2,18 @@
 
 import React from 'react'
 import { CATEGORIES_NAV_ITEMS } from '@/constants'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { InlineButtons } from '@telegram-apps/telegram-ui'
 import {
   InlineButtonsItem
 } from '@telegram-apps/telegram-ui/dist/components/Blocks/InlineButtons/components/InlineButtonsItem/InlineButtonsItem'
+import { QrCode } from 'lucide-react'
+import { cn } from '@/components/ui/utils'
 
 export const Categories = () => {
   const { t } = useTranslation()
+  const currentPage = usePathname()
   const router = useRouter()
 
   const handleClick = (href: string) => {
@@ -20,8 +23,15 @@ export const Categories = () => {
   return (
     <>
       <InlineButtons mode='gray'>
-        {CATEGORIES_NAV_ITEMS.map(({ id, label, href, key }) => (
-          <InlineButtonsItem onClick={() => handleClick(href)} key={id} text={t(`CATEGORIES_NAV_ITEMS.${key}`)}/>
+        {CATEGORIES_NAV_ITEMS.map(({ id, href, key, Icon }) => (
+          <InlineButtonsItem
+            key={id}
+            text={t(`CATEGORIES_NAV_ITEMS.${key}`)}
+            onClick={() => handleClick(href)}
+            className={cn(href === currentPage && '!text-primary')}
+          >
+            <Icon className='w-5 h-5'/>
+          </InlineButtonsItem>
         ))}
       </InlineButtons>
     </>

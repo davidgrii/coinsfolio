@@ -1,51 +1,75 @@
 'use client'
 
 import { useSearchStore } from 'src/store'
-import { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 
-import { useAddFavorite, useDeleteFavorite, useFavorites } from '@/features/favorites'
-import { LoadMoreIndicator, useCryptoData, useSearchCrypto } from '@/features/crypto-data'
 import { useIntersection } from '@/hooks/use-intersection'
 import { Container } from '@/components/container'
 import { Categories } from '@/components/categories'
-import { SearchInput } from '@/components/search'
+import { SearchInput } from '@/components/market/search'
 import { CryptoTableHeader } from '@/components/crypto-table-header'
-import { CryptoSkeleton } from '@/components/crypto-skeleton'
-import { CryptoItem } from '@/components'
+import { CryptoSkeletonList } from '@/components/crypto-skeleton'
+import { CryptoItem, Icons } from '@/components'
 import { List } from '@telegram-apps/telegram-ui'
 import { motion } from 'framer-motion'
+import { useInfiniteCryptos } from '@/hooks/queries/use-crypto'
+import { useAddFavorite, useDeleteFavorite } from '@/hooks/queries/use-favorite-mutation'
+import { useFavorites } from '@/hooks/queries/use-crypto'
+import { useDebounceValue } from 'usehooks-ts'
+import { cn } from '@/components/ui/utils'
 
 export default function MarketPage() {
   const { data } = useTelegramUser()
   const userId = data?.userId || ''
 
-  const {
-    cryptoData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading
-  } = useCryptoData()
-
   const [searchValue, setSearchValue] = useState('')
+  const [debouncedSearchValue] = useDebounceValue(searchValue, 300);
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const { searchResults } = useSearchCrypto(searchValue)
+  const cryptoQueryParams = useMemo(
+    () => ({
+      published: 'true',
+      name: debouncedSearchValue || '',
+    }),
+    [debouncedSearchValue]
+  );
 
-  const { handleAdd: addFavorite } = useAddFavorite()
-  const { favorites } = useFavorites(userId)
-  const { handleDelete: removeFavorite } = useDeleteFavorite()
-
+  const {
+    data: rawCryptoPages, isLoading:
+    isCryptosLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useInfiniteCryptos(cryptoQueryParams, { enabled: searchValue !== '' })
+  const { data: favoriteCryptos, isLoading: isFavoriteLoading } = useFavorites()
   const { isSearchOpen } = useSearchStore()
+
+  const { mutate: addFavorite } = useAddFavorite()
+  const { mutate: deleteFavorite } = useDeleteFavorite()
+
+  const favorites = favoriteCryptos?.favorites || []
 
   const cursorRef = useIntersection(async () => {
     await fetchNextPage()
   })
 
+  const cryptosItems = useMemo(
+    () => rawCryptoPages?.pages.flatMap((page) => page.data) ?? [],
+    [rawCryptoPages]
+  );
+
+  const handleFavoriteToggle = async (cryptoId: string) => {
+    if (favoriteCryptos?.favorites.includes(cryptoId)) {
+      deleteFavorite({ userId, cryptoId })
+    } else {
+      addFavorite({ userId, cryptoId })
+    }
+  }
+
   return (
-    <Container back={false} className={'pt-0 mb-20'}>
+    <Container back={false}>
       <Categories />
 
       {isSearchOpen && (
@@ -60,8 +84,8 @@ export default function MarketPage() {
         isSearchEnabled={true}
       />
 
-      {isLoading ? (
-        <CryptoSkeleton itemsCount={10} />
+      {!cryptosItems || isCryptosLoading  ? (
+        <CryptoSkeletonList itemsCount={10} />
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
@@ -69,16 +93,15 @@ export default function MarketPage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-        <List className={'grid gap-2 overflow-y-auto max-h-screen scrollbar-none'}>
-          {cryptoData.map((crypto, index) => (
+        <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none'}>
+          {cryptosItems.map((crypto, index) => (
             <CryptoItem
               userId={userId}
               key={crypto.id}
               crypto={crypto}
               index={index}
               favorites={favorites}
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
+              onToggleFavorite={handleFavoriteToggle}
             />
           ))}
 
@@ -93,7 +116,45 @@ export default function MarketPage() {
         </List>
         </motion.div>
       )}
-
     </Container>
+  )
+}
+
+
+interface IProps {
+  hasNextPage: boolean
+  isFetchingNextPage: boolean
+  className?: string
+}
+
+const LoadMoreIndicator: React.FC<IProps> = ({ hasNextPage, isFetchingNextPage, className }) => {
+  if (hasNextPage && !isFetchingNextPage) return null
+
+  return (
+    <motion.div
+      className={cn(className, '')}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {!hasNextPage ? (
+        <div className={'flex justify-center gap-2 items-center'}>
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#007AFF]"></span>
+          </span>
+
+          <span className={'text-sm'}>No more data...</span>
+        </div>
+      ) : (
+        !isFetchingNextPage &&
+        <div className={'flex justify-center gap-2 items-center'}>
+          <Icons.spinner className={'w-[25px] h-[25px]'} />
+
+          <span className={'text-sm'}>Loading crypto...</span>
+        </div>
+      )}
+    </motion.div>
   )
 }

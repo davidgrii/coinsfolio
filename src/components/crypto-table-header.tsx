@@ -8,10 +8,9 @@ import { Icons } from '@/components'
 
 interface IProps {
   isSearchEnabled?: boolean
-  className?: string
 }
 
-export const CryptoTableHeader: React.FC<IProps> = ({ isSearchEnabled = false, className }) => {
+export const CryptoTableHeader: React.FC<IProps> = ({ isSearchEnabled = false }) => {
   const { t } = useTranslation()
   const { toggleSearch, isSearchOpen } = useSearchStore()
 
@@ -20,7 +19,7 @@ export const CryptoTableHeader: React.FC<IProps> = ({ isSearchEnabled = false, c
       {
         isSearchEnabled ? (
           <div
-            className={clsx('flex justify-between text-[12.5px] font-medium text-muted-foreground mt-3 mb-4', className)}
+            className={clsx('flex justify-between text-[12.5px] font-medium text-neutral-03 mt-3 mb-4')}
           >
             <div className="flex gap-5">
               <span>{t('table_header.rank')}</span>
@@ -41,13 +40,13 @@ export const CryptoTableHeader: React.FC<IProps> = ({ isSearchEnabled = false, c
                 className={clsx(isSearchOpen ? 'hidden' : 'visible', 'cursor-pointer')}
                 onClick={() => toggleSearch(true)}
               >
-                <Icons.SearchV2 />
+                <Icons.search />
               </motion.span>
             </div>
           </div>
         ) : (
           <div
-            className={`flex justify-between text-[12.5px] font-medium text-muted-foreground mt-3 mb-4 mr-3.5 ${className}`}
+            className={`flex justify-between text-[12.5px] font-medium text-neutral-03 mt-3 mb-4 mr-3.5`}
           >
             <div className="flex gap-5">
               <span>{t('table_header.rank')}</span>

@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { APP_NAV_ITEMS } from '@/constants'
 import { Tabbar } from '@telegram-apps/telegram-ui'
 
-type TranslationKey =  "market" | "portfolio"
 
 export const AppMenu = () => {
   const currentPage = usePathname()
@@ -20,16 +19,14 @@ export const AppMenu = () => {
 
   return (
     <>
-
-      <Tabbar>
-        {APP_NAV_ITEMS.map(({ id, label, href, Icon }) =>
-          <Tabbar.Item  key={id} text={t(label as TranslationKey)} selected={href === currentPage} onClick={() => handleNavClick(href)}
+      <Tabbar className='!bg-base-background select-none'>
+        {APP_NAV_ITEMS.map(({ id, key, href, Icon }) =>
+          <Tabbar.Item  key={id} text={t(key)} selected={href === currentPage} onClick={() => handleNavClick(href)}
         >
-          <Icon />
+          <Icon className={'w-6 h-6'}/>
         </Tabbar.Item>)}
       </Tabbar>
     </>
-
   )
 }
 

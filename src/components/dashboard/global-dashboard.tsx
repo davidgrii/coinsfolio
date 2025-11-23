@@ -1,52 +1,45 @@
 'use client'
 
-import React from 'react'
+import React, { useRef } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/components/ui/utils'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
-import { useGlobalData } from '@/features/global-data/model/use-global-data'
+import { useGlobalData } from '@/hooks/queries/use-global-data'
+import { formatPriceWithCommas, getMarketCapChangeClass } from '@/lib/utils'
+import { Skeleton } from '@/components/ui/skeleton'
 
-interface IProps {
-  className?: string
+function GlobalDashboardSkeleton() {
+  return (
+    <Skeleton className={'animate-pulse h-[70px] w-full rounded-xl mb-3'} />
+  )
 }
 
-export const GlobalDashboard: React.FC<IProps> = ({ className }) => {
-  const { globalData, isLoading } = useGlobalData()
-  const showEmpty = !isLoading && !globalData
-
+export const GlobalDashboard = () => {
+  const { data: globalData, isLoading: isGlobalDataLoading } = useGlobalData()
   const { t } = useTranslation()
+
+  const carouselRef = useRef(
+    Autoplay({ delay: 9000, stopOnInteraction: true })
+  )
 
   const totalMarketCapUSD = Math.floor(globalData?.total_market_cap?.usd || 0)
   const totalVolume24hUSD = Math.floor(globalData?.total_volume?.usd || 0)
-  const marketCapChange24h = globalData?.market_cap_change_percentage_24h_usd || null
+  const marketCapChange24h = globalData?.market_cap_change_percentage_24h_usd || 0
   const marketCapPercentageBTC = globalData?.market_cap_percentage?.btc || 0
 
-  const getMarketCapChangeClass = () => {
-    if (marketCapChange24h === null) return 'text-muted'
-    return marketCapChange24h < 0 ? 'text-specials-danger' : 'text-specials-success'
-  }
-
-  const formatNumberWithCommas = (num: number) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  }
+  if (!globalData || isGlobalDataLoading) return <GlobalDashboardSkeleton/>
 
   return (
-    <Carousel plugins={[
-      Autoplay({
-        delay: 8000,
-      }),
-    ]} opts={{
-      loop: true
-    }}>
-      <CarouselContent className={'select-none'}>
+    <Carousel plugins={[carouselRef.current]} opts={{ loop: true }}>
+      <CarouselContent className={'select-none pb-3'}>
         <CarouselItem>
           <Card
-            className={cn('bg-neutral-04 flex py-4 pl-6 pr-9 items-center cursor-pointer relative justify-between rounded-xl border-0', className)}>
+            className='bg-neutral-04 flex py-4 pl-6 pr-9 items-center cursor-pointer relative justify-between rounded-xl border-0'>
             <CardHeader className={'p-0 space-y-0.5'}>
-              <CardTitle className={'text-xs text-neutral-02'}>
+              <CardTitle className={'text-xs text-neutral-03'}>
                 {t('dashboard.market_cap')}
               </CardTitle>
               <motion.div
@@ -55,7 +48,7 @@ export const GlobalDashboard: React.FC<IProps> = ({ className }) => {
                 transition={{ duration: 1.1 }}
               >
                 <CardDescription className={'text-sm text-foreground font-bold'}>
-                  {formatNumberWithCommas(totalMarketCapUSD)} $
+                  {formatPriceWithCommas(totalMarketCapUSD)} $
                 </CardDescription>
               </motion.div>
             </CardHeader>
@@ -66,8 +59,8 @@ export const GlobalDashboard: React.FC<IProps> = ({ className }) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.1 }}
               >
-                <p className={cn(getMarketCapChangeClass(), 'text-sm font-semibold transition-colors')}>
-                  {showEmpty ? 'N/A' : marketCapChange24h !== null && marketCapChange24h.toFixed(2) + ' %'}
+                <p className={cn(getMarketCapChangeClass(marketCapChange24h), 'text-sm font-semibold transition-colors')}>
+                  {marketCapChange24h?.toFixed(2) + ' %'}
                 </p>
               </motion.div>
             </CardContent>
@@ -81,9 +74,9 @@ export const GlobalDashboard: React.FC<IProps> = ({ className }) => {
 
         <CarouselItem>
           <Card
-            className={cn('bg-neutral-04 flex py-4 pl-6 pr-9 relative h-[70px] items-center cursor-pointer justify-between rounded-xl border-0', className)}>
+            className='bg-neutral-04 flex py-4 pl-6 pr-9 relative h-[70px] items-center cursor-pointer justify-between rounded-xl border-0'>
             <CardHeader className={'p-0 space-y-0.5'}>
-              <CardTitle className={'text-xs text-muted-foreground'}>
+              <CardTitle className={'text-xs text-neutral-03'}>
                 {t('dashboard.trending')}
               </CardTitle>
               <motion.div
@@ -92,7 +85,7 @@ export const GlobalDashboard: React.FC<IProps> = ({ className }) => {
                 transition={{ duration: 1.1 }}
               >
                 <CardDescription className={'text-sm text-base-foreground font-bold'}>
-                  {formatNumberWithCommas(totalVolume24hUSD)} $
+                  {formatPriceWithCommas(totalVolume24hUSD)} $
                 </CardDescription>
               </motion.div>
             </CardHeader>
@@ -104,7 +97,7 @@ export const GlobalDashboard: React.FC<IProps> = ({ className }) => {
                 transition={{ duration: 1.1 }}
                 className={'text-right leading-none space-y-0.5'}
               >
-                <span className={'flex justify-end font-semibold tracking-tight text-xs text-muted-foreground h-4'}>
+                <span className={'flex justify-end font-semibold tracking-tight text-xs text-neutral-03 h-4'}>
                   {t('dashboard.dominance')}
                 </span>
 
@@ -115,8 +108,8 @@ export const GlobalDashboard: React.FC<IProps> = ({ className }) => {
             </CardContent>
 
             <div className={'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'}>
-              <span className={'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'}></span>
-              <span className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'}></span>
+              <span className={'w-1.5 h-1.5 rounded-full border-neutral-03 border'}></span>
+              <span className={'w-1.5 h-1.5 rounded-full bg-neutral-03'}></span>
             </div>
           </Card>
 

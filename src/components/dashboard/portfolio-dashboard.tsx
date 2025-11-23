@@ -1,23 +1,31 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { cn } from '@/components/ui/utils'
 import { usePortfolioStore } from '@/store'
 import { useTranslation } from 'react-i18next'
-import { formatPrice } from '@/lib/utils/formatters'
+import { formatPrice, formattedBalance, getClassedBasedOnValue, getClassesBalance } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import Autoplay from 'embla-carousel-autoplay'
-import { usePortfolio } from '@/features/portfolio'
 import { useTelegramUser } from '@/hooks/use-telegram-user'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { usePortfolio } from '@/hooks/queries/use-portfolio'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Divider } from '@telegram-apps/telegram-ui'
+
+function PortfolioDashboardSkeleton() {
+  return (
+    <Skeleton className={'animate-pulse h-[89px] w-full rounded-xl mb-3'} />
+  )
+}
 
 export const PortfolioDashboard = () => {
   const { data } = useTelegramUser()
   const userId = data?.userId || ''
 
-  const { portfolioData: portfolio } = usePortfolio(userId)
+  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio(userId)
 
   const {
     setPortfolio,
@@ -32,50 +40,29 @@ export const PortfolioDashboard = () => {
 
   const { t } = useTranslation()
 
-  const getClassedBasedOnValue = (value: number) => {
-    if (value === 0) return 'text-muted'
-    return value < 0 ? 'text-secondary' : 'text-primary'
-  }
+  const carouselRef = useRef(
+    Autoplay({ delay: 9000, stopOnInteraction: true })
+  )
 
-  const getClassesBalance = () => {
-    if (totalBalance > totalInvestedUSD) {
-      return 'text-primary'
-    } else {
-      return 'text-secondary'
-    }
-  }
-
-  const formattedBalance = totalBalance.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })
+  const balance = formattedBalance(Number(totalBalance.toFixed(2)))
 
   useEffect(() => {
-      if (portfolio.length > 0) {
-        setPortfolio(portfolio)
-      }
+    if (portfolio) {
+      setPortfolio(portfolio)
+      calculateTotalInvestedUSD()
+    }
+  }, [calculateTotalInvestedUSD, portfolio, setPortfolio])
 
-      if (portfolio.length > 0) {
-        calculateTotalInvestedUSD()
-      }
-    },
-    [calculateTotalInvestedUSD, portfolio, setPortfolio]
-  )
+  if (!portfolio || isPortfolioLoading) return <PortfolioDashboardSkeleton />
 
   return (
     <>
       {portfolio.length > 0 ?
-        <Carousel plugins={[
-          Autoplay({
-            delay: 8000
-          })
-        ]} opts={{
-          loop: true
-        }}>
+        <Carousel plugins={[carouselRef.current]} opts={{ loop: true }}>
           <CarouselContent className={'select-none'}>
             <CarouselItem>
               <Card
-                className={'py-5 pl-6 pr-9 items-center justify-between rounded-xl border-0 cursor-pointer relative'}>
+                className={'bg-neutral-04 py-5 pl-6 pr-9 items-center justify-between rounded-xl border-0 cursor-pointer relative'}>
                 <CardContent className={'flex flex-col gap-1 p-0'}>
                   <div className={'flex justify-between items-end'}>
                     <p className={'text-sm text-foreground font-semibold'}>
@@ -89,13 +76,13 @@ export const PortfolioDashboard = () => {
                       className={'flex gap-1.5'}
                     >
                       <p
-                        className={cn(getClassesBalance(), 'text-sm font-semibold transition-colors')}>
-                        {formattedBalance} $
+                        className={cn(getClassesBalance(totalBalance, totalInvestedUSD), 'text-sm font-semibold transition-colors')}>
+                        {balance} $
                       </p>
                     </motion.div>
                   </div>
 
-                  <Separator className={'opacity-30'} />
+                  <Divider />
 
                   <div className={'flex justify-between items-end'}>
                     <p className={'text-sm text-foreground font-semibold'}>
@@ -125,7 +112,7 @@ export const PortfolioDashboard = () => {
 
             <CarouselItem>
               <Card
-                className={'py-5 pl-6 pr-9 items-center justify-between rounded-xl border-0 cursor-pointer relative'}>
+                className={'bg-neutral-04  py-5 pl-6 pr-9 items-center justify-between rounded-xl border-0 cursor-pointer relative'}>
                 <CardContent className={'flex flex-col gap-1 p-0'}>
                   <div className={'flex justify-between items-end'}>
                     <p className={'text-sm text-foreground font-semibold'}>
@@ -150,7 +137,7 @@ export const PortfolioDashboard = () => {
                     </motion.div>
                   </div>
 
-                  <Separator className={'opacity-30'} />
+                  <Divider />
 
                   <div className={'flex justify-between items-end'}>
                     <p className={'text-sm text-foreground font-semibold text-nowrap'}>

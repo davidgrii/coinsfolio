@@ -13,14 +13,17 @@ html {
 @theme {
     --font-sans: 'Aileron', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-    --color-base-background: #000000;
-    --color-base-foreground: #ffffff;
+    --color-base-background: rgba(23, 33, 43);
+    --color-base-foreground: rgb(255, 255, 255);
 
-    --color-neutral-01: rgba(0, 0, 0, 0.56);
-    --color-neutral-02: #6ab3f3;
-    --color-neutral-03: rgba(0, 0, 0, 0.2);
+    --color-primary: rgb(106, 179, 243);
+    --color-secondary: rgb(0, 122, 255);
+
+    --color-neutral-01: rgb(255, 255, 255);
+    --color-neutral-02: rgb(255, 255, 255);
+    --color-neutral-03: rgb(170, 170, 170);
     --color-neutral-04: rgba(255, 255, 255, 0.08);
-    --color-neutral-05: rgba(0, 0, 0, 0.05);
+    --color-neutral-05: rgba(120, 121, 126);
 
     --color-pink-01: rgba(53, 13, 42, 0.4);
     --color-pink-02: rgba(245, 211, 214, 1);
@@ -70,6 +73,10 @@ html {
     --text-label--letter-spacing: 0;
 
     --blur-48: 48px;
+}
+
+button {
+    cursor: pointer;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

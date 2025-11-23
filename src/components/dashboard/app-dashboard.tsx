@@ -7,19 +7,10 @@ interface IProps {
 }
 
 export const AppDashboard: React.FC<IProps> = ({ variant }) => {
-  let dashboardContent
 
-  if (variant === 'portfolio') {
-    dashboardContent = <PortfolioDashboard />;
-  } else {
-    dashboardContent = <GlobalDashboard />;
-  }
-
-  return (
-    <>
-      <div className={'max-w-3xl mx-auto p-3'}>
-        {dashboardContent}
-      </div>
-    </>
-  )
+ return (
+   <div className='px-3'>
+     {variant === 'public' ? <GlobalDashboard /> : <PortfolioDashboard />}
+   </div>
+ )
 }

@@ -33,14 +33,12 @@ export default function RootLayout(
     </head>
 
     <body className={cn(`overflow-hidden ${inter.className}`)}>
-    {/*<React.StrictMode>*/}
-      <QueryProvider>
-        <TelegramProvider>
-          {children}
-        </TelegramProvider>
-      </QueryProvider>
+    <QueryProvider>
+      <TelegramProvider>
+        {children}
+      </TelegramProvider>
+    </QueryProvider>
     <Analytics />
-    {/*</React.StrictMode>*/}
     </body>
     </html>
   )

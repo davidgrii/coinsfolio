@@ -28,7 +28,7 @@ export const Container: React.FC<IProps> = ({ children, back = true, className }
     // }, [router]);
 
     return (
-        <div className={cn('mx-auto max-w-3xl p-3', className)}>
+        <div className={cn('mx-auto max-w-3xl px-3', className)}>
             {children}
         </div>
     )

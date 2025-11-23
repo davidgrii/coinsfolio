@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import i18n from '@/i18n'
 
 interface ITelegramStore {
+  // @ts-ignore
   bot: typeof window.Telegram.WebApp | null
   userId: string
   userLanguage: string
@@ -15,6 +16,7 @@ export const useTelegramStore = create<ITelegramStore>((set, get) => ({
 
   initializeBot: async () => {
     const isBrowser = typeof window !== 'undefined'
+    // @ts-ignore
     const botInstance = isBrowser ? window.Telegram.WebApp : null
     const userIdInstance = isBrowser ? String(botInstance?.initDataUnsafe?.user?.id || '1422316270') : ''
     const userLanguage = botInstance?.initDataUnsafe?.user?.language_code || 'en'
