@@ -27,7 +27,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <Icons.PortfolioArrow className={'w-[9px] h-[9px]'} />
+      <Icons.portfolioArrow className={'w-[9px] h-[9px]'} />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -126,7 +126,7 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute left-2 flex h-3 w-3 rotate-[270deg] items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Icons.PortfolioArrow className={'w-5 h-5'} />
+        <Icons.portfolioArrow className={'w-5 h-5'} />
       </SelectPrimitive.ItemIndicator>
     </span>
 

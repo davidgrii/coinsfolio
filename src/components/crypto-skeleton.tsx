@@ -1,27 +1,43 @@
 import React from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
-import { cn } from '@/components/ui/utils'
+import { List } from '@telegram-apps/telegram-ui'
+import { motion } from 'framer-motion'
+import { Icons } from '@/components/icons'
 
 interface IProps {
   itemsCount: number
+  isPortfolio?: boolean
   className?: string
 }
 
-export const CryptoSkeleton: React.FC<IProps> = ({ itemsCount = 10, className }) => {
+export const CryptoSkeletonList: React.FC<IProps> = ({ itemsCount = 10, isPortfolio = false }) => {
   return (
-      <div
-        className={cn('grid justify-start gap-8', className)}
-      >
-        {Array.from({ length: itemsCount }).map((_, index) => (
-          <div key={index} className={'flex items-center justify-center space-x-3'}>
-            <Skeleton className="h-[40px] w-[40px] rounded-full" />
+    <List className={'w-full grid gap-2 overflow-y-auto max-h-screen scrollbar-none'}>
+      {Array.from({ length: itemsCount }).map((_, index) => (
+        <div key={index} className={'flex w-full items-center space-x-3'}>
+          {!isPortfolio && (
+            <span className="w-4 animate-pulse text-sm text-neutral-04">{index + 1}</span>
+          )}
 
-            <div className={'flex flex-col gap-1'}>
-              <Skeleton className="h-3 w-[210px] rounded-[2px]" />
-              <Skeleton className="h-2 w-[110px] rounded-[2px]" />
-            </div>
+          <Skeleton className="h-[40px] w-[40px] rounded-full" />
+
+          <div className={'flex flex-col gap-0.5 flex-1'}>
+            <Skeleton className="h-4 w-full rounded" />
+            <Skeleton className="h-1.5 w-[100px] rounded" />
           </div>
-        ))}
-      </div>
+          <motion.button
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="p-1 pb-[6px]"
+          >
+
+            <Icons.favorites className={'w-4 h-4 animate-pulse text-neutral-04'} />
+
+          </motion.button>
+        </div>
+      ))}
+    </List>
   )
 }

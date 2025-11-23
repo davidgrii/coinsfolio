@@ -1,7 +1,8 @@
 {
   "market": "Рынок",
   "favorites": "Избранное",
-  "portfolio": "Мои Активы",
+  "portfolio": "Портфолио",
+  "settings": "Настройки",
   "friends": "Друзья",
   "search": "Поиск",
   "table_header": {

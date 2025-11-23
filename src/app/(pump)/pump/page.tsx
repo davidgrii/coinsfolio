@@ -4,33 +4,41 @@ import React from 'react'
 
 import { motion } from 'framer-motion'
 import { useTelegramUser } from '@/hooks/use-telegram-user'
-import { useAddFavorite, useDeleteFavorite, useFavorites } from '@/features/favorites'
-import { usePumpCryptos } from '@/features/pump-dump/model/use-pump-crypto'
 import { Container } from '@/components/container'
 import { Categories } from '@/components/categories'
 import { CryptoTableHeader } from '@/components/crypto-table-header'
-import { Card } from '@/components/ui/card'
 import { CryptoItem } from '@/components'
-import { CryptoSkeleton } from '@/components/crypto-skeleton'
+import { CryptoSkeletonList } from '@/components/crypto-skeleton'
+import { List } from '@telegram-apps/telegram-ui'
+import { useFavorites, usePumpCryptos } from '@/hooks/queries/use-crypto'
+import { useAddFavorite, useDeleteFavorite } from '@/hooks/queries/use-favorite-mutation'
 
 export default function PumpPage() {
   const { data } = useTelegramUser()
   const userId = data?.userId || ''
 
-  const { pumpCryptos = [], isLoading } = usePumpCryptos()
+  const { data: pumpCryptos, isLoading: isPumpCryptosLoading } = usePumpCryptos()
+  const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } = useFavorites()
 
-  const { favorites } = useFavorites(userId)
-  const { handleAdd: addFavorite } = useAddFavorite()
-  const { handleDelete: removeFavorite } = useDeleteFavorite()
+  const { mutate: addFavorite } = useAddFavorite()
+  const { mutate: deleteFavorite } = useDeleteFavorite()
+
+  const handleFavoriteToggle = async (cryptoId: string) => {
+    if (favoriteCryptos?.favorites.includes(cryptoId)) {
+      deleteFavorite({ userId, cryptoId })
+    } else {
+      addFavorite({ userId, cryptoId })
+    }
+  }
 
   return (
-    <Container className={'pt-0'}>
+    <Container back={true} className={'pt-0'}>
       <Categories />
 
       <CryptoTableHeader />
 
-      {isLoading ? (
-        <CryptoSkeleton itemsCount={10} />
+      {!(pumpCryptos && favoriteCryptos) || isPumpCryptosLoading || isFavoriteCryptosLoading ? (
+        <CryptoSkeletonList itemsCount={10} />
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
@@ -38,19 +46,18 @@ export default function PumpPage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <Card className={'bg-background grid gap-8 border-0'}>
+          <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[84px] scrollbar-none'}>
             {pumpCryptos.map((crypto, index) => (
               <CryptoItem
                 userId={userId}
                 key={crypto.id}
                 crypto={crypto}
                 index={index}
-                favorites={favorites}
-                addFavorite={addFavorite}
-                removeFavorite={removeFavorite}
+                favorites={favoriteCryptos.favorites}
+                onToggleFavorite={handleFavoriteToggle}
               />
             ))}
-          </Card>
+          </List>
         </motion.div>
       )}
     </Container>

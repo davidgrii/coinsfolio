@@ -3,35 +3,43 @@
 import { motion } from 'framer-motion'
 
 import { useTelegramUser } from '@/hooks/use-telegram-user'
-import { useTrendingData } from '@/features/trending/models/use-trending-data'
-import { TrendingCryptoItem } from '@/features/trending/ui/trending-crypto-item'
 
-import { useAddFavorite, useDeleteFavorite, useFavorites } from '@/features/favorites'
 import { Container } from '@/components/container'
 import { Categories } from '@/components/categories'
 import { CryptoTableHeader } from '@/components/crypto-table-header'
-import { Card } from '@/components/ui/card'
-import { CryptoSkeleton } from '@/components/crypto-skeleton'
+import { CryptoSkeletonList } from '@/components/crypto-skeleton'
+import { useFavorites, useTrendingCryptos } from '@/hooks/queries/use-crypto'
+import { useAddFavorite, useDeleteFavorite } from '@/hooks/queries/use-favorite-mutation'
+import { List } from '@telegram-apps/telegram-ui'
+import { CryptoItem } from '@/components'
+import React from 'react'
 
 export default function TrendingPage() {
-  const { trendingCrypto, isLoading } = useTrendingData()
-
   const { data } = useTelegramUser()
   const userId = data?.userId || ''
 
-  const { favorites } = useFavorites(userId)
-  const { handleAdd: addFavorite } = useAddFavorite()
-  const { handleDelete: removeFavorite } = useDeleteFavorite()
+  const { data: trendingCryptos, isLoading: isTrendingCryptosLoading } = useTrendingCryptos()
+  const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } = useFavorites()
 
+  const { mutate: addFavorite } = useAddFavorite()
+  const { mutate: deleteFavorite } = useDeleteFavorite()
+
+  const handleFavoriteToggle = async (cryptoId: string) => {
+    if (favoriteCryptos?.favorites.includes(cryptoId)) {
+      deleteFavorite({ userId, cryptoId })
+    } else {
+      addFavorite({ userId, cryptoId })
+    }
+  }
 
   return (
-    <Container className={'pt-0'}>
+    <Container back={true}>
       <Categories />
 
       <CryptoTableHeader />
 
-      {isLoading ? (
-        <CryptoSkeleton itemsCount={10} />
+      {!(trendingCryptos && favoriteCryptos) || isTrendingCryptosLoading || isFavoriteCryptosLoading ? (
+        <CryptoSkeletonList itemsCount={10} />
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
@@ -39,19 +47,19 @@ export default function TrendingPage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <Card className={'bg-background grid gap-8 border-0'}>
-            {trendingCrypto.map((crypto, index) => (
-              <TrendingCryptoItem
+          <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[84px] scrollbar-none'}>
+            {trendingCryptos.map((crypto, index) => (
+              <CryptoItem
+                isTrendingCrypto={true}
                 userId={userId}
                 index={index}
                 key={crypto.id}
                 crypto={crypto}
-                favorites={favorites}
-                addFavorite={addFavorite}
-                removeFavorite={removeFavorite}
+                favorites={favoriteCryptos.favorites}
+                onToggleFavorite={handleFavoriteToggle}
               />
             ))}
-          </Card>
+          </List>
         </motion.div>
       )}
     </Container>

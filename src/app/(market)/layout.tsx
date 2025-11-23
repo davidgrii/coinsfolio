@@ -1,16 +1,16 @@
-import React from 'react'
-import { AppMenu, Dashboard } from '@/components'
+import React, { type PropsWithChildren } from 'react'
+import { AppDashboard, AppMenu } from '@/components'
+import { CryptoItemModal } from '@/components/crypto-item-details'
 
 
-export default function Layout({ children }: {
-  children: React.ReactNode
-}) {
+export default function Layout({ children }: PropsWithChildren) {
 
   return (
     <>
-      <Dashboard variant={'public'} />
+      <AppDashboard variant={'public'} />
       {children}
       <AppMenu />
+      <CryptoItemModal />
     </>
   )
 }

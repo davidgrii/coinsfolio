@@ -3,6 +3,7 @@ import i18n from '@/i18n'
 import Cookies from 'js-cookie'
 
 interface ITelegramUser {
+  // @ts-ignore
   bot: typeof window.Telegram.WebApp | null
   userId: string
   userLanguage: string
@@ -14,12 +15,14 @@ const fetchUserData = async (): Promise<ITelegramUser> => {
 
   if (cachedUserId && isBrowser) {
     return {
+      // @ts-ignore
       bot: window.Telegram.WebApp || null,
       userId: cachedUserId,
       userLanguage: 'en'
     }
   }
 
+  // @ts-ignore
   const botInstance = isBrowser ? window.Telegram.WebApp : null
   const userIdInstance = isBrowser ? String(botInstance?.initDataUnsafe?.user?.id || '1422316270') : '1422316270'
   const userLanguage = botInstance?.initDataUnsafe?.user?.language_code || 'en'

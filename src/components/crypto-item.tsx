@@ -1,121 +1,101 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
-import { AnimatePresence } from 'framer-motion'
-import { ICrypto } from '@/types'
-import { formatPrice, getDynamicFontSize } from '@/lib/utils/formatters'
+import { formatPrice, getDynamicFontSize } from '@/lib/utils'
 import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store'
-import { CryptoItemDetails } from '@/features/crypto-details/ui/crypto-item-details'
 import { CardContent } from '@/components/ui/card'
 import { Icons } from './icons'
+import { Avatar } from '@telegram-apps/telegram-ui'
+import { motion } from 'framer-motion'
+import type { ICrypto } from '@/types'
 
 interface IProps {
   userId: string
   index: number
   crypto: ICrypto
+  isTrendingCrypto?: boolean
   favorites: string[]
-  addFavorite: ({ userId, cryptoId }: { userId: string, cryptoId: string }) => Promise<void>
-  removeFavorite: ({ userId, cryptoId }: { userId: string, cryptoId: string }) => Promise<void>
+  onToggleFavorite: (cryptoId: string) => void
   className?: string
 }
 
 export const CryptoItem: React.FC<IProps> = (
   {
-    userId,
     crypto,
     index,
+    isTrendingCrypto = false,
     favorites,
-    addFavorite,
-    removeFavorite
+    onToggleFavorite
   }) => {
 
   const isFavorite = favorites.includes(crypto.id)
   const priceChange = crypto.price_change_percentage_24h ?? 0
   const isPricePositive = !priceChange.toString().includes('-')
 
-  const { openModal, isOpen } = useCryptoModalStore()
-
-  const handleFavoriteToggle = async (event: React.MouseEvent, cryptoId: string) => {
-    event.stopPropagation()
-
-    try {
-      if (isFavorite) {
-        await removeFavorite({ userId, cryptoId })
-      } else {
-        await addFavorite({ userId, cryptoId })
-      }
-
-    } catch (error) {
-      console.error('Error toggling favorite:', error)
-    }
-  }
-
-  if (!crypto.current_price) return null
+  const { setIsOpen, setSelectedCrypto } = useCryptoModalStore()
 
   return (
-    <AnimatePresence>
+    <>
       <CardContent
-        onClick={() => openModal(crypto, crypto.market_cap_rank)}
+        onClick={() => {
+          setIsOpen(true)
+          setSelectedCrypto(crypto)
+        }}
         className={'p-0 flex justify-between items-center cursor-pointer select-none'}>
 
         <div className="flex items-center gap-2">
-          <span className="w-5 text-sm text-muted-foreground">{index + 1}</span>
+          <span className="w-5 text-sm text-neutral-03">{index + 1}</span>
 
-          <div className='rounded-full overflow-hidden'>
-            <Image
-              width={36}
-              height={36}
-              className="h-9 w-9"
-              src={crypto.image}
-              alt={crypto.name}
-            />
+          <div className="rounded-full overflow-hidden">
+            <Avatar size={40} src={crypto.image} alt={crypto.name} className="!bg-transparent" />
           </div>
           <div className="grid gap-0.5">
             <p className="text-sm leading-none">
               {crypto.symbol.toUpperCase()}
             </p>
-            <p className="text-[8.5px] font-semibold text-muted-foreground truncate">
+            <p className="text-[8.5px] font-semibold text-neutral-03 truncate">
               {crypto.name.length > 10 ? `${crypto.name.slice(0, 14)}...` : crypto.name}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <p
-            className={`${getDynamicFontSize(crypto.current_price.toString().length)} text-foreground font-bold whitespace-nowrap`}>
-            {formatPrice(crypto.current_price)} $
-          </p>
+          {isTrendingCrypto ? (
+            <p
+              className={`${getDynamicFontSize(crypto?.price.toString().length)} text-foreground font-bold whitespace-nowrap`}>
+              {formatPrice(crypto.price)} $
+            </p>) : (
+            <p
+              className={`${getDynamicFontSize(crypto.current_price.toString().length)} text-foreground font-bold whitespace-nowrap`}>
+              {formatPrice(crypto.current_price)} $
+            </p>
+          )}
 
           <div
-            className={`w-16 text-[13px] text-right ${isPricePositive ? 'text-primary' : 'text-secondary'}`}
+            className={`w-16 text-[13px] text-right ${isPricePositive ? 'text-specials-success' : 'text-specials-danger'}`}
           >
             <span className="font-semibold">{priceChange.toFixed(2)} %</span>
           </div>
 
-          <button
+          <motion.button
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="p-1 pb-[6px]"
-            onClick={(e) => handleFavoriteToggle(e, crypto.id)}
+            onClick={(e) => {
+              e.stopPropagation()
+              onToggleFavorite(crypto.id)
+            }}
           >
             {isFavorite ?
-              <Icons.StarFavorite className={'w-4 h-4'} />
+              <Icons.favorites className={'w-4 h-4 text-[#FFB364]'} />
               :
-              <Icons.Star className={'w-4 h-4'} />
+              <Icons.favoritesOutline className={'w-4 h-4'} />
             }
-          </button>
+          </motion.button>
         </div>
       </CardContent>
-
-      {isOpen &&
-        <CryptoItemDetails
-          addFavorite={addFavorite}
-          removeFavorite={removeFavorite}
-          favorites={favorites}
-          userId={userId}
-          key={crypto.id}
-          index={index}
-        />
-      }
-    </AnimatePresence>
+    </>
   )
 }

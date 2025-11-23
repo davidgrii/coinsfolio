@@ -1,7 +1,8 @@
 {
   "market": "Market",
   "favorites": "Favorites",
-  "portfolio": "My Assets",
+  "portfolio": "Portfolio",
+  "settings": "Settings",
   "friends": "Friends",
   "search": "Search",
   "table_header": {
