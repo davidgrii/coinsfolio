@@ -16,7 +16,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 function AddCryptoModalSkeleton() {
   return (
-    <div className="flex flex-col items-center justify-center px-3">
+    <div className="flex flex-col items-center justify-center px-3 mb-8">
       <Skeleton className={'animate-pulse h-[70px] w-full rounded-xl mb-8'} />
 
       <Skeleton className={'animate-pulse h-[200px] w-full rounded-xl mb-8'} />
@@ -99,10 +99,11 @@ export const AddCrypto: React.FC<IProps> = ({ onAddCrypto, isOpen, setIsOpen, is
         onOpenChange={setIsOpen}
         header={<ModalHeader/>}
         trigger={
-        <FixedLayout  vertical='bottom' className='flex justify-center !w-full !bottom-[100px]'>
-          <Button size="m"><CirclePlus className={'w-9 h-9 cursor-pointer text-foreground transition-colors'} /></Button>
-        </FixedLayout>
-      }
+          <FixedLayout  vertical='bottom' className='flex justify-center !w-full !bottom-[100px]'>
+            <Button size="m"><CirclePlus className={'w-9 h-9 cursor-pointer text-foreground transition-colors'} /></Button>
+          </FixedLayout>
+        }
+        className='!bg-base-background'
       >
         <Placeholder description='' header={t('add_crypto.add_coin')}/>
 
@@ -110,7 +111,6 @@ export const AddCrypto: React.FC<IProps> = ({ onAddCrypto, isOpen, setIsOpen, is
           <AddCryptoModalSkeleton/>
         ) : (
           <>
-
             {selectedCrypto ? (
               <div className="flex items-center justify-between w-full py-4 px-4 bg-[#282828] rounded-xl">
                 <div className="flex items-center gap-3">

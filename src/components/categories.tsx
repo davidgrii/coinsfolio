@@ -30,7 +30,7 @@ export const Categories = () => {
             onClick={() => handleClick(href)}
             className={cn(href === currentPage && '!text-primary')}
           >
-            <Icon className='w-5 h-5'/>
+            {id === 'favorites' ? <Icon className='w-4 h-4'/> : <Icon className='w-5 h-5'/>}
           </InlineButtonsItem>
         ))}
       </InlineButtons>
