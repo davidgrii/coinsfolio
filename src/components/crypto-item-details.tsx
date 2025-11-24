@@ -60,7 +60,7 @@ export const CryptoItemModal = () => {
         open={isOpen}
         onOpenChange={setIsOpen}
         header={<ModalHeader/>}
-        className='min-h-[60vh]'
+        className='min-h-[60vh] !bg-base-background'
       >
         {!crypto || !selectedCrypto || isLoading ? (
           <CryptoItemModalSkeleton />
@@ -126,7 +126,7 @@ export const CryptoItemModal = () => {
 
             <FixedLayout className="px-3 !pb-3">
               <Button size="l" stretched mode='filled'>
-                See more details
+                Buy {selectedCrypto.symbol.toUpperCase()}
               </Button>
             </FixedLayout>
           </div>

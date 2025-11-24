@@ -19,7 +19,7 @@ export const AppMenu = () => {
 
   return (
     <>
-      <Tabbar className='!bg-base-background select-none !pb-2'>
+      <Tabbar className='!bg-base-background select-none !pb-3'>
         {APP_NAV_ITEMS.map(({ id, key, href, Icon }) =>
           <Tabbar.Item  key={id} text={t(key)} selected={href === currentPage} onClick={() => handleNavClick(href)}
         >
