@@ -1,36 +1,41 @@
-'use client'
+'use client';
 
-import React from 'react'
+import React from 'react';
 
-import { motion } from 'framer-motion'
+import { motion } from 'framer-motion';
 
-import { useTelegramUser } from '@/hooks/use-telegram-user'
-import { CryptoItem } from '@/components'
-import { CryptoTableHeader } from '@/components/crypto-table-header'
-import { Container } from '@/components/container'
-import { Categories } from '@/components/categories'
-import { List } from '@telegram-apps/telegram-ui'
-import { useDumpCryptos, useFavorites } from '@/hooks/queries/use-crypto'
-import { useAddFavorite, useDeleteFavorite } from '@/hooks/queries/use-favorite-mutation'
-import { CryptoSkeletonList } from '@/components/crypto-skeleton'
+import { useTelegramUser } from '@/hooks/use-telegram-user';
+import { CryptoItem } from '@/components';
+import { CryptoTableHeader } from '@/components/crypto-table-header';
+import { Container } from '@/components/container';
+import { Categories } from '@/components/categories';
+import { List } from '@telegram-apps/telegram-ui';
+import { useDumpCryptos, useFavorites } from '@/hooks/queries/use-crypto';
+import {
+  useAddFavorite,
+  useDeleteFavorite,
+} from '@/hooks/queries/use-favorite-mutation';
+import { CryptoSkeletonList } from '@/components/crypto-skeleton';
 
 export default function DumpPage() {
-  const { data } = useTelegramUser()
-  const userId = data?.userId || ''
+  const { data } = useTelegramUser();
+  const userId = data?.userId || '';
 
-  const { data: dumpCryptos, isLoading: isDumpCryptosLoading } = useDumpCryptos()
-  const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } = useFavorites()
+  const { data: dumpCryptos, isLoading: isDumpCryptosLoading } =
+    useDumpCryptos();
+  const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } =
+    useFavorites();
 
-  const { mutate: addFavorite } = useAddFavorite()
-  const { mutate: deleteFavorite } = useDeleteFavorite()
+  const { mutate: addFavorite } = useAddFavorite();
+  const { mutate: deleteFavorite } = useDeleteFavorite();
 
   const handleFavoriteToggle = async (cryptoId: string) => {
     if (favoriteCryptos?.favorites.includes(cryptoId)) {
-      deleteFavorite({ userId, cryptoId })
+      deleteFavorite({ userId, cryptoId });
     } else {
-      addFavorite({ userId, cryptoId })
+      addFavorite({ userId, cryptoId });
     }
-  }
+  };
 
   return (
     <Container back={true}>
@@ -38,7 +43,9 @@ export default function DumpPage() {
 
       <CryptoTableHeader />
 
-      {!(dumpCryptos && favoriteCryptos) || isDumpCryptosLoading || isFavoriteCryptosLoading ? (
+      {!(dumpCryptos && favoriteCryptos) ||
+      isDumpCryptosLoading ||
+      isFavoriteCryptosLoading ? (
         <CryptoSkeletonList itemsCount={10} />
       ) : (
         <motion.div
@@ -47,7 +54,11 @@ export default function DumpPage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <List className={'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none !pt-0 !px-0'}>
+          <List
+            className={
+              'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none !pt-0 !px-0'
+            }
+          >
             {dumpCryptos.map((crypto, index) => (
               <CryptoItem
                 userId={userId}
@@ -62,5 +73,5 @@ export default function DumpPage() {
         </motion.div>
       )}
     </Container>
-  )
+  );
 }

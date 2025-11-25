@@ -1,23 +1,25 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef } from 'react';
 
 export function useIntersection(onIntersect: () => void) {
-  const unsubscribe = useRef<() => void>(() => {
-  })
+  const unsubscribe = useRef<() => void>(() => {});
 
-  return useCallback((el: HTMLDivElement | null) => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(intersection => {
-        if (intersection.isIntersecting) {
-          onIntersect()
-        }
-      })
-    })
+  return useCallback(
+    (el: HTMLDivElement | null) => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((intersection) => {
+          if (intersection.isIntersecting) {
+            onIntersect();
+          }
+        });
+      });
 
-    if (el) {
-      observer.observe(el)
-      unsubscribe.current = () => observer.disconnect()
-    } else {
-      unsubscribe.current()
-    }
-  }, [onIntersect])
+      if (el) {
+        observer.observe(el);
+        unsubscribe.current = () => observer.disconnect();
+      } else {
+        unsubscribe.current();
+      }
+    },
+    [onIntersect],
+  );
 }
