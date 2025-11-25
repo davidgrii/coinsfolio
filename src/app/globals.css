@@ -23,7 +23,7 @@ html {
     --color-neutral-02: rgb(255, 255, 255);
     --color-neutral-03: rgb(170, 170, 170);
     --color-neutral-04: rgba(255, 255, 255, 0.08);
-    --color-neutral-05: rgba(120, 121, 126);
+    --color-neutral-05: #78797e;
 
     --color-pink-01: rgba(53, 13, 42, 0.4);
     --color-pink-02: rgba(245, 211, 214, 1);
