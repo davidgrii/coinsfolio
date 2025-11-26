@@ -26,7 +26,7 @@ export const BalanceTableHeader = ({ onSort }: IProps) => {
       <h2 className='select-none'>{t('balance_table_header.coin')}</h2>
 
       <div className={'flex'}>
-        <div className={'flex gap-8 mr-5 select-none'}>
+        <div className={'flex gap-8 mr-6 select-none'}>
           <span>{t('balance_table_header.price')}</span>
           <span className={'w-20 text-right'}>
             {t('balance_table_header.value')}

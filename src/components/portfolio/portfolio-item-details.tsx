@@ -25,7 +25,7 @@ export const PortfolioDetails: React.FC<IProps> = ({
   return (
     <div
       className={
-        'flex flex-col gap-0.5 w-full text-sm font-medium text-muted-foreground mr-9 select-none'
+        'flex flex-col gap-0.5 w-full text-sm font-medium mr-9 select-none'
       }
     >
       <div className={'flex justify-between'}>
@@ -79,7 +79,7 @@ export const PortfolioDetails: React.FC<IProps> = ({
       {notice && (
         <span
           className={
-            '-ml-11 flex items-center gap-5 text-foreground border-[#282828] border font-medium rounded-sm mt-1 p-1 pl-2.5 pr-4 text-[12px]'
+            '-ml-11 flex items-center gap-5 text-foreground border-neutral-03 border font-medium rounded-sm mt-1 p-1 pl-2.5 pr-4 text-[12px]'
           }
         >
           <Icons.notice /> {notice}

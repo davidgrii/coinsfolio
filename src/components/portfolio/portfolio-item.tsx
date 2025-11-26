@@ -1,19 +1,19 @@
-import { CardContent } from '@/components/ui/card';
+import { CardContent } from '@/components/ui/card'
 import {
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import type { IPortfolio } from '@/types';
-import { formatPrice, formatPriceWithoutDecimals } from '@/lib/utils';
-import { PortfolioEdit } from '@/components/portfolio/portfolio-item-edit';
-import { PortfolioConfirm } from '@/components/portfolio/portfolio-item-confirm';
-import { PortfolioDetails } from '@/components/portfolio/portfolio-item-details';
-import { Avatar, Snackbar } from '@telegram-apps/telegram-ui';
-import { useTranslation } from 'react-i18next';
+  AccordionTrigger
+} from '@/components/ui/accordion'
+import React, { useState } from 'react'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
+import type { IPortfolio } from '@/types'
+import { formatPrice, formatPriceWithoutDecimals } from '@/lib/utils'
+import { PortfolioEdit } from '@/components/portfolio/portfolio-item-edit'
+import { PortfolioConfirm } from '@/components/portfolio/portfolio-item-confirm'
+import { PortfolioDetails } from '@/components/portfolio/portfolio-item-details'
+import { Avatar, Snackbar } from '@telegram-apps/telegram-ui'
+import { useTranslation } from 'react-i18next'
 
 interface IProps {
   item: IPortfolio;
@@ -22,31 +22,27 @@ interface IProps {
 }
 
 export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  if (!item || !item.crypto) {
-    return null;
-  }
+  const currentPrice = item?.crypto.current_price
+  const quantity = item.quantity
+  const purchasePrice = item.purchasePrice
 
-  const currentPrice = item?.crypto.current_price;
-  const quantity = item.quantity;
-  const purchasePrice = item.purchasePrice;
-
-  const investedUSD = quantity * purchasePrice;
-  const currentInvestmentValue = currentPrice * quantity;
-  const profitLossUSD = currentInvestmentValue - investedUSD;
+  const investedUSD = quantity * purchasePrice
+  const currentInvestmentValue = currentPrice * quantity
+  const profitLossUSD = currentInvestmentValue - investedUSD
   const profitLossPercentage =
-    ((currentPrice - purchasePrice) / purchasePrice) * 100;
+    ((currentPrice - purchasePrice) / purchasePrice) * 100
 
   const handleClickDelete = (cryptoId: string) => {
-    const result = confirm(t('my_portfolio_page.are_agree'));
+    const result = confirm(t('my_portfolio_page.are_agree'))
 
     if (result) {
-      onDelete(cryptoId);
+      onDelete(cryptoId)
     }
-  };
+  }
 
   return (
     <motion.div
@@ -55,25 +51,23 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
       transition={{ duration: 0.7 }}
     >
       <AccordionItem value={item.cryptoId}>
-        <AccordionTrigger className=''>
-          <CardContent
-            className={'p-0 flex w-full justify-between select-none'}
-          >
+        <AccordionTrigger className='select-none py-3'>
+          <div className='flex w-full justify-between'>
             <div className={'flex items-center gap-2'}>
-              <div className='rounded-full overflow-hidden'>
+              <div className="rounded-full overflow-hidden">
                 <Avatar
                   size={40}
                   src={item.crypto.image}
                   alt={item.crypto.name}
-                  className='!bg-transparent'
+                  className="!bg-transparent"
                 />
               </div>
 
-              <div className='grid gap-0.5 text-left'>
-                <p className='text-sm leading-none'>
+              <div className="grid gap-0.5 text-left">
+                <p className="text-sm leading-none">
                   {item.crypto.symbol?.toUpperCase()}
                 </p>
-                <p className='text-[8.5px] font-semibold text-neutral-03 truncate'>
+                <p className="text-[8.5px] font-semibold text-neutral-03 truncate">
                   {item.crypto?.name}
                 </p>
               </div>
@@ -108,7 +102,7 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
                   } text-foreground font-bold text-right  whitespace-nowrap`}
                 >
                   {formatPriceWithoutDecimals(
-                    item.crypto.current_price * item.quantity,
+                    item.crypto.current_price * item.quantity
                   )}{' '}
                   $
                 </p>
@@ -121,14 +115,14 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
                 </p>
               </div>
             </div>
-          </CardContent>
+          </div>
         </AccordionTrigger>
 
         <AccordionContent className={'flex gap-2.5 pl-0.5 items-start'}>
           <PortfolioEdit
-            open={open}
+            isOpen={isOpen}
             onDelete={handleClickDelete}
-            setOpen={setOpen}
+            setIsOpen={setIsOpen}
             onEdit={onEdit}
             itemId={item.cryptoId}
           />
@@ -143,5 +137,5 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
         </AccordionContent>
       </AccordionItem>
     </motion.div>
-  );
-};
+  )
+}
