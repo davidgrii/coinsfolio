@@ -10,16 +10,16 @@ import { useTranslation } from 'react-i18next';
 import { Divider } from '@telegram-apps/telegram-ui';
 
 interface IProps {
-  open: boolean;
-  setOpen: (prev: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (prev: boolean) => void;
   onEdit: (_id: string) => void;
   itemId: string;
   onDelete: (_id: string) => void;
 }
 
 export const PortfolioEdit: React.FC<IProps> = ({
-  open,
-  setOpen,
+  isOpen,
+  setIsOpen,
   onEdit,
   itemId,
   onDelete,
@@ -28,7 +28,7 @@ export const PortfolioEdit: React.FC<IProps> = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={'p-1'}>
+      <DropdownMenuTrigger className={'p-1 select-none cursor-pointer focus:outline-none'}>
         <Icons.edit />
       </DropdownMenuTrigger>
 
@@ -47,7 +47,7 @@ export const PortfolioEdit: React.FC<IProps> = ({
             'flex text-sm text-specials-danger justify-between cursor-pointer '
           }
           onClick={() => {
-            setOpen(!open);
+            setIsOpen(!isOpen);
             onDelete(itemId);
           }}
         >

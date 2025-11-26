@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
 import { Icons } from '@/components/icons';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
-import { X } from 'lucide-react';
 import { formatNumber } from '@/lib/utils';
-import type { IAddCrypto, IPortfolio, IUpdatedCrypto } from '@/types';
+import type { IPortfolio, IUpdatedCrypto } from '@/types';
+import {
+  Avatar,
+  Button,
+  Input,
+  Modal,
+  Placeholder,
+  Tappable,
+  Textarea
+} from '@telegram-apps/telegram-ui'
+import {
+  ModalHeader
+} from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader'
 
 interface IProps {
   isOpen: boolean;
   setIsOpen: (state: boolean) => void;
-  item?: IPortfolio;
+  item: IPortfolio | null;
   onEditCrypto: (updatedCrypto: IUpdatedCrypto) => void;
 }
 
@@ -28,15 +29,9 @@ export const EditCrypto: React.FC<IProps> = ({
   item,
   onEditCrypto,
 }) => {
-  const [selectedCrypto, setSelectedCrypto] = useState<IPortfolio | undefined>(
-    item,
-  );
-  const [quantity, setQuantity] = useState<string | undefined>(
-    item?.quantity?.toString() || '',
-  );
-  const [purchase, setPurchase] = useState<string | undefined>(
-    item?.purchasePrice?.toString() || '',
-  );
+  const [selectedCrypto, setSelectedCrypto] = useState<IPortfolio | null>(item);
+  const [quantity, setQuantity] = useState<string | undefined>(item?.quantity?.toString() || '',);
+  const [purchase, setPurchase] = useState<string | undefined>(item?.purchasePrice?.toString() || '',);
   const [notice, setNotice] = useState<string>(item?.notice || '');
 
   const { t } = useTranslation();
@@ -64,6 +59,7 @@ export const EditCrypto: React.FC<IProps> = ({
 
       onEditCrypto(updatedData);
       setIsOpen(false);
+
     }
   };
 
@@ -75,92 +71,101 @@ export const EditCrypto: React.FC<IProps> = ({
   }, [item]);
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent
-        side={'top'}
-        className={
-          'bg-card rounded-2xl border-0 flex flex-col gap-6 items-center pt-10 pb-8'
-        }
+    <>
+      <Modal
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        header={<ModalHeader />}
+        className='!bg-base-background h-screen px-3'
       >
-        <SheetClose className='absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary'>
-          <X className='h-5 w-5' />
-        </SheetClose>
-        <SheetHeader className={'text-center'}>
-          <SheetTitle className={'text-2xl'}>
-            {t('edit_crypto.edit_coin')}
-          </SheetTitle>
-        </SheetHeader>
+        <Placeholder header={t('edit_crypto.edit_coin')} />
 
-        {selectedCrypto && (
-          <div className='flex items-center justify-between w-full py-4 px-4 bg-[#282828] rounded-xl'>
-            <div className='flex items-center gap-3'>
-              <Image
-                width={32}
-                height={32}
-                src={selectedCrypto.crypto.image}
-                alt={selectedCrypto.crypto.name}
-                className='w-8 h-8'
-              />
-              <div className={'flex-col'}>
-                <p className='text-sm text-foreground '>
-                  {selectedCrypto.crypto.symbol.toUpperCase()}
-                </p>
-                <p className='text-[8px] text-muted-foreground'>
-                  {selectedCrypto.crypto.name}
-                </p>
+        <form className='w-full flex flex-col gap-6 items-center justify-between'>
+          {selectedCrypto && (
+            <div className='relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl'>
+              <div className='flex items-center gap-3'>
+                <div className='rounded-full overflow-hidden'>
+                  <Avatar
+                    size={28}
+                    src={selectedCrypto.crypto.image}
+                    alt={selectedCrypto.crypto.name}
+                    className='!bg-transparent'
+                  />
+                </div>
+
+                <div className={'flex-col'}>
+                  <p className='text-xs text-foreground '>
+                    {selectedCrypto.crypto.symbol.toUpperCase()}
+                  </p>
+                  <p className='text-[8px] text-neutral-03'>
+                    {selectedCrypto.crypto.name}
+                  </p>
+                </div>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className='text-muted-foreground'
-            >
-              <Icons.clear />
-            </button>
+          )}
+
+          <div className='w-full relative'>
+            <Input
+              type='number'
+              inputMode={'decimal'}
+              placeholder={t('add_crypto.quantity')}
+              value={quantity}
+              onChange={handleChangeQuantity}
+              after={quantity && (
+                <Tappable
+                  Component='div'
+                  className='bg-neutral-04  rounded-xl'
+                  onClick={() => setQuantity('')}
+                >
+                  <Icons.close />
+                </Tappable>
+              )}
+              className='!bg-neutral-04 !w-full'
+            />
           </div>
-        )}
 
-        <Input
-          type={'text'}
-          inputMode={'text'}
-          placeholder={t('edit_crypto.quantity')}
-          value={quantity}
-          onChange={handleChangeQuantity}
-          className={
-            'font-medium py-8 px-6 rounded-xl text-[16px] bg-accent border-0'
-          }
-        />
+          <div className='w-full relative'>
+            <Input
+              type='number'
+              inputMode={'decimal'}
+              placeholder={t('add_crypto.purchase')}
+              value={purchase}
+              onChange={handleChangePurchase}
+              after={purchase && (
+                <Tappable
+                  Component='button'
+                  className='bg-neutral-04 rounded-full'
+                  onClick={() => setPurchase('')}
+                >
+                  <Icons.close />
+                </Tappable>
+              )}
+              className='!bg-neutral-04 !w-full'
+            />
+          </div>
 
-        <Input
-          type={'text'}
-          inputMode={'decimal'}
-          value={purchase}
-          placeholder={t('add_crypto.purchase')}
-          onChange={handleChangePurchase}
-          className={
-            'font-medium py-8 px-6 rounded-xl text-[16px] bg-accent border-0'
-          }
-        />
+          <div className='w-full relative'>
+            <Textarea
+              placeholder={t('add_crypto.note')}
+              value={notice}
+              onChange={(e) => setNotice(e.target.value)}
+              className='!w-full !bg-neutral-04'
+            />
+          </div>
 
-        <Input
-          type={'text'}
-          inputMode={'text'}
-          placeholder={t('add_crypto.note')}
-          value={notice ? notice : ''}
-          onChange={(e) => setNotice(e.target.value)}
-          className={
-            'font-medium py-8 px-6 rounded-xl text-[16px] bg-accent border-0'
-          }
-        />
-
-        <Button
-          onClick={handleSubmit}
-          className={
-            'bg-foreground py-8 rounded-xl text-lg text-background font-semibold mx-auto w-full transition-colors hover:bg-foreground/75'
-          }
-        >
-          {t('edit_crypto.btn')}
-        </Button>
-      </SheetContent>
-    </Sheet>
+          <Button
+            size='l'
+            mode='filled'
+            onClick={handleSubmit}
+            className={
+              'bg-foreground py-8 rounded-xl text-lg text-background font-semibold mx-auto w-full transition-colors hover:bg-foreground/75'
+            }
+          >
+            {t('edit_crypto.btn')} {selectedCrypto?.crypto.symbol?.toUpperCase()}
+          </Button>
+        </form>
+      </Modal>
+    </>
   );
 };

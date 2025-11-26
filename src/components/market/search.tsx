@@ -49,7 +49,7 @@ export const SearchInput: React.FC<IProps> = ({
               <Icons.close />
             </Tappable>
           )}
-          className='outline-2 !pl-14 outline-neutral-04 !bg-transparent !-mx-4 !-my-4'
+          className='outline-2 !pl-14 outline-neutral-04 !bg-transparent'
         />
       </div>
     </div>

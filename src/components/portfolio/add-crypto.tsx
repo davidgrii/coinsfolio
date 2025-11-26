@@ -15,7 +15,6 @@ import {
   Tappable, Textarea
 } from '@telegram-apps/telegram-ui'
 import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
-import { Icon24Close } from '@telegram-apps/telegram-ui/dist/icons/24/close';
 import { useSearchCrypto } from '@/hooks/queries/use-crypto';
 import { formatNumber } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -59,6 +58,8 @@ export const AddCrypto: React.FC<IProps> = ({
   const [debouncedSearchValue] = useDebounceValue(searchValue, 300);
 
   const { t } = useTranslation();
+
+  const isFormCompleted = quantity && purchase && selectedCrypto;
 
   const cryptoQueryParams = useMemo(
     () => ({
@@ -202,26 +203,17 @@ export const AddCrypto: React.FC<IProps> = ({
             />
 
             {searchValue && cryptos && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className='absolute -bottom-52 mb-2 w-full z-10 border border-base-foreground/10 rounded-xl overflow-hidden'>
-                  <div
-                    className={
-                      'bg-base-background rounded-xl shadow-md max-h-52 overflow-y-auto'
-                    }
-                  >
+                <div className='absolute top-14 mb-2 w-full z-10 border-neutral-04 border rounded-xl overflow-hidden'>
+                  <div className='bg-base-background rounded-xl shadow-md max-h-[30vh] overflow-y-auto'>
                     {cryptos.map((crypto) => (
                       <React.Fragment key={crypto.id}>
                         <motion.div
                           initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.8 }}
+                          animate={{ opacity: 1}}
+                          transition={{ duration: 0.3 }}
                         >
                           <div
-                            className='flex items-center gap-3 px-4 py-2 hover:bg-muted-foreground rounded-lg cursor-pointer'
+                            className='flex items-center gap-3 px-4 py-2 hover:bg-muted-foreground transition-colors duration-100 cursor-pointer hover:bg-neutral-04'
                             onClick={() => handleCryptoSelect(crypto)}
                           >
                             <div className='rounded-full overflow-hidden'>
@@ -246,7 +238,6 @@ export const AddCrypto: React.FC<IProps> = ({
                     ))}
                   </div>
                 </div>
-              </motion.div>
             )}
           </div>
         )}
@@ -304,6 +295,7 @@ export const AddCrypto: React.FC<IProps> = ({
         <Button
           size='l'
           mode='filled'
+          disabled={!isFormCompleted}
           onClick={handleSubmit}
           className={
             'bg-foreground py-8 rounded-xl text-lg text-background font-semibold mx-auto w-full transition-colors hover:bg-foreground/75'
