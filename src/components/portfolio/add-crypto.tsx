@@ -145,7 +145,7 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout>
       }
-      className='!bg-base-background h-dvh px-3'
+      className='!bg-base-background !h-dvh px-3'
     >
       <Placeholder header={t('add_crypto.add_coin')} />
 
@@ -183,7 +183,7 @@ export const AddCrypto: React.FC<IProps> = ({
         ) : (
           <div className='relative w-full'>
             <Input
-              autoFocus={true}
+              // autoFocus={true}
               type={'text'}
               inputMode={'text'}
               placeholder={t('add_crypto.choose')}
