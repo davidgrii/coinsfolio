@@ -138,3 +138,10 @@ body {
     -ms-overflow-style: none;  /* IE и Edge */
     scrollbar-width: none;     /* Firefox */
 }
+
+/*         TG      */
+
+.tgui-8ca550c2fc85eff5 {
+    box-sizing: border-box !important;
+    padding: 0 !important;
+}

@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react'
 import { CirclePlus } from 'lucide-react';
 import { ICrypto } from '@/types';
 import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
 import { Icons } from '@/components/icons';
 import {
   Avatar,
@@ -16,26 +15,14 @@ import {
 } from '@telegram-apps/telegram-ui'
 import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
 import { useSearchCrypto } from '@/hooks/queries/use-crypto';
-import { formatNumber } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useDebounceValue } from 'usehooks-ts'
-
-function AddCryptoModalSkeleton() {
-  return (
-    <div className='flex flex-col items-center justify-center px-3 mb-8'>
-      <Skeleton className={'animate-pulse h-[70px] w-full rounded-xl mb-8'} />
-
-      <Skeleton className={'animate-pulse h-[200px] w-full rounded-xl mb-8'} />
-      <Skeleton className={'animate-pulse h-[200px] w-full rounded-xl '} />
-    </div>
-  );
-}
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface IProps {
   isOpen: boolean;
+  shouldShowTrigger?: boolean;
   setIsOpen: (state: boolean) => void;
-  isEmpty: boolean;
   onAddCrypto: (
     cryptoId: string,
     quantity: number,
@@ -44,11 +31,22 @@ interface IProps {
   ) => void;
 }
 
+export function SearchCryptoSkeleton() {
+  return (
+    <div className='flex items-center gap-4 px-4 py-2'>
+      <Skeleton className='h-[28px] w-[28px] rounded-full' />
+      <Skeleton className='h-[10px] w-[60px]' />
+      <Skeleton className='h-[10px] w-[28px]' />
+    </div>
+  )
+}
+
 export const AddCrypto: React.FC<IProps> = ({
+  shouldShowTrigger,
   onAddCrypto,
   isOpen,
   setIsOpen,
-  isEmpty,
+
 }) => {
   const [quantity, setQuantity] = useState('');
   const [purchase, setPurchase] = useState('');
@@ -70,20 +68,14 @@ export const AddCrypto: React.FC<IProps> = ({
     [debouncedSearchValue],
   );
 
-  const { data: cryptos, isLoading: isCryptosLoading } = useSearchCrypto(cryptoQueryParams);
+  const { data: cryptos, isLoading: isCryptosLoading, isFetching: isCryptosFetching } = useSearchCrypto(cryptoQueryParams);
 
   const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const formattedValue = formatNumber(value);
-
-    setQuantity(formattedValue);
+    setQuantity(e.target.value);
   };
 
   const handleChangePurchase = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const formattedValue = formatNumber(value);
-
-    setPurchase(formattedValue);
+    setPurchase(e.target.value);
   };
 
   const handleCryptoSelect = (crypto: ICrypto) => {
@@ -131,7 +123,7 @@ export const AddCrypto: React.FC<IProps> = ({
       open={isOpen}
       onOpenChange={setIsOpen}
       header={<ModalHeader />}
-      trigger={
+      trigger={shouldShowTrigger ?
         <FixedLayout
           vertical='bottom'
           className='flex justify-center !bottom-[100px]'
@@ -143,9 +135,9 @@ export const AddCrypto: React.FC<IProps> = ({
               }
             />
           </Button>
-        </FixedLayout>
+        </FixedLayout> : null
       }
-      className='!bg-base-background !h-dvh px-3'
+      className='!bg-base-background !h-dvh px-3 !z-50'
     >
       <Placeholder header={t('add_crypto.add_coin')} />
 
@@ -202,40 +194,46 @@ export const AddCrypto: React.FC<IProps> = ({
               className='!bg-neutral-04'
             />
 
-            {searchValue && cryptos && (
+            {searchValue && (
                 <div className='absolute top-14 mb-2 w-full z-10 border-neutral-04 border rounded-xl overflow-hidden'>
                   <div className='bg-base-background rounded-xl shadow-md max-h-[30vh] overflow-y-auto'>
-                    {cryptos.map((crypto) => (
-                      <React.Fragment key={crypto.id}>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1}}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <div
-                            className='flex items-center gap-3 px-4 py-2 hover:bg-muted-foreground transition-colors duration-100 cursor-pointer hover:bg-neutral-04'
-                            onClick={() => handleCryptoSelect(crypto)}
+                    {isCryptosLoading || isCryptosFetching ? (
+                      new Array(8).fill(null).map((_, index) => (
+                        <SearchCryptoSkeleton key={index} />
+                      ))
+                    ) : (
+                      cryptos?.map((crypto) => (
+                        <React.Fragment key={crypto.id}>
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1}}
+                            transition={{ duration: 0.3 }}
                           >
-                            <div className='rounded-full overflow-hidden'>
-                              <Avatar
-                                size={28}
-                                src={crypto.image}
-                                alt={crypto.name}
-                                className='!bg-transparent'
-                              />
-                            </div>
+                            <div
+                              className='flex items-center gap-3 px-4 py-2 hover:bg-muted-foreground transition-colors duration-100 cursor-pointer hover:bg-neutral-04'
+                              onClick={() => handleCryptoSelect(crypto)}
+                            >
+                              <div className='rounded-full overflow-hidden'>
+                                <Avatar
+                                  size={28}
+                                  src={crypto.image}
+                                  alt={crypto.name}
+                                  className='!bg-transparent'
+                                />
+                              </div>
 
-                            <p className='text-[13px] text-nowrap'>
-                              {crypto.name.length > 18
-                                ? crypto.name.slice(0, 18) + '...'
-                                : crypto.name}{' '}
-                              ({crypto.symbol.toUpperCase()})
-                            </p>
-                          </div>
-                        </motion.div>
-                        <Divider />
-                      </React.Fragment>
-                    ))}
+                              <p className='text-[13px] text-nowrap'>
+                                {crypto.name.length > 18
+                                  ? crypto.name.slice(0, 18) + '...'
+                                  : crypto.name}{' '}
+                                ({crypto.symbol.toUpperCase()})
+                              </p>
+                            </div>
+                          </motion.div>
+                          <Divider />
+                        </React.Fragment>
+                      ))
+                    )}
                   </div>
                 </div>
             )}

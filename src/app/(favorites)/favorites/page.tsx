@@ -16,10 +16,13 @@ import {
   useDeleteFavorite,
 } from '@/hooks/queries/use-favorite-mutation';
 import { EmptyFavorites } from '@/components/empty-favorites';
+import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom'
 
 export default function FavoritesPage() {
   const { data } = useTelegramUser();
   const userId = data?.userId || '';
+  const platform = usePlatform()
 
   const { data: favoriteCryptos, isLoading: isFavoriteCryptoLoading } =
     useFavorites();
@@ -53,9 +56,10 @@ export default function FavoritesPage() {
           transition={{ duration: 0.7 }}
         >
           <List
-            className={
+            className={cn(
               'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none !pt-0 !px-0'
-            }
+
+            )}
           >
             {showEmptyMessage ? (
               <EmptyFavorites isFavoritesEmpty={true} />

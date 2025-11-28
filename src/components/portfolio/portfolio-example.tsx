@@ -16,8 +16,7 @@ import { PortfolioDetails } from '@/components/portfolio/portfolio-item-details'
 import { Avatar } from '@telegram-apps/telegram-ui';
 
 interface IProps {
-  onTriggerClick?: () => void;
-  className?: string;
+  onAddCrypto: (open: boolean) => void;
 }
 
 const {
@@ -49,19 +48,15 @@ const {
 };
 
 export const PortfolioExample: React.FC<IProps> = ({
-  className,
-  onTriggerClick,
+                                                     onAddCrypto,
 }) => {
   const { t } = useTranslation();
 
   return (
-    <motion.div
+    <div
       className={'w-full flex flex-col justify-center'}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.9 }}
     >
-      {/*<div className={'fixed inset-0 bg-base-background/30 blur-xs z-40'} />*/}
+      <div className={'fixed inset-0 bg-black/10 backdrop-blur-[1.5px] z-40 select-none'} />
 
       <Accordion value={id} className={'w-full'} type={'single'}>
         <AccordionItem value={id}>
@@ -115,7 +110,7 @@ export const PortfolioExample: React.FC<IProps> = ({
                   </p>
                   <p
                     className={
-                      'text-muted-foreground text-[8.7px] text-right font-semibold'
+                      'text-neutral-03 text-[8.7px] text-right font-semibold'
                     }
                   >
                     {formatPrice(quantity)} {symbol.toUpperCase()}
@@ -144,7 +139,7 @@ export const PortfolioExample: React.FC<IProps> = ({
       <div className={'relative mt-6 w-fit m-auto z-50'}>
         <div className={'flex items-center justify-center relative mb-7'}>
           <button
-            onClick={onTriggerClick}
+            onClick={() => onAddCrypto(true)}
             className={'bg-background/0 animate-pulse'}
           >
             <CirclePlus
@@ -163,6 +158,6 @@ export const PortfolioExample: React.FC<IProps> = ({
           {t('add_crypto.add_coin_desc')}
         </span>
       </div>
-    </motion.div>
+    </div>
   );
 };
