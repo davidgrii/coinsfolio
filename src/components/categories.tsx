@@ -20,7 +20,7 @@ export const Categories = () => {
 
   return (
     <>
-      <InlineButtons mode='gray'>
+      <InlineButtons mode='gray' className='!gap-2'>
         {CATEGORIES_NAV_ITEMS.map(({ id, href, key, Icon }) => (
           <InlineButtonsItem
             key={id}

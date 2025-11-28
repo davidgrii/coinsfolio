@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { Input, Tappable } from '@telegram-apps/telegram-ui'
 import { SearchIcon } from 'lucide-react';
 import { Icons } from '../icons';
+import { usePlatform } from '@/hooks/use-platfrom'
+import { cn } from '@/components/ui/utils'
 
 interface IProps {
   searchValue: string;
@@ -20,6 +22,9 @@ export const SearchInput: React.FC<IProps> = ({
 }) => {
   const { toggleSearch } = useSearchStore();
   const { t } = useTranslation();
+  const platform = usePlatform();
+
+  console.log(platform)
 
   const clearInput = () => {
     setSearchValue('');
@@ -49,7 +54,7 @@ export const SearchInput: React.FC<IProps> = ({
               <Icons.close />
             </Tappable>
           )}
-          className='outline-2 !pl-14 outline-neutral-04 !bg-transparent'
+          className={cn('outline-2 !pl-14 outline-neutral-04 !bg-transparent')}
         />
       </div>
     </div>

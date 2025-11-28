@@ -72,7 +72,7 @@ export const PortfolioDashboard = () => {
   if (!portfolio || isPortfolioLoading) return <PortfolioDashboardSkeleton />;
 
   return (
-    <>
+    <div className='relative'>
       {portfolio.length > 0 ? (
         <Carousel plugins={[carouselRef.current]} opts={{ loop: true }}>
           <CarouselContent className={'select-none'}>
@@ -124,21 +124,6 @@ export const PortfolioDashboard = () => {
                     </motion.div>
                   </div>
                 </CardContent>
-
-                <div
-                  className={
-                    'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'
-                  }
-                >
-                  <span
-                    className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'}
-                  ></span>
-                  <span
-                    className={
-                      'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'
-                    }
-                  ></span>
-                </div>
               </Card>
             </CarouselItem>
 
@@ -222,21 +207,6 @@ export const PortfolioDashboard = () => {
                     </motion.div>
                   </div>
                 </CardContent>
-
-                <div
-                  className={
-                    'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'
-                  }
-                >
-                  <span
-                    className={
-                      'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'
-                    }
-                  ></span>
-                  <span
-                    className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'}
-                  ></span>
-                </div>
               </Card>
             </CarouselItem>
           </CarouselContent>
@@ -333,6 +303,23 @@ export const PortfolioDashboard = () => {
           </CardContent>
         </Card>
       )}
-    </>
+
+      {portfolio.length > 0 && (
+        <div
+          className={
+            'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'
+          }
+        >
+                  <span
+                    className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'}
+                  ></span>
+          <span
+            className={
+              'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'
+            }
+          ></span>
+        </div>
+      )}
+    </div>
   );
 };

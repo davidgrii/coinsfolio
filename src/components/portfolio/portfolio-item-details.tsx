@@ -77,13 +77,13 @@ export const PortfolioDetails: React.FC<IProps> = ({
       </div>
 
       {notice && (
-        <span
+        <p
           className={
-            '-ml-11 flex items-center gap-5 text-foreground border-neutral-03 border font-medium rounded-sm mt-1 p-1 pl-2.5 pr-4 text-[12px]'
+            '-ml-10 flex items-center gap-2 text-foreground border-neutral-04 border font-medium rounded-lg mt-1 p-1 pl-2.5 pr-4 text-[12px]'
           }
         >
-          <Icons.notice /> {notice}
-        </span>
+          <Icons.notice className='size-6'/> {notice}
+        </p>
       )}
     </div>
   );

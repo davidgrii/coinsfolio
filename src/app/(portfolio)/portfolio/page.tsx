@@ -51,6 +51,10 @@ export default function PortfolioPage() {
   const handleSortPortfolio = () => {
   }
 
+  const handleTriggerClick = () => {
+    setIsAddCryptoOpen(true)
+  }
+
   const handleAddCrypto = async (
     cryptoId: string,
     quantity: number,
@@ -137,7 +141,7 @@ export default function PortfolioPage() {
       {!portfolio || isPortfolioLoading ? (
         <CryptoSkeletonList isPortfolio={true} itemsCount={10} />
       ) : portfolio?.length === 0 ? (
-        <PortfolioExample />
+        <PortfolioExample onAddCrypto={handleTriggerClick} />
       ) : (
         <>
           <motion.div
@@ -165,13 +169,6 @@ export default function PortfolioPage() {
             </List>
           </motion.div>
 
-          <AddCrypto
-            onAddCrypto={handleAddCrypto}
-            isOpen={isAddCryptoOpen}
-            setIsOpen={setIsAddCryptoOpen}
-            isEmpty={!isPortfolioLoading && portfolio.length === 0}
-          />
-
           <EditCrypto
             isOpen={isEditCryptoOpen}
             setIsOpen={setIsEditCryptoOpen}
@@ -180,6 +177,13 @@ export default function PortfolioPage() {
           />
         </>
       )}
+
+      <AddCrypto
+        shouldShowTrigger={(portfolio?.length || 0) > 0}
+        isOpen={isAddCryptoOpen}
+        onAddCrypto={handleAddCrypto}
+        setIsOpen={setIsAddCryptoOpen}
+      />
     </Container>
   )
 }

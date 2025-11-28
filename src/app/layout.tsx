@@ -37,7 +37,9 @@ export default function RootLayout({
         className={cn(`bg-base-background overflow-hidden ${inter.className}`)}
       >
         <QueryProvider>
-          <TelegramProvider>{children}</TelegramProvider>
+          <TelegramProvider>
+            {children}
+          </TelegramProvider>
         </QueryProvider>
         <Analytics />
       </body>
