@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { cn } from '@/components/ui/utils';
 import { usePortfolioStore } from '@/store';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { usePortfolio } from '@/hooks/queries/use-portfolio';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Divider } from '@telegram-apps/telegram-ui';

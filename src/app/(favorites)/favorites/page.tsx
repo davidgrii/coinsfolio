@@ -15,7 +15,7 @@ import {
   useAddFavorite,
   useDeleteFavorite,
 } from '@/hooks/queries/use-favorite-mutation';
-import { EmptyFavorites } from '@/components/empty-favorites';
+import { EmptyFavorites } from '@/components/favorites/empty-favorites';
 import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 

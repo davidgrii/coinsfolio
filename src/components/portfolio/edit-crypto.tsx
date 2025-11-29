@@ -15,6 +15,8 @@ import {
 import {
   ModalHeader
 } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader'
+import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom'
 
 interface IProps {
   isOpen: boolean;
@@ -34,6 +36,7 @@ export const EditCrypto: React.FC<IProps> = ({
   const [purchase, setPurchase] = useState<string | undefined>(item?.purchasePrice?.toString() || '',);
   const [notice, setNotice] = useState<string>(item?.notice || '');
 
+  const platform = usePlatform();
   const { t } = useTranslation();
 
   const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,13 +79,15 @@ export const EditCrypto: React.FC<IProps> = ({
         open={isOpen}
         onOpenChange={setIsOpen}
         header={<ModalHeader />}
-        className='!bg-base-background h-screen px-3'
+        className='!bg-base-background h-full px-3'
       >
         <Placeholder header={t('edit_crypto.edit_coin')} />
 
         <form className='w-full flex flex-col gap-6 items-center justify-between'>
           {selectedCrypto && (
-            <div className='relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl'>
+            <div className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl',
+              (platform === 'ios' || platform === 'macos') && 'input-box-shadow'
+            )}>
               <div className='flex items-center gap-3'>
                 <div className='rounded-full overflow-hidden'>
                   <Avatar

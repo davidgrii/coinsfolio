@@ -18,6 +18,8 @@ import { useSearchCrypto } from '@/hooks/queries/use-crypto';
 import { motion } from 'framer-motion';
 import { useDebounceValue } from 'usehooks-ts'
 import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom'
 
 interface IProps {
   isOpen: boolean;
@@ -55,6 +57,7 @@ export const AddCrypto: React.FC<IProps> = ({
   const [selectedCrypto, setSelectedCrypto] = useState<ICrypto | null>(null);
   const [debouncedSearchValue] = useDebounceValue(searchValue, 300);
 
+  const platform = usePlatform();
   const { t } = useTranslation();
 
   const isFormCompleted = quantity && purchase && selectedCrypto;
@@ -137,13 +140,15 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout> : null
       }
-      className='!bg-base-background !h-dvh px-3 !z-50'
+      className='!bg-base-background !h-dvh !z-50'
     >
       <Placeholder header={t('add_crypto.add_coin')} />
 
-      <form className='w-full flex flex-col gap-6 items-center justify-between'>
+      <form className='w-full flex flex-col gap-6 items-center justify-between px-3'>
         {selectedCrypto ? (
-          <div className='relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl'>
+          <div className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl',
+            (platform === 'ios' || platform === 'macos') && 'input-box-shadow'
+          )}>
             <div className='flex items-center gap-3'>
               <div className='rounded-full overflow-hidden'>
                 <Avatar

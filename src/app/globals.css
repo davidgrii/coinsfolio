@@ -145,3 +145,7 @@ body {
     box-sizing: border-box !important;
     padding: 0 !important;
 }
+
+.input-box-shadow {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}

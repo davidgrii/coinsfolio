@@ -56,7 +56,7 @@ export const PortfolioExample: React.FC<IProps> = ({
     <div
       className={'w-full flex flex-col justify-center'}
     >
-      <div className={'fixed inset-0 bg-black/10 backdrop-blur-[1.5px] z-40 select-none'} />
+      <div className={'fixed inset-0 bg-black/10 backdrop-blur-[1px] z-20 select-none'} />
 
       <Accordion value={id} className={'w-full'} type={'single'}>
         <AccordionItem value={id}>
@@ -136,27 +136,27 @@ export const PortfolioExample: React.FC<IProps> = ({
         </AccordionItem>
       </Accordion>
 
-      <div className={'relative mt-6 w-fit m-auto z-50'}>
-        <div className={'flex items-center justify-center relative mb-7'}>
+      <div className={'relative mt-4 m-auto z-50'}>
+        <div className={'flex items-center justify-center relative mb-6'}>
           <button
             onClick={() => onAddCrypto(true)}
-            className={'bg-background/0 animate-pulse'}
+            className={'animate-pulse'}
           >
             <CirclePlus
               className={
-                'w-9 h-9 cursor-pointer text-foreground transition-colors hover:text-muted-foreground'
+                'w-10 h-10 cursor-pointer text-foreground transition-colors hover:text-muted-foreground'
               }
             />
           </button>
 
-          <span className={'absolute animate-pulse top-2 right-20'}>
+          <span className={'absolute animate-pulse top-2 right-24'}>
             <Icons.arrowEmpty />
           </span>
         </div>
 
-        <span className={'text-xs flex max-w-96 text-center px-5 font-medium'}>
+        <p className={'text-xs flex text-center mx-2 font-medium'}>
           {t('add_crypto.add_coin_desc')}
-        </span>
+        </p>
       </div>
     </div>
   );

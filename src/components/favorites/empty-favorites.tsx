@@ -4,12 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 interface IProps {
   isFavoritesEmpty: boolean;
-  className?: string;
 }
 
 export const EmptyFavorites: React.FC<IProps> = ({
   isFavoritesEmpty,
-  className,
 }) => {
   const { t } = useTranslation();
 

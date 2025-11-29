@@ -1,18 +1,15 @@
-import { CardContent } from '@/components/ui/card'
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion'
 import React, { useState } from 'react'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import type { IPortfolio } from '@/types'
 import { formatPrice, formatPriceWithoutDecimals } from '@/lib/utils'
 import { PortfolioEdit } from '@/components/portfolio/portfolio-item-edit'
-import { PortfolioConfirm } from '@/components/portfolio/portfolio-item-confirm'
 import { PortfolioDetails } from '@/components/portfolio/portfolio-item-details'
-import { Avatar, Snackbar } from '@telegram-apps/telegram-ui'
+import { Avatar } from '@telegram-apps/telegram-ui'
 import { useTranslation } from 'react-i18next'
 
 interface IProps {
