@@ -77,6 +77,9 @@ export const EditCrypto: React.FC<IProps> = ({
     <>
       <Modal
         open={isOpen}
+        modal={true}
+        preventScrollRestoration={true}
+        dismissible={false}
         onOpenChange={setIsOpen}
         header={<ModalHeader />}
         className='!bg-base-background h-full px-3'
