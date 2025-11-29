@@ -23,7 +23,6 @@ import {
 import { EditCrypto } from '@/components/portfolio/edit-crypto'
 import { AddCrypto } from '@/components/portfolio/add-crypto'
 import { PortfolioExample } from '@/components/portfolio/portfolio-example'
-import { PortfolioEdit } from '@/components/portfolio/portfolio-item-edit'
 
 export default function PortfolioPage() {
   const { data } = useTelegramUser()

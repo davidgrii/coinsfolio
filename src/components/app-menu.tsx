@@ -21,7 +21,7 @@ export const AppMenu = () => {
 
   return (
     <>
-      <Tabbar className={cn('!bg-base-background select-none')}>
+      <Tabbar className={cn('!bg-base-background select-none !z-50')}>
         {APP_NAV_ITEMS.map(({ id, key, href, Icon }) => (
           <Tabbar.Item
             key={id}
