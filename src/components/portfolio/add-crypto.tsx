@@ -123,8 +123,8 @@ export const AddCrypto: React.FC<IProps> = ({
 
   return (
     <Modal
-      open={isOpen}
-      onOpenChange={setIsOpen}
+      open={true}
+      // onOpenChange={setIsOpen}
       header={<ModalHeader />}
       trigger={shouldShowTrigger ?
         <FixedLayout
