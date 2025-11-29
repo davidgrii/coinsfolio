@@ -140,7 +140,7 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout> : null
       }
-      className='!bg-base-background !z-50'
+      className='!bg-base-background !z-50 !max-h-dvh h-full'
     >
       <Placeholder header={t('add_crypto.add_coin')} />
 
