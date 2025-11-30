@@ -79,14 +79,14 @@ export const EditCrypto: React.FC<IProps> = ({
         open={isOpen}
         onOpenChange={setIsOpen}
         header={<ModalHeader />}
-        className='!bg-base-background !min-h-dvh px-3'
+        className='!bg-base-background !min-h-dvh !z-50'
       >
         <Placeholder header={t('edit_crypto.edit_coin')} />
 
-        <form className='w-full flex flex-col gap-6 items-center justify-between'>
+        <form className='w-full flex flex-col gap-6 items-center justify-between px-3'>
           {selectedCrypto && (
             <div className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl',
-              (platform === 'ios' || platform === 'macos') && 'input-box-shadow'
+              !(platform === 'ios' || platform === 'macos') && 'input-box-shadow'
             )}>
               <div className='flex items-center gap-3'>
                 <div className='rounded-full overflow-hidden'>

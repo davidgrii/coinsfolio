@@ -7,7 +7,7 @@ import { useTelegramUser } from '@/hooks/use-telegram-user';
 import { Container } from '@/components/container';
 import { Categories } from '@/components/categories';
 import { CryptoTableHeader } from '@/components/crypto-table-header';
-import { CryptoSkeletonList } from '@/components/crypto-skeleton';
+import { CryptoSkeletonList } from '@/components/crypto-skeleton-list';
 import { CryptoItem } from '@/components';
 import { List } from '@telegram-apps/telegram-ui';
 import { useFavorites } from '@/hooks/queries/use-crypto';

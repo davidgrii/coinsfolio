@@ -1,6 +1,8 @@
 import { INavItem } from '@/types';
 import { Icons } from '@/components/icons';
 
+export const BINANCE_REF_URL = 'https://accounts.binance.com/register?ref=1021567637'
+
 export const BASE_URL =
   process.env.NODE_ENV === 'production'
     ? process.env.NEXT_PUBLIC_PROD_BACKEND_URL

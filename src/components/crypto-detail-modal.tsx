@@ -27,6 +27,7 @@ import { ModalClose } from '@telegram-apps/telegram-ui/dist/components/Overlays/
 import { Icon28Close } from '@telegram-apps/telegram-ui/dist/icons/28/close'
 import { useTranslation } from 'react-i18next'
 import { ICoinGlobalMarketsData, IMarketsCoinData } from '@/types'
+import { BINANCE_REF_URL } from '@/constants'
 
 function CryptoItemModalSkeleton() {
   return (
@@ -72,14 +73,7 @@ export const CryptoItemModal = () => {
       <Modal
         header={
           <ModalHeader
-            after={
-              <ModalClose>
-                <Icon28Close
-                  style={{ color: 'var(--tgui--plain_foreground)' }}
-                />
-              </ModalClose>
-            }
-          ></ModalHeader>
+          />
         }
         open={isOpen}
         onOpenChange={setIsOpen}
@@ -88,7 +82,7 @@ export const CryptoItemModal = () => {
         {!crypto || !selectedCrypto || isLoading ? (
           <CryptoItemModalSkeleton />
         ) : (
-          <div className="px-3">
+          <div className="px-3 scrollbar-none pb-16">
             <div
               className="flex justify-between w-full bg-neutral-04 items-center gap-3 px-6 py-4 rounded-xl select-none mb-10">
               <div className={'flex items-center gap-2'}>
@@ -148,10 +142,12 @@ export const CryptoItemModal = () => {
               <DetailsMarketsData cryptoMarketsData={crypto.markets} />
             ) : null}
 
-            <FixedLayout className="px-3 !pb-3">
-              <Button size="l" stretched mode="filled">
-                Buy {selectedCrypto.symbol.toUpperCase()}
-              </Button>
+            <FixedLayout className="px-3 !pb-[70px]">
+              <a href={BINANCE_REF_URL} target="_blank" rel="noreferrer">
+                <Button size="l" stretched mode="filled">
+                  Buy {selectedCrypto.symbol.toUpperCase()}
+                </Button>
+              </a>
             </FixedLayout>
           </div>
         )}

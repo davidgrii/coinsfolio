@@ -10,7 +10,7 @@ import { Container } from '@/components/container';
 import { Categories } from '@/components/categories';
 import { SearchInput } from '@/components/market/search';
 import { CryptoTableHeader } from '@/components/crypto-table-header';
-import { CryptoSkeletonList } from '@/components/crypto-skeleton';
+import { CryptoSkeletonList } from '@/components/crypto-skeleton-list';
 import { CryptoItem, Icons } from '@/components';
 import { List } from '@telegram-apps/telegram-ui';
 import { motion } from 'framer-motion';
