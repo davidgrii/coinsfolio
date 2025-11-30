@@ -29,7 +29,7 @@ export const AppMenu = () => {
             selected={href === currentPage}
             onClick={() => handleNavClick(href)}
             className={cn(
-              platform === 'ios' && '!pb-4' ||
+              platform === 'ios' && '!pb-6' ||
               platform === 'macos' && '!pb-2'
             )}
           >
