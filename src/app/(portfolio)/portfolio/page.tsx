@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { motion } from 'framer-motion'
 import { usePortfolioStore } from '@/store/portfolio/portfolio.store'
@@ -11,7 +11,7 @@ import { Container } from '@/components/container'
 import { Accordion } from '@/components/ui/accordion'
 import { List } from '@telegram-apps/telegram-ui'
 import { BalanceTableHeader } from '@/components/portfolio/balance-table-header'
-import { CryptoSkeletonList } from '@/components/crypto-skeleton'
+import { CryptoSkeletonList } from '@/components/crypto-skeleton-list'
 import { PortfolioItem } from '@/components/portfolio/portfolio-item'
 import type { IUpdatedCrypto } from '@/types'
 import { usePortfolio } from '@/hooks/queries/use-portfolio'
@@ -22,14 +22,12 @@ import {
 } from '@/hooks/queries/use-portfolio-mutation'
 import { EditCrypto } from '@/components/portfolio/edit-crypto'
 import { AddCrypto } from '@/components/portfolio/add-crypto'
-import { PortfolioExample } from '@/components/portfolio/portfolio-example'
 
 export default function PortfolioPage() {
   const { data } = useTelegramUser()
   const userId = data?.userId || ''
 
-  const { data: portfolio, isLoading: isPortfolioLoading } =
-    usePortfolio(userId)
+  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio(userId)
   const { mutate: deleteCrypto } = useDeleteCrypto()
   const { mutate: addCrypto } = useAddCrypto()
   const { mutate: updateCrypto } = useUpdateCrypto()
@@ -38,6 +36,7 @@ export default function PortfolioPage() {
   const [isAddCryptoOpen, setIsAddCryptoOpen] = useState<boolean>(false)
   const [isEditCryptoOpen, setIsEditCryptoOpen] = useState<boolean>(false)
   const [activeCryptoId, setActiveCryptoId] = useState<string | null>(null)
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
 
   const {
     calculateTotalBalance,
@@ -47,12 +46,20 @@ export default function PortfolioPage() {
     calculateTotalPriceChange24h
   } = usePortfolioStore()
 
-  const handleSortPortfolio = () => {
-  }
+  const handleSortPortfolio = useCallback(() => {
+    setSortedPortfolio((prev) => {
+      if (!prev) return prev
 
-  const handleTriggerClick = () => {
-    setIsAddCryptoOpen(true)
-  }
+      return [...prev].sort((a, b) => {
+        const v1 = a.quantity * a.crypto.current_price
+        const v2 = b.quantity * b.crypto.current_price
+
+        return sortDirection === 'asc' ? v1 - v2 : v2 - v1
+      })
+    })
+
+    setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+  }, [sortDirection, setSortedPortfolio])
 
   const handleAddCrypto = async (
     cryptoId: string,
@@ -118,6 +125,7 @@ export default function PortfolioPage() {
 
   useEffect(() => {
     if ((portfolio?.length || 0) > 0) {
+      setSortedPortfolio(portfolio)
       calculateTotalBalance()
       calculateTotalProfitLoss()
       calculateTotalProfitLossPercentage()
@@ -133,14 +141,16 @@ export default function PortfolioPage() {
     calculateTotalPriceChange24h
   ])
 
+  useEffect(() => {
+    if (portfolio?.length === 0) setIsAddCryptoOpen(true)
+  }, [portfolio])
+
   return (
     <Container back={true}>
       <BalanceTableHeader onSort={handleSortPortfolio} />
 
-      {!portfolio || isPortfolioLoading ? (
+      {!sortedPortfolio || isPortfolioLoading ? (
         <CryptoSkeletonList isPortfolio={true} itemsCount={10} />
-      ) : portfolio?.length === 0 ? (
-        <PortfolioExample onAddCrypto={handleTriggerClick} />
       ) : (
         <>
           <motion.div
@@ -155,7 +165,7 @@ export default function PortfolioPage() {
               }
             >
               <Accordion type="single" collapsible className="w-full">
-                {portfolio.map((crypto, index) => (
+                {sortedPortfolio.map((crypto, index) => (
                   <PortfolioItem
                     key={index}
                     item={crypto}
@@ -171,18 +181,20 @@ export default function PortfolioPage() {
           <EditCrypto
             isOpen={isEditCryptoOpen}
             setIsOpen={setIsEditCryptoOpen}
-            item={portfolio.find((crypto) => crypto.cryptoId === activeCryptoId) || null}
+            item={sortedPortfolio.find((crypto) => crypto.cryptoId === activeCryptoId) || null}
             onEditCrypto={(updatedData) => handleUpdateCrypto(userId, updatedData)}
           />
         </>
       )}
 
-      <AddCrypto
-        shouldShowTrigger={(portfolio?.length || 0) > 0}
-        isOpen={isAddCryptoOpen}
-        onAddCrypto={handleAddCrypto}
-        setIsOpen={setIsAddCryptoOpen}
-      />
+      {isPortfolioLoading ? null : (
+        <AddCrypto
+          isOpen={isAddCryptoOpen}
+          isPortfolioEmpty={(portfolio?.length || 0) === 0}
+          onAddCrypto={handleAddCrypto}
+          setIsOpen={setIsAddCryptoOpen}
+        />
+      )}
     </Container>
   )
 }

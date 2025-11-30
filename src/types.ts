@@ -47,25 +47,7 @@ export interface IGlobalMarketData {
   market_cap_percentage: { btc: number };
 }
 
-export interface IPortfolioStore {
-  portfolio: IPortfolio[];
-  initialPortfolio: IPortfolio[];
-  totalBalance: number;
-  totalInvestedUSD: number;
-  totalProfitLoss: number;
-  totalPriceChange24h: number;
-  totalProfitLossPercentage: number;
-  totalPercentageChange24h: number;
-  setPortfolio: (portfolio: IPortfolio[]) => void;
-  calculateTotalBalance: () => void;
-  calculateTotalInvestedUSD: () => void;
-  calculateTotalPercentageChange24h: () => void;
-  calculateTotalProfitLossPercentage: () => void;
-  calculateTotalProfitLoss: () => void;
-  calculateTotalPriceChange24h: () => void;
-  isSorted: boolean;
-  sortPortfolio: () => void;
-}
+
 
 export interface ICrypto {
   id: string;

@@ -5,10 +5,12 @@ import { AppRoot } from '@telegram-apps/telegram-ui';
 import { useDidMount } from '@/hooks/use-did-mount';
 import ErrorPage from '@/app/error'
 import { ErrorBoundary } from '@/components/error-boundary'
-import { useLaunchParams } from '@telegram-apps/sdk-react'
+import { backButton, init, useLaunchParams } from '@telegram-apps/sdk-react'
 
 export const TelegramProviderInner = ({ children }: PropsWithChildren) => {
   const lp = useLaunchParams();
+  init()
+  backButton.mount()
 
   // const isDark = useSignal(miniApp.isDark);
   // const initDataUser = useSignal(initData.user);

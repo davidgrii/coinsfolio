@@ -15,7 +15,7 @@ import {
   useAddFavorite,
   useDeleteFavorite,
 } from '@/hooks/queries/use-favorite-mutation';
-import { CryptoSkeletonList } from '@/components/crypto-skeleton';
+import { CryptoSkeletonList } from '@/components/crypto-skeleton-list';
 
 export default function DumpPage() {
   const { data } = useTelegramUser();

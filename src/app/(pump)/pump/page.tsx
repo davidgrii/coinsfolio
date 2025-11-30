@@ -8,7 +8,7 @@ import { Container } from '@/components/container';
 import { Categories } from '@/components/categories';
 import { CryptoTableHeader } from '@/components/crypto-table-header';
 import { CryptoItem } from '@/components';
-import { CryptoSkeletonList } from '@/components/crypto-skeleton';
+import { CryptoSkeletonList } from '@/components/crypto-skeleton-list';
 import { List } from '@telegram-apps/telegram-ui';
 import { useFavorites, usePumpCryptos } from '@/hooks/queries/use-crypto';
 import {

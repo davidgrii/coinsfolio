@@ -1,5 +1,23 @@
 import { create } from 'zustand';
-import { IPortfolioStore } from '@/types';
+import { type IPortfolio } from '@/types'
+
+export interface IPortfolioStore {
+  portfolio: IPortfolio[];
+  initialPortfolio: IPortfolio[];
+  totalBalance: number;
+  totalInvestedUSD: number;
+  totalProfitLoss: number;
+  totalPriceChange24h: number;
+  totalProfitLossPercentage: number;
+  totalPercentageChange24h: number;
+  setPortfolio: (portfolio: IPortfolio[]) => void;
+  calculateTotalBalance: () => void;
+  calculateTotalInvestedUSD: () => void;
+  calculateTotalPercentageChange24h: () => void;
+  calculateTotalProfitLossPercentage: () => void;
+  calculateTotalProfitLoss: () => void;
+  calculateTotalPriceChange24h: () => void;
+}
 
 export const usePortfolioStore = create<IPortfolioStore>((set) => ({
   portfolio: [],
@@ -10,7 +28,6 @@ export const usePortfolioStore = create<IPortfolioStore>((set) => ({
   totalPriceChange24h: 0,
   totalPercentageChange24h: 0,
   totalProfitLossPercentage: 0,
-  isSorted: false,
   isLoading: true,
 
   setPortfolio: (newPortfolio) => {
@@ -116,25 +133,4 @@ export const usePortfolioStore = create<IPortfolioStore>((set) => ({
 
       return { totalPriceChange24h };
     }),
-
-  sortPortfolio: () => {
-    set((state) => {
-      let newPortfolio;
-      let newSorted;
-
-      if (state.isSorted) {
-        newPortfolio = [...state.initialPortfolio];
-        newSorted = false;
-      } else {
-        newPortfolio = [...state.portfolio].sort(
-          (a, b) =>
-            b.quantity * b.crypto.current_price -
-            a.quantity * a.crypto.current_price,
-        );
-        newSorted = true;
-      }
-
-      return { portfolio: newPortfolio, isSorted: newSorted };
-    });
-  },
 }));
