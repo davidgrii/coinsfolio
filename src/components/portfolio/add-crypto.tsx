@@ -123,7 +123,7 @@ export const AddCrypto: React.FC<IProps> = ({
 
   return (
     <Modal
-      open={true}
+      open={isOpen}
       onOpenChange={setIsOpen}
       header={<ModalHeader />}
       trigger={shouldShowTrigger ?
@@ -140,7 +140,7 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout> : null
       }
-      className='!bg-base-background !z-50 !max-h-dvh h-full'
+      className='!bg-base-background !h-dvh !z-50'
     >
       <Placeholder header={t('add_crypto.add_coin')} />
 

@@ -56,7 +56,7 @@ export default function DumpPage() {
         >
           <List
             className={
-              'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none !pt-0 !px-0'
+              'grid gap-2 overflow-y-auto max-h-[70vh] !pb-[80px] scrollbar-none !pt-0 !px-0'
             }
           >
             {dumpCryptos.map((crypto, index) => (

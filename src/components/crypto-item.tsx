@@ -44,7 +44,9 @@ export const CryptoItem: React.FC<IProps> = ({
         }
       >
         <div className='flex items-center gap-2'>
-          <span className='w-5 text-sm text-neutral-03'>{index + 1}</span>
+          <span className='w-5 text-xs text-neutral-03'>
+            {index >= 1000 ? index.toString().slice(0, 1) + 'k+' : index + 1}
+          </span>
 
           <div className='rounded-full overflow-hidden'>
             <Avatar
@@ -56,12 +58,16 @@ export const CryptoItem: React.FC<IProps> = ({
           </div>
           <div className='grid gap-0.5'>
             <p className='text-sm leading-none'>
-              {crypto.symbol.toUpperCase()}
+              {crypto.symbol.length > 10
+                ? `${crypto.symbol.slice(0, 8).toUpperCase()}...`
+                : crypto.symbol.toUpperCase()
+              }
             </p>
             <p className='text-[8.5px] font-semibold text-neutral-03 truncate'>
               {crypto.name.length > 10
                 ? `${crypto.name.slice(0, 14)}...`
-                : crypto.name}
+                : crypto.name
+              }
             </p>
           </div>
         </div>
