@@ -56,7 +56,7 @@ export default function TrendingPage() {
         >
           <List
             className={
-              'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none !pt-0 !px-0'
+              'grid gap-2 overflow-y-auto max-h-[70vh] !pb-[80px] scrollbar-none !pt-0 !px-0'
             }
           >
             {trendingCryptos.map((crypto, index) => (

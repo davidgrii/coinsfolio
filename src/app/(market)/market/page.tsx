@@ -103,7 +103,7 @@ export default function MarketPage() {
         >
           <List
             className={
-              'grid gap-2 overflow-y-auto overflow-x-hidden max-h-[70vh] pb-[64px] scrollbar-none !pt-0 !px-0'
+              'grid gap-2 overflow-y-auto overflow-x-hidden max-h-[70vh] !pb-[80px] scrollbar-none !pt-0 !px-0'
             }
           >
             {searchResults
@@ -152,13 +152,11 @@ interface IProps {
 const LoadMoreIndicator: React.FC<IProps> = ({
   hasNextPage,
   isFetchingNextPage,
-  className,
 }) => {
   if (hasNextPage && !isFetchingNextPage) return null;
 
   return (
     <motion.div
-      className={cn(className, '')}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
