@@ -22,6 +22,8 @@ import {
 } from '@/hooks/queries/use-portfolio-mutation'
 import { EditCrypto } from '@/components/portfolio/edit-crypto'
 import { AddCrypto } from '@/components/portfolio/add-crypto'
+import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom'
 
 export default function PortfolioPage() {
   const { data } = useTelegramUser()
@@ -37,6 +39,8 @@ export default function PortfolioPage() {
   const [isEditCryptoOpen, setIsEditCryptoOpen] = useState<boolean>(false)
   const [activeCryptoId, setActiveCryptoId] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+
+  const platform = usePlatform()
 
   const {
     calculateTotalBalance,
@@ -160,9 +164,7 @@ export default function PortfolioPage() {
             transition={{ duration: 0.7 }}
           >
             <List
-              className={
-                'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none -mt-4 !pt-0 !px-0'
-              }
+              className={cn('grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-4 !pt-0 !px-0', (platform === 'ios' || platform === 'macos') ? '!pb-16' : '!pb-19')}
             >
               <Accordion type="single" collapsible className="w-full">
                 {sortedPortfolio.map((crypto, index) => (

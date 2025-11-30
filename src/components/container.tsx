@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { cn } from '@/components/ui/utils';
 import { useRouter } from 'next/navigation';
-import { backButton } from '@telegram-apps/sdk-react'
+import { backButton } from '@tma.js/sdk-react'
 
 interface IProps {
   children: React.ReactNode;

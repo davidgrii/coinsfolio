@@ -24,15 +24,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang='en'>
-      <head>
-        <script
-          src='https://telegram.org/js/telegram-web-app.js'
-          defer
-        ></script>
-      </head>
-
       <body
         className={cn(`bg-base-background overflow-hidden ${inter.className}`)}
       >

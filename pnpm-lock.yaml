@@ -53,6 +53,9 @@ importers:
       '@telegram-apps/telegram-ui':
         specifier: ^2.1.13
         version: 2.1.13(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tma.js/sdk-react':
+        specifier: ^3.0.11
+        version: 3.0.11(@types/react@18.3.18)(react@18.3.1)(typescript@5.8.2)
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0(next@15.2.0(@babel/core@7.28.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -1861,6 +1864,33 @@ packages:
   '@telegram-apps/types@1.2.1':
     resolution: {integrity: sha512-so4HLh7clur0YyMthi9KVIgWoGpZdXlFOuQjk3+Q5NAvJZ11nAheBSwPlGw/Ko92+zwvrSBE/lQyN2+p17RP+w==}
 
+  '@tma.js/bridge@2.2.0':
+    resolution: {integrity: sha512-wzmnH5cROVZRJAH8o1fS8bKyuujDhQ7OuGTkIpcRA4ic0WSptTDR/wyK26hMIWoeMSNfUh+srzFm+mK7JYwC4g==}
+
+  '@tma.js/sdk-react@3.0.11':
+    resolution: {integrity: sha512-HWDLLbd7nVTw6/QtgzKGvQ6t6OBfWSw2HM3iRIWZz07BZa2yZqIAPHGNpSMTGTam8I7G+MBMCQJcEoe+1n2BOg==}
+    peerDependencies:
+      '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@tma.js/sdk@3.1.2':
+    resolution: {integrity: sha512-ZeQwtQrrKzCLV/iWKppuNHpEbsX990wnO2axDNYrYxokJ2ZRrBWGO66GCsG7jd+k++wo3K3egmozjTd3pT87Lg==}
+
+  '@tma.js/signals@1.0.1':
+    resolution: {integrity: sha512-i2HUuwGqL4BmM5KAklAUhMhlEgUOF+F4nMHHS/zxrmD0upHE/0CiXCEdQxVeeOGN6e2RrKlonA40sDtR6OUDCw==}
+
+  '@tma.js/toolkit@1.0.2':
+    resolution: {integrity: sha512-HGKYFZuxfbrlUguyoV+q+0ghNWqEYnnI66oI5DH2zSrafA0QyTsMOYXZ95aU+fzKbulf5S+YOVJTnFZQZnqLMQ==}
+
+  '@tma.js/transformers@1.1.1':
+    resolution: {integrity: sha512-FTzsUXojndg/zk5Ai/lxncc11gxGiI2szdK4tsN36elhig8lPj0gg9uYDlIfyWNM7TCyq2ZWE3jliCz3ofpiiA==}
+
+  '@tma.js/types@1.0.2':
+    resolution: {integrity: sha512-qs4mi+U1xZmMQBdMhWAo1X4YqUJ/ae0y28s+GNCpQq58bsJo0h8rvyVOB1RwPvXogIY9+yribbZe6z3AIJmsAQ==}
+
   '@twa-dev/types@7.10.0':
     resolution: {integrity: sha512-BXHyNLXy+cPbOZ2qQq5ArPKcP4kUfuX3YBSFT0XUxtMNWAzvyMuYAiq59UTfQ8OnELXlfChrAoIT3c2pujBtcQ==}
 
@@ -2116,6 +2146,9 @@ packages:
   baseline-browser-mapping@2.8.30:
     resolution: {integrity: sha512-aTUKW4ptQhS64+v2d6IkPzymEzzhw+G0bA1g3uBRV3+ntkH+svttKseW5IOR4Ed6NUVKqnY7qT3dKvzQ7io4AA==}
     hasBin: true
+
+  better-promises@1.0.0:
+    resolution: {integrity: sha512-gPgL2nRgeSbMIe3QpsYdKR3K0S9OZuphVuos60Eqsw8d/6GivOkyJ5D/zmnolJ6hzh7upnnflBUWUlQh4qpU2A==}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -2394,6 +2427,9 @@ packages:
   error-ex@1.3.4:
     resolution: {integrity: sha512-sqQamAnR14VgCr1A618A3sGrygcpK+HEbenA/HiEAkkUwcZIIB/tgWqHFxWgOyDh4nB4JCRimh79dR5Ywc9MDQ==}
 
+  error-kid@1.0.2:
+    resolution: {integrity: sha512-Xvq0ZrY/azCbREWKt9E/3mXDF0MkuEVVvHnOKutUhtq2O8pyneEixQ4nSFkA19Xfn+/OVSg//iVG0dxIDj7DIA==}
+
   error-stack-parser@2.1.4:
     resolution: {integrity: sha512-Sk5V6wVazPhq5MhpO+AUxJn5x7XSXGl1R93Vn7i+zS15KDVxQijejNCrz8340/2bgLBjR9GtEG8ZVKONDjcqGQ==}
 
@@ -2475,6 +2511,9 @@ packages:
   flow-parser@0.291.0:
     resolution: {integrity: sha512-MLqjFn72Dvndqrkjy280HaIs4AV9Z6nxVRmNPO3TjbYcipg4hR7QX7tEYZYsVvaaZWZPGe6Mithluk2aPGlDOw==}
     engines: {node: '>=0.4.0'}
+
+  fp-ts@2.16.11:
+    resolution: {integrity: sha512-LaI+KaX2NFkfn1ZGHoKCmcfv7yrZsC3b8NtWsTVQeHkq4F27vI5igUuO53sxqDEa2gNQMHFPmpojDw/1zmUK7w==}
 
   framer-motion@11.18.2:
     resolution: {integrity: sha512-5F5Och7wrvtLVElIpclDT0CBzMVg3dL22B64aZwHtsIY8RB4mXICLrkajK4G9R+ieSAGcgrLeae2SeUTg2pr6w==}
@@ -2953,6 +2992,9 @@ packages:
 
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+
+  mitt@3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
 
   mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
@@ -3678,6 +3720,14 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  valibot@1.2.0:
+    resolution: {integrity: sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   victory-vendor@36.9.2:
     resolution: {integrity: sha512-PnpQQMuxlwYdocC8fIJqVXvkeViHYzotI+NJrCuav0ZYFoq912ZHBk3mCeuj+5/VpodOjPe1z0Fk2ihgzlXqjQ==}
@@ -5711,6 +5761,61 @@ snapshots:
 
   '@telegram-apps/types@1.2.1': {}
 
+  '@tma.js/bridge@2.2.0(typescript@5.8.2)':
+    dependencies:
+      '@tma.js/signals': 1.0.1
+      '@tma.js/toolkit': 1.0.2
+      '@tma.js/transformers': 1.1.1(typescript@5.8.2)
+      '@tma.js/types': 1.0.2
+      better-promises: 1.0.0
+      error-kid: 1.0.2
+      fp-ts: 2.16.11
+      mitt: 3.0.1
+      valibot: 1.2.0(typescript@5.8.2)
+    transitivePeerDependencies:
+      - typescript
+
+  '@tma.js/sdk-react@3.0.11(@types/react@18.3.18)(react@18.3.1)(typescript@5.8.2)':
+    dependencies:
+      '@tma.js/sdk': 3.1.2(typescript@5.8.2)
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.18
+    transitivePeerDependencies:
+      - typescript
+
+  '@tma.js/sdk@3.1.2(typescript@5.8.2)':
+    dependencies:
+      '@tma.js/bridge': 2.2.0(typescript@5.8.2)
+      '@tma.js/signals': 1.0.1
+      '@tma.js/toolkit': 1.0.2
+      '@tma.js/transformers': 1.1.1(typescript@5.8.2)
+      '@tma.js/types': 1.0.2
+      better-promises: 1.0.0
+      error-kid: 1.0.2
+      fp-ts: 2.16.11
+      valibot: 1.2.0(typescript@5.8.2)
+    transitivePeerDependencies:
+      - typescript
+
+  '@tma.js/signals@1.0.1': {}
+
+  '@tma.js/toolkit@1.0.2':
+    dependencies:
+      better-promises: 1.0.0
+      fp-ts: 2.16.11
+
+  '@tma.js/transformers@1.1.1(typescript@5.8.2)':
+    dependencies:
+      '@tma.js/toolkit': 1.0.2
+      '@tma.js/types': 1.0.2
+      fp-ts: 2.16.11
+      valibot: 1.2.0(typescript@5.8.2)
+    transitivePeerDependencies:
+      - typescript
+
+  '@tma.js/types@1.0.2': {}
+
   '@twa-dev/types@7.10.0': {}
 
   '@types/babel__core@7.20.5':
@@ -5991,6 +6096,10 @@ snapshots:
 
   baseline-browser-mapping@2.8.30: {}
 
+  better-promises@1.0.0:
+    dependencies:
+      error-kid: 1.0.2
+
   brace-expansion@1.1.11:
     dependencies:
       balanced-match: 1.0.2
@@ -6258,6 +6367,8 @@ snapshots:
     dependencies:
       is-arrayish: 0.2.1
 
+  error-kid@1.0.2: {}
+
   error-stack-parser@2.1.4:
     dependencies:
       stackframe: 1.3.4
@@ -6336,6 +6447,8 @@ snapshots:
   flow-enums-runtime@0.0.6: {}
 
   flow-parser@0.291.0: {}
+
+  fp-ts@2.16.11: {}
 
   framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -6919,6 +7032,8 @@ snapshots:
       brace-expansion: 1.1.11
 
   minimist@1.2.8: {}
+
+  mitt@3.0.1: {}
 
   mkdirp@0.5.6:
     dependencies:
@@ -7646,6 +7761,10 @@ snapshots:
       react: 18.3.1
 
   utils-merge@1.0.1: {}
+
+  valibot@1.2.0(typescript@5.8.2):
+    optionalDependencies:
+      typescript: 5.8.2
 
   victory-vendor@36.9.2:
     dependencies:
