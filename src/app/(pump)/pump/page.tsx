@@ -27,8 +27,10 @@ export default function PumpPage() {
   const { mutate: addFavorite } = useAddFavorite();
   const { mutate: deleteFavorite } = useDeleteFavorite();
 
+  const favorites = favoriteCryptos?.favorites || [];
+
   const handleFavoriteToggle = async (cryptoId: string) => {
-    if (favoriteCryptos?.favorites.includes(cryptoId)) {
+    if (favorites.includes(cryptoId)) {
       deleteFavorite({ userId, cryptoId });
     } else {
       addFavorite({ userId, cryptoId });
@@ -63,7 +65,7 @@ export default function PumpPage() {
                 key={crypto.id}
                 crypto={crypto}
                 index={index}
-                favorites={favoriteCryptos.favorites}
+                favorites={favorites}
                 onToggleFavorite={handleFavoriteToggle}
               />
             ))}

@@ -19,16 +19,16 @@ import { useUser } from '@/app/_providers/user-provider'
 export default function TrendingPage() {
   const { userId } = useUser()
 
-  const { data: trendingCryptos, isLoading: isTrendingCryptosLoading } =
-    useTrendingCryptos()
-  const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } =
-    useFavorites()
+  const { data: trendingCryptos, isLoading: isTrendingCryptosLoading } = useTrendingCryptos()
+  const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } = useFavorites()
 
   const { mutate: addFavorite } = useAddFavorite()
   const { mutate: deleteFavorite } = useDeleteFavorite()
 
+  const favorites = favoriteCryptos?.favorites || [];
+
   const handleFavoriteToggle = async (cryptoId: string) => {
-    if (favoriteCryptos?.favorites.includes(cryptoId)) {
+    if (favorites.includes(cryptoId)) {
       deleteFavorite({ userId, cryptoId })
     } else {
       addFavorite({ userId, cryptoId })
@@ -64,7 +64,7 @@ export default function TrendingPage() {
                 index={index}
                 key={crypto.id}
                 crypto={crypto}
-                favorites={favoriteCryptos.favorites}
+                favorites={favorites}
                 onToggleFavorite={handleFavoriteToggle}
               />
             ))}
