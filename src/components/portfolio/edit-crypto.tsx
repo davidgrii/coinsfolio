@@ -79,7 +79,7 @@ export const EditCrypto: React.FC<IProps> = ({
         open={isOpen}
         onOpenChange={setIsOpen}
         header={<ModalHeader />}
-        className='!bg-base-background !h-[96%] !z-50 !min-h-[96%] !max-h-[96%]'
+        className='!bg-base-background !h-[96dvh] !min-h-[96dvh] !max-h-[96dvh] !z-50'
       >
         <Placeholder header={t('edit_crypto.edit_coin')} />
 
