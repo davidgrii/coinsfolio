@@ -163,7 +163,9 @@ export default function PortfolioPage() {
             transition={{ duration: 0.7 }}
           >
             <List
-              className={cn('grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-4 !pt-0 !px-0', (platform === 'ios' || platform === 'macos') ? '!pb-16' : '!pb-19')}
+              className={cn('grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-4 !pt-0 !px-0',
+                (platform === 'ios' || platform === 'macos') ? '!pb-16' : '!pb-19'
+              )}
             >
               <Accordion type="single" collapsible className="w-full">
                 {sortedPortfolio.map((crypto, index) => (

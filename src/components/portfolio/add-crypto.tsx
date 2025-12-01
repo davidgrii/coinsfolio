@@ -130,7 +130,11 @@ export const AddCrypto: React.FC<IProps> = ({
       trigger={
         <FixedLayout
           vertical='bottom'
-          className={cn('flex justify-center', (platform === 'ios' || platform === 'macos') ? '!bottom-18' : '!bottom-24')}
+          className={cn('flex justify-center',
+            (platform === 'macos') && '!bottom-18' ||
+            (platform === 'ios') && '!bottom-20' ||
+            '!bottom-24'
+          )}
         >
           <Button size='m'>
             <CirclePlus
