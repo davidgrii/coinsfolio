@@ -128,7 +128,7 @@ export default function MarketPage() {
             }
 
             {!searchValue ? (
-              <div>
+              <div ref={cursorRef}>
                 <LoadMoreIndicator
                   hasNextPage={hasNextPage}
                   isFetchingNextPage={isFetchingNextPage}

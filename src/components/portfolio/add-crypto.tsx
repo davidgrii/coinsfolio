@@ -132,7 +132,7 @@ export const AddCrypto: React.FC<IProps> = ({
           vertical='bottom'
           className={cn('flex justify-center',
             (platform === 'macos') && '!bottom-18' ||
-            (platform === 'ios') && '!bottom-20' ||
+            (platform === 'ios') && '!bottom-22' ||
             '!bottom-24'
           )}
         >
@@ -145,7 +145,7 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout>
       }
-      className='!bg-base-background !h-dvh !z-50'
+      className='!bg-base-background !h-dvh !z-50 !min-h-[96%] !max-h-[96%]'
     >
       <VisuallyHidden>
         <DialogTitle>
