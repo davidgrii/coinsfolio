@@ -15,9 +15,6 @@ i18n.use(initReactI18next).init({
   fallbackLng: 'en',
   interpolation: { escapeValue: false },
   react: { useSuspense: false },
-  backend: {
-    loadPath: '/locales/{{lng}}.json',
-  },
 });
 
 export default i18n;

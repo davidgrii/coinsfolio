@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           <TelegramProvider>
-            <UserProvider >
+            <UserProvider>
               {children}
             </UserProvider>
           </TelegramProvider>
