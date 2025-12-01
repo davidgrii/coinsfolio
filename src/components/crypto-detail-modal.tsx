@@ -148,7 +148,7 @@ export const CryptoItemModal = () => {
 
             <FixedLayout className={cn('px-3',
               (platform === 'macos') && '!bottom-18' ||
-              (platform === 'ios') && '!bottom-20' ||
+              (platform === 'ios') && '!bottom-22' ||
               '!bottom-24'
             )}>
               <a href={BINANCE_REF_URL} target="_blank" rel="noreferrer">
