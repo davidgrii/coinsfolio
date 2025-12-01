@@ -12,7 +12,6 @@ import {
 } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import Autoplay from 'embla-carousel-autoplay'
-import { useTelegramUser } from '@/hooks/use-telegram-user'
 import {
   Carousel,
   CarouselContent,
@@ -33,11 +32,8 @@ function PortfolioDashboardSkeleton() {
 }
 
 export const PortfolioDashboard = () => {
-  const { data } = useTelegramUser()
-  const userId = data?.userId || ''
 
-  const { data: portfolio, isLoading: isPortfolioLoading } =
-    usePortfolio(userId)
+  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio()
 
   const {
     setPortfolio,

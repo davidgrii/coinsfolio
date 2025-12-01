@@ -15,7 +15,6 @@ export const TelegramProviderInner = ({ children }: PropsWithChildren) => {
   // const isDark = useSignal(miniApp.isDark);
   // const initDataUser = useSignal(initData.user);
 
-
   // useEffect(() => {
   //   initDataUser && setLocale(initDataUser.language_code);
   // }, [initDataUser]);

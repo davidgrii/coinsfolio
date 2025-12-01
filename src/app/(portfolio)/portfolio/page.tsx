@@ -5,8 +5,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { usePortfolioStore } from '@/store/portfolio/portfolio.store'
 
-import { useTelegramUser } from '@/hooks/use-telegram-user'
-
 import { Container } from '@/components/container'
 import { Accordion } from '@/components/ui/accordion'
 import { List } from '@telegram-apps/telegram-ui'
@@ -24,12 +22,13 @@ import { EditCrypto } from '@/components/portfolio/edit-crypto'
 import { AddCrypto } from '@/components/portfolio/add-crypto'
 import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
+import { useUser } from '@/app/_providers/user-provider'
 
 export default function PortfolioPage() {
-  const { data } = useTelegramUser()
-  const userId = data?.userId || ''
+  const { userId } = useUser();
 
-  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio(userId)
+
+  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio()
   const { mutate: deleteCrypto } = useDeleteCrypto()
   const { mutate: addCrypto } = useAddCrypto()
   const { mutate: updateCrypto } = useUpdateCrypto()

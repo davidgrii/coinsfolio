@@ -3,8 +3,6 @@
 import { useSearchStore } from 'src/store';
 import React, { useMemo, useRef, useState } from 'react';
 
-import { useTelegramUser } from '@/hooks/use-telegram-user';
-
 import { useIntersection } from '@/hooks/use-intersection';
 import { Container } from '@/components/container';
 import { Categories } from '@/components/categories';
@@ -24,10 +22,10 @@ import {
 } from '@/hooks/queries/use-favorite-mutation';
 import { useFavorites } from '@/hooks/queries/use-crypto';
 import { useDebounceValue } from 'usehooks-ts';
+import { useUser } from '@/app/_providers/user-provider'
 
 export default function MarketPage() {
-  const { data } = useTelegramUser();
-  const userId = data?.userId || '';
+  const { userId } = useUser();
 
   const [searchValue, setSearchValue] = useState('');
   const [debouncedSearchValue] = useDebounceValue(searchValue, 300);

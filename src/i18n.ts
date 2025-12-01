@@ -5,13 +5,6 @@ import translationEn from '@public/locales/en.json';
 import translationRu from '@public/locales/ru.json';
 import translationUk from '@public/locales/uk.json';
 
-const getInitialLang = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('language') || 'en';
-  }
-  return 'en';
-};
-
 i18n.use(initReactI18next).init({
   resources: {
     en: { translation: translationEn },

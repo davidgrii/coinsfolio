@@ -3,7 +3,6 @@
 import React from 'react';
 
 import { motion } from 'framer-motion';
-import { useTelegramUser } from '@/hooks/use-telegram-user';
 import { Container } from '@/components/container';
 import { Categories } from '@/components/categories';
 import { CryptoTableHeader } from '@/components/crypto-table-header';
@@ -15,10 +14,10 @@ import {
   useAddFavorite,
   useDeleteFavorite,
 } from '@/hooks/queries/use-favorite-mutation';
+import { useUser } from '@/app/_providers/user-provider'
 
 export default function PumpPage() {
-  const { data } = useTelegramUser();
-  const userId = data?.userId || '';
+  const { userId } = useUser();
 
   const { data: pumpCryptos, isLoading: isPumpCryptosLoading } =
     usePumpCryptos();

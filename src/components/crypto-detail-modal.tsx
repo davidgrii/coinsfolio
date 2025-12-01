@@ -19,7 +19,6 @@ import {
   useAddFavorite,
   useDeleteFavorite
 } from '@/hooks/queries/use-favorite-mutation'
-import { useTelegramUser } from '@/hooks/use-telegram-user'
 import { motion } from 'framer-motion'
 import { Icons } from '@/components/icons'
 import { Icon20QuestionMark } from '@telegram-apps/telegram-ui/dist/icons/20/question_mark'
@@ -29,6 +28,7 @@ import { BINANCE_REF_URL } from '@/constants'
 import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 import { DialogTitle } from '@radix-ui/react-dialog'
+import { useUser } from '@/app/_providers/user-provider'
 
 function CryptoItemModalSkeleton() {
   return (
@@ -44,8 +44,7 @@ function CryptoItemModalSkeleton() {
 // TODO: delete selectedCrypto instead of Crypto
 
 export const CryptoItemModal = () => {
-  const { data } = useTelegramUser()
-  const userId = data?.userId || ''
+  const { userId } = useUser();
 
   const { isOpen, selectedCrypto, setIsOpen } = useCryptoModalStore()
   const { data: crypto, isLoading } = useCrypto(selectedCrypto?.id || '')

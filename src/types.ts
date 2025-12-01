@@ -1,5 +1,16 @@
 import React from 'react';
 
+export interface IUser {
+  first_name: string
+  id: number
+  is_bot?: boolean | undefined
+  is_premium?: boolean | undefined
+  last_name?: string | undefined
+  language_code?: string | undefined
+  photo_url?: string | undefined
+  username?: string | undefined
+};
+
 export interface INavItem {
   id: string;
   label: string;
