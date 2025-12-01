@@ -27,7 +27,6 @@ import { useUser } from '@/app/_providers/user-provider'
 export default function PortfolioPage() {
   const { userId } = useUser();
 
-
   const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio()
   const { mutate: deleteCrypto } = useDeleteCrypto()
   const { mutate: addCrypto } = useAddCrypto()
@@ -70,6 +69,10 @@ export default function PortfolioPage() {
     purchasePrice: number,
     notice?: string
   ) => {
+    const isDuplicateCrypto = portfolio?.find((item) => item.cryptoId === cryptoId)
+
+    if (isDuplicateCrypto) return alert('This crypto is already in your portfolio, soon we will add this feature')
+
     const data = {
       purchasePrice,
       cryptoId,
