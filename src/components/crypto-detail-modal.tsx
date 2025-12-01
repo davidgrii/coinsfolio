@@ -146,7 +146,11 @@ export const CryptoItemModal = () => {
               <DetailsMarketsData cryptoMarketsData={crypto.markets} />
             ) : null}
 
-            <FixedLayout className={cn('px-3', (platform === 'ios' || platform === 'macos') ? '!bottom-18' : '!bottom-24')}>
+            <FixedLayout className={cn('px-3',
+              (platform === 'macos') && '!bottom-18' ||
+              (platform === 'ios') && '!bottom-20' ||
+              '!bottom-24'
+            )}>
               <a href={BINANCE_REF_URL} target="_blank" rel="noreferrer">
                 <Button size="l" stretched mode="filled">
                   Buy {selectedCrypto.symbol.toUpperCase()}
