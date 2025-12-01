@@ -1,41 +1,39 @@
-'use client';
+'use client'
 
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
-import { useTelegramUser } from '@/hooks/use-telegram-user';
-
-import { Container } from '@/components/container';
-import { Categories } from '@/components/categories';
-import { CryptoTableHeader } from '@/components/crypto-table-header';
-import { CryptoSkeletonList } from '@/components/crypto-skeleton-list';
-import { useFavorites, useTrendingCryptos } from '@/hooks/queries/use-crypto';
+import { Container } from '@/components/container'
+import { Categories } from '@/components/categories'
+import { CryptoTableHeader } from '@/components/crypto-table-header'
+import { CryptoSkeletonList } from '@/components/crypto-skeleton-list'
+import { useFavorites, useTrendingCryptos } from '@/hooks/queries/use-crypto'
 import {
   useAddFavorite,
-  useDeleteFavorite,
-} from '@/hooks/queries/use-favorite-mutation';
-import { List } from '@telegram-apps/telegram-ui';
-import { CryptoItem } from '@/components';
-import React from 'react';
+  useDeleteFavorite
+} from '@/hooks/queries/use-favorite-mutation'
+import { List } from '@telegram-apps/telegram-ui'
+import { CryptoItem } from '@/components'
+import React from 'react'
+import { useUser } from '@/app/_providers/user-provider'
 
 export default function TrendingPage() {
-  const { data } = useTelegramUser();
-  const userId = data?.userId || '';
+  const { userId } = useUser()
 
   const { data: trendingCryptos, isLoading: isTrendingCryptosLoading } =
-    useTrendingCryptos();
+    useTrendingCryptos()
   const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } =
-    useFavorites();
+    useFavorites()
 
-  const { mutate: addFavorite } = useAddFavorite();
-  const { mutate: deleteFavorite } = useDeleteFavorite();
+  const { mutate: addFavorite } = useAddFavorite()
+  const { mutate: deleteFavorite } = useDeleteFavorite()
 
   const handleFavoriteToggle = async (cryptoId: string) => {
     if (favoriteCryptos?.favorites.includes(cryptoId)) {
-      deleteFavorite({ userId, cryptoId });
+      deleteFavorite({ userId, cryptoId })
     } else {
-      addFavorite({ userId, cryptoId });
+      addFavorite({ userId, cryptoId })
     }
-  };
+  }
 
   return (
     <Container back={true}>
@@ -74,5 +72,5 @@ export default function TrendingPage() {
         </motion.div>
       )}
     </Container>
-  );
+  )
 }

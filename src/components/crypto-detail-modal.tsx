@@ -8,7 +8,7 @@ import {
   Button, Divider,
   FixedLayout,
   IconButton,
-  Modal
+  Modal, VisuallyHidden
 } from '@telegram-apps/telegram-ui'
 import {
   ModalHeader
@@ -19,15 +19,16 @@ import {
   useAddFavorite,
   useDeleteFavorite
 } from '@/hooks/queries/use-favorite-mutation'
-import { useTelegramUser } from '@/hooks/use-telegram-user'
 import { motion } from 'framer-motion'
 import { Icons } from '@/components/icons'
 import { Icon20QuestionMark } from '@telegram-apps/telegram-ui/dist/icons/20/question_mark'
-import { ModalClose } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalClose/ModalClose'
-import { Icon28Close } from '@telegram-apps/telegram-ui/dist/icons/28/close'
 import { useTranslation } from 'react-i18next'
 import { ICoinGlobalMarketsData, IMarketsCoinData } from '@/types'
 import { BINANCE_REF_URL } from '@/constants'
+import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom'
+import { DialogTitle } from '@radix-ui/react-dialog'
+import { useUser } from '@/app/_providers/user-provider'
 
 function CryptoItemModalSkeleton() {
   return (
@@ -43,19 +44,18 @@ function CryptoItemModalSkeleton() {
 // TODO: delete selectedCrypto instead of Crypto
 
 export const CryptoItemModal = () => {
-  const { data } = useTelegramUser()
-  const userId = data?.userId || ''
+  const { userId } = useUser();
 
   const { isOpen, selectedCrypto, setIsOpen } = useCryptoModalStore()
   const { data: crypto, isLoading } = useCrypto(selectedCrypto?.id || '')
-  const { data: favoriteCryptos, isLoading: isFavoriteLoading } =
-    useFavorites()
+  const { data: favoriteCryptos, isLoading: isFavoriteLoading } = useFavorites()
 
   const { mutate: addFavorite } = useAddFavorite()
   const { mutate: deleteFavorite } = useDeleteFavorite()
 
-  const cryptoPrice =
-    selectedCrypto?.current_price || selectedCrypto?.price || 0
+  const platform = usePlatform();
+
+  const cryptoPrice = selectedCrypto?.current_price || selectedCrypto?.price || 0
   const isFavorite = favoriteCryptos?.favorites.includes(
     selectedCrypto?.id || ''
   )
@@ -79,10 +79,14 @@ export const CryptoItemModal = () => {
         onOpenChange={setIsOpen}
         className="!h-screen !bg-base-background"
       >
+        <VisuallyHidden>
+          <DialogTitle>Open Detail Crypto Modal</DialogTitle>
+        </VisuallyHidden>
+
         {!crypto || !selectedCrypto || isLoading ? (
           <CryptoItemModalSkeleton />
         ) : (
-          <div className="px-3 scrollbar-none pb-16">
+          <div className={cn("px-3 scrollbar-none", platform === 'ios' || platform === 'macos' ? 'pb-16' : 'pb-24')}>
             <div
               className="flex justify-between w-full bg-neutral-04 items-center gap-3 px-6 py-4 rounded-xl select-none mb-10">
               <div className={'flex items-center gap-2'}>
@@ -142,7 +146,7 @@ export const CryptoItemModal = () => {
               <DetailsMarketsData cryptoMarketsData={crypto.markets} />
             ) : null}
 
-            <FixedLayout className="px-3 !pb-[70px]">
+            <FixedLayout className={cn('px-3', (platform === 'ios' || platform === 'macos') ? '!bottom-18' : '!bottom-24')}>
               <a href={BINANCE_REF_URL} target="_blank" rel="noreferrer">
                 <Button size="l" stretched mode="filled">
                   Buy {selectedCrypto.symbol.toUpperCase()}
@@ -194,9 +198,7 @@ const DetailsCoinsData = ({ cryptoMarketCoinData }: { cryptoMarketCoinData: IMar
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.circulation_supply')}</p>
           <p>
-            {formatPrice(
-              Number(cryptoMarketCoinData?.circulating_supply.toFixed())
-            )}
+            {formatPrice(Number(cryptoMarketCoinData?.circulating_supply) || 0)} $
           </p>
         </div>
 
@@ -205,7 +207,7 @@ const DetailsCoinsData = ({ cryptoMarketCoinData }: { cryptoMarketCoinData: IMar
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.total_supply')}</p>
           <p>
-            {formatPrice(Number(cryptoMarketCoinData?.total_supply.toFixed()))}
+            {formatPrice(Number(cryptoMarketCoinData?.total_supply) || 0)} $
           </p>
         </div>
 

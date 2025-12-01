@@ -4,7 +4,6 @@ import React from 'react';
 
 import { motion } from 'framer-motion';
 
-import { useTelegramUser } from '@/hooks/use-telegram-user';
 import { CryptoItem } from '@/components';
 import { CryptoTableHeader } from '@/components/crypto-table-header';
 import { Container } from '@/components/container';
@@ -16,10 +15,10 @@ import {
   useDeleteFavorite,
 } from '@/hooks/queries/use-favorite-mutation';
 import { CryptoSkeletonList } from '@/components/crypto-skeleton-list';
+import { useUser } from '@/app/_providers/user-provider'
 
 export default function DumpPage() {
-  const { data } = useTelegramUser();
-  const userId = data?.userId || '';
+  const { userId } = useUser();
 
   const { data: dumpCryptos, isLoading: isDumpCryptosLoading } =
     useDumpCryptos();

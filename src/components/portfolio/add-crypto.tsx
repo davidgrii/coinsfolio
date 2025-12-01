@@ -130,7 +130,7 @@ export const AddCrypto: React.FC<IProps> = ({
       trigger={
         <FixedLayout
           vertical='bottom'
-          className={cn('flex justify-center', (platform === 'ios' || platform === 'macos') ? '!bottom-20' : '!bottom-24')}
+          className={cn('flex justify-center', (platform === 'ios' || platform === 'macos') ? '!bottom-18' : '!bottom-24')}
         >
           <Button size='m'>
             <CirclePlus
@@ -153,7 +153,7 @@ export const AddCrypto: React.FC<IProps> = ({
 
       <form className='w-full flex flex-col gap-6 items-center justify-between px-3'>
         {selectedCrypto ? (
-          <div className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl',
+          <div className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[48px] !bg-neutral-04 rounded-xl',
             !(platform === 'ios' || platform === 'macos') && 'input-box-shadow'
           )}>
             <div className='flex items-center gap-3'>
@@ -187,7 +187,7 @@ export const AddCrypto: React.FC<IProps> = ({
         ) : (
           <div className='relative w-full'>
             <Input
-              // autoFocus={true}
+              autoFocus={true}
               type={'text'}
               inputMode={'text'}
               placeholder={t('add_crypto.choose')}

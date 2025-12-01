@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { AppDashboard, AppMenu } from '@/components';
+import { CryptoItemModal } from '@/components/crypto-detail-modal'
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
@@ -7,6 +8,7 @@ export default function Layout({ children }: PropsWithChildren) {
       <AppDashboard variant={'public'} />
       {children}
       <AppMenu />
+      <CryptoItemModal />
     </>
   );
 }

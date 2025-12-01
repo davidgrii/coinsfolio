@@ -3,8 +3,6 @@
 import { useSearchStore } from 'src/store';
 import React, { useMemo, useRef, useState } from 'react';
 
-import { useTelegramUser } from '@/hooks/use-telegram-user';
-
 import { useIntersection } from '@/hooks/use-intersection';
 import { Container } from '@/components/container';
 import { Categories } from '@/components/categories';
@@ -12,7 +10,7 @@ import { SearchInput } from '@/components/market/search';
 import { CryptoTableHeader } from '@/components/crypto-table-header';
 import { CryptoSkeletonList } from '@/components/crypto-skeleton-list';
 import { CryptoItem, Icons } from '@/components';
-import { List } from '@telegram-apps/telegram-ui';
+import { List, Spinner } from '@telegram-apps/telegram-ui';
 import { motion } from 'framer-motion';
 import {
   useInfiniteCryptos,
@@ -24,11 +22,10 @@ import {
 } from '@/hooks/queries/use-favorite-mutation';
 import { useFavorites } from '@/hooks/queries/use-crypto';
 import { useDebounceValue } from 'usehooks-ts';
-import { cn } from '@/components/ui/utils';
+import { useUser } from '@/app/_providers/user-provider'
 
 export default function MarketPage() {
-  const { data } = useTelegramUser();
-  const userId = data?.userId || '';
+  const { userId } = useUser();
 
   const [searchValue, setSearchValue] = useState('');
   const [debouncedSearchValue] = useDebounceValue(searchValue, 300);
@@ -126,10 +123,12 @@ export default function MarketPage() {
                     favorites={favorites}
                     onToggleFavorite={handleFavoriteToggle}
                   />
-                ))}
+                )
+              )
+            }
 
             {!searchValue ? (
-              <div ref={cursorRef}>
+              <div>
                 <LoadMoreIndicator
                   hasNextPage={hasNextPage}
                   isFetchingNextPage={isFetchingNextPage}
@@ -153,14 +152,14 @@ const LoadMoreIndicator: React.FC<IProps> = ({
   hasNextPage,
   isFetchingNextPage,
 }) => {
-  if (hasNextPage && !isFetchingNextPage) return null;
+  if (hasNextPage && !isFetchingNextPage) return <div className='mx-auto w-fit'><Spinner size='m' /></div>
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.2 }}
     >
       {!hasNextPage ? (
         <div className={'flex justify-center gap-2 items-center'}>

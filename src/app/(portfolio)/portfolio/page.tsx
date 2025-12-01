@@ -5,8 +5,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { usePortfolioStore } from '@/store/portfolio/portfolio.store'
 
-import { useTelegramUser } from '@/hooks/use-telegram-user'
-
 import { Container } from '@/components/container'
 import { Accordion } from '@/components/ui/accordion'
 import { List } from '@telegram-apps/telegram-ui'
@@ -22,12 +20,15 @@ import {
 } from '@/hooks/queries/use-portfolio-mutation'
 import { EditCrypto } from '@/components/portfolio/edit-crypto'
 import { AddCrypto } from '@/components/portfolio/add-crypto'
+import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom'
+import { useUser } from '@/app/_providers/user-provider'
 
 export default function PortfolioPage() {
-  const { data } = useTelegramUser()
-  const userId = data?.userId || ''
+  const { userId } = useUser();
 
-  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio(userId)
+
+  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio()
   const { mutate: deleteCrypto } = useDeleteCrypto()
   const { mutate: addCrypto } = useAddCrypto()
   const { mutate: updateCrypto } = useUpdateCrypto()
@@ -37,6 +38,8 @@ export default function PortfolioPage() {
   const [isEditCryptoOpen, setIsEditCryptoOpen] = useState<boolean>(false)
   const [activeCryptoId, setActiveCryptoId] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+
+  const platform = usePlatform()
 
   const {
     calculateTotalBalance,
@@ -160,9 +163,7 @@ export default function PortfolioPage() {
             transition={{ duration: 0.7 }}
           >
             <List
-              className={
-                'grid gap-2 overflow-y-auto max-h-[70vh] pb-[64px] scrollbar-none -mt-4 !pt-0 !px-0'
-              }
+              className={cn('grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-4 !pt-0 !px-0', (platform === 'ios' || platform === 'macos') ? '!pb-16' : '!pb-19')}
             >
               <Accordion type="single" collapsible className="w-full">
                 {sortedPortfolio.map((crypto, index) => (

@@ -6,6 +6,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import "@/i18n"
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryCache = new QueryCache();

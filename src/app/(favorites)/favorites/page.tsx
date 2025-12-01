@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 
-import { useTelegramUser } from '@/hooks/use-telegram-user';
-
 import { Container } from '@/components/container';
 import { Categories } from '@/components/categories';
 import { CryptoTableHeader } from '@/components/crypto-table-header';
@@ -17,12 +15,11 @@ import {
 } from '@/hooks/queries/use-favorite-mutation';
 import { EmptyFavorites } from '@/components/favorites/empty-favorites';
 import { cn } from '@/components/ui/utils'
-import { usePlatform } from '@/hooks/use-platfrom'
+import { useUser } from '@/app/_providers/user-provider'
 
 export default function FavoritesPage() {
-  const { data } = useTelegramUser();
-  const userId = data?.userId || '';
-  const platform = usePlatform()
+  const { userId } = useUser();
+
 
   const { data: favoriteCryptos, isLoading: isFavoriteCryptoLoading } =
     useFavorites();

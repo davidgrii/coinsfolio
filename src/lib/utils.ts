@@ -1,6 +1,6 @@
 export const formatPrice = (price?: number): string => {
   if (price === undefined) {
-    return '';
+    return '0';
   }
 
   return new Intl.NumberFormat('en-US', {

@@ -3,14 +3,13 @@ import {
   useQuery,
   type UseQueryResult,
 } from '@tanstack/react-query';
-import { useTelegramUser } from '@/hooks/use-telegram-user';
 import type {
   ICrypto,
   ICryptoDetails,
   IFavorite,
-  ISearchResponse,
 } from '@/types';
 import { BASE_URL } from '@/constants';
+import { useUser } from '@/app/_providers/user-provider'
 
 export const useInfiniteCryptos = () => {
   return useInfiniteQuery({
@@ -52,8 +51,7 @@ export const useCrypto = (
 };
 
 export const useFavorites = (): UseQueryResult<IFavorite, Error> => {
-  const { data: user } = useTelegramUser();
-  const userId = user?.userId || '';
+  const { userId } = useUser();
 
   return useQuery({
     queryKey: ['favorites', userId],
