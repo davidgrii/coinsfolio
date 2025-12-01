@@ -212,7 +212,7 @@ export const AddCrypto: React.FC<IProps> = ({
 
             {searchValue && (
                 <div className='absolute top-14 mb-2 w-full z-10 border-neutral-04 border rounded-xl overflow-hidden'>
-                  <div className='bg-base-background rounded-xl shadow-md max-h-[30vh] overflow-y-auto'>
+                  <div className='bg-base-background rounded-xl shadow-md max-h-[35dvh] overflow-y-auto'>
                     {isCryptosLoading || isCryptosFetching ? (
                       new Array(8).fill(null).map((_, index) => (
                         <SearchCryptoSkeleton key={index} />
