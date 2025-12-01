@@ -145,7 +145,7 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout>
       }
-      className='!bg-base-background !h-dvh !z-50 !min-h-[96%] !max-h-[96%]'
+      className='!bg-base-background !h-dvh !z-50 !min-h-dvh'
     >
       <VisuallyHidden>
         <DialogTitle>
