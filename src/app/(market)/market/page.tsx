@@ -68,7 +68,7 @@ export default function MarketPage() {
   );
 
   const handleFavoriteToggle = async (cryptoId: string) => {
-    if (favoriteCryptos?.favorites.includes(cryptoId)) {
+    if (favorites.includes(cryptoId)) {
       deleteFavorite({ userId, cryptoId });
     } else {
       addFavorite({ userId, cryptoId });

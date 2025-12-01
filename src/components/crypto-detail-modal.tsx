@@ -56,12 +56,11 @@ export const CryptoItemModal = () => {
   const platform = usePlatform();
 
   const cryptoPrice = selectedCrypto?.current_price || selectedCrypto?.price || 0
-  const isFavorite = favoriteCryptos?.favorites.includes(
-    selectedCrypto?.id || ''
-  )
+  const favorites = favoriteCryptos?.favorites || []
+  const isFavorite = favorites.includes(selectedCrypto?.id || '')
 
   const handleFavoriteToggle = async (cryptoId: string) => {
-    if (favoriteCryptos?.favorites.includes(cryptoId)) {
+    if (favorites.includes(cryptoId)) {
       deleteFavorite({ userId, cryptoId })
     } else {
       addFavorite({ userId, cryptoId })
