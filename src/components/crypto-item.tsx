@@ -97,7 +97,8 @@ export const CryptoItem: React.FC<IProps> = ({
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.2 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
             className='p-1 pb-[6px]'
             onClick={(e) => {
               e.stopPropagation();

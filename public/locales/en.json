@@ -66,6 +66,8 @@
     "btn": "Edit"
   },
   "crypto_details_popup": {
+    "exchanges": "Choose service",
+    "btn": "Buy",
     "coins_data": "COINS DATA",
     "coin_data_table": {
       "market_cap": "Market Сap",

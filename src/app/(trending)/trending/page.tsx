@@ -15,6 +15,7 @@ import { List } from '@telegram-apps/telegram-ui'
 import { CryptoItem } from '@/components'
 import React from 'react'
 import { useUser } from '@/app/_providers/user-provider'
+import { ANIMATE_CRYPTOS_LIST } from '@/constants'
 
 export default function TrendingPage() {
   const { userId } = useUser()
@@ -47,10 +48,10 @@ export default function TrendingPage() {
         <CryptoSkeletonList itemsCount={10} />
       ) : (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.7 }}
+          initial={ANIMATE_CRYPTOS_LIST.initial}
+          animate={ANIMATE_CRYPTOS_LIST.animate}
+          exit={ANIMATE_CRYPTOS_LIST.exit}
+          transition={ANIMATE_CRYPTOS_LIST.transition}
         >
           <List
             className={
