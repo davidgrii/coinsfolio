@@ -5,10 +5,11 @@ import React from 'react'
 import Image from 'next/image'
 import { formatPrice, getDynamicFontSize } from '@/lib/utils'
 import {
+  Avatar,
   Button, Divider,
   FixedLayout,
   IconButton,
-  Modal, VisuallyHidden
+  Modal, Placeholder, VisuallyHidden
 } from '@telegram-apps/telegram-ui'
 import {
   ModalHeader
@@ -21,10 +22,9 @@ import {
 } from '@/hooks/queries/use-favorite-mutation'
 import { motion } from 'framer-motion'
 import { Icons } from '@/components/icons'
-import { Icon20QuestionMark } from '@telegram-apps/telegram-ui/dist/icons/20/question_mark'
 import { useTranslation } from 'react-i18next'
 import { ICoinGlobalMarketsData, IMarketsCoinData } from '@/types'
-import { BINANCE_REF_URL } from '@/constants'
+import { BINANCE_REF_URL, COINGEKO_URL, EXCHANGE_REF_URLS } from '@/constants'
 import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 import { DialogTitle } from '@radix-ui/react-dialog'
@@ -44,7 +44,8 @@ function CryptoItemModalSkeleton() {
 // TODO: delete selectedCrypto instead of Crypto
 
 export const CryptoItemModal = () => {
-  const { userId } = useUser();
+  const { userId } = useUser()
+  const { t } = useTranslation()
 
   const { isOpen, selectedCrypto, setIsOpen } = useCryptoModalStore()
   const { data: crypto, isLoading } = useCrypto(selectedCrypto?.id || '')
@@ -53,7 +54,7 @@ export const CryptoItemModal = () => {
   const { mutate: addFavorite } = useAddFavorite()
   const { mutate: deleteFavorite } = useDeleteFavorite()
 
-  const platform = usePlatform();
+  const platform = usePlatform()
 
   const cryptoPrice = selectedCrypto?.current_price || selectedCrypto?.price || 0
   const favorites = favoriteCryptos?.favorites || []
@@ -85,17 +86,18 @@ export const CryptoItemModal = () => {
         {!crypto || !selectedCrypto || isLoading ? (
           <CryptoItemModalSkeleton />
         ) : (
-          <div className={cn("px-3 scrollbar-none", platform === 'ios' || platform === 'macos' ? 'pb-16' : 'pb-24')}>
+          <div className={cn('px-3 scrollbar-none', platform === 'ios' || platform === 'macos' ? 'pb-16' : 'pb-24')}>
             <div
-              className="flex justify-between w-full bg-neutral-04 items-center gap-3 px-6 py-4 rounded-xl select-none mb-10">
+              className="flex justify-between w-full bg-neutral-04 items-center gap-3 px-6 py-3.5 rounded-xl select-none mb-10">
               <div className={'flex items-center gap-2'}>
-                <Image
-                  width={36}
-                  height={36}
-                  className="h-9 w-9"
-                  src={selectedCrypto.image}
-                  alt={selectedCrypto.name}
-                />
+                <div className="rounded-full overflow-hidden">
+                  <Avatar
+                    size={40}
+                    src={selectedCrypto.image}
+                    alt={selectedCrypto.name}
+                    className="!bg-transparent"
+                  />
+                </div>
 
                 <div className="flex flex-col items-start">
                   <div className={'flex gap-1 h-4 text-neutral-03'}>
@@ -133,9 +135,12 @@ export const CryptoItemModal = () => {
                   )}
                 </motion.button>
 
-                <IconButton mode="bezeled" size="s">
-                  <Icon20QuestionMark />
-                </IconButton>
+                <a href={`${COINGEKO_URL}${'/' + selectedCrypto.id}`}
+                   rel="noreferrer" target="_blank">
+                  <IconButton mode="bezeled" size="s">
+                    <Icons.globus />
+                  </IconButton>
+                </a>
               </div>
             </div>
 
@@ -145,17 +150,40 @@ export const CryptoItemModal = () => {
               <DetailsMarketsData cryptoMarketsData={crypto.markets} />
             ) : null}
 
-            <FixedLayout className={cn('px-3',
-              (platform === 'macos') && '!bottom-18' ||
-              (platform === 'ios') && '!bottom-22' ||
-              '!bottom-24'
-            )}>
-              <a href={BINANCE_REF_URL} target="_blank" rel="noreferrer">
-                <Button size="l" stretched mode="filled">
-                  Buy {selectedCrypto.symbol.toUpperCase()}
-                </Button>
-              </a>
-            </FixedLayout>
+            <Modal
+              header={
+                <ModalHeader
+                />
+              }
+              trigger={
+                <FixedLayout className={cn('px-3',
+                  (platform === 'macos') && '!bottom-18' ||
+                  (platform === 'ios') && '!bottom-22' ||
+                  '!bottom-24'
+                )}>
+                  <Button size="l" stretched mode="filled">
+                    {t('crypto_details_popup.btn')} {selectedCrypto.symbol.toUpperCase()}
+                  </Button>
+                </FixedLayout>
+              }
+              className="!h-[92%] !bg-base-background"
+            >
+              <VisuallyHidden>
+                <DialogTitle>Choose service</DialogTitle>
+              </VisuallyHidden>
+
+              <Placeholder header={t('crypto_details_popup.exchanges')} />
+
+              <div className="flex flex-col gap-4 px-3">
+                {EXCHANGE_REF_URLS.map(({ label, url }) => (
+                  <a href={url} target="_blank" rel="noreferrer" key={label}>
+                    <Button size="l" stretched mode='filled'>
+                      {t('crypto_details_popup.btn')} {selectedCrypto.symbol.toUpperCase()} on {label}
+                    </Button>
+                  </a>
+                ))}
+              </div>
+            </Modal>
           </div>
         )}
       </Modal>
@@ -226,8 +254,8 @@ const DetailsCoinsData = ({ cryptoMarketCoinData }: { cryptoMarketCoinData: IMar
 }
 
 
-const DetailsMarketsData= ({ cryptoMarketsData }: { cryptoMarketsData: ICoinGlobalMarketsData[] }) => {
-  const { t } = useTranslation();
+const DetailsMarketsData = ({ cryptoMarketsData }: { cryptoMarketsData: ICoinGlobalMarketsData[] }) => {
+  const { t } = useTranslation()
 
   return (
     <div className={'flex flex-col items-center justify-center w-full mb-16'}>
@@ -256,5 +284,5 @@ const DetailsMarketsData= ({ cryptoMarketsData }: { cryptoMarketsData: ICoinGlob
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

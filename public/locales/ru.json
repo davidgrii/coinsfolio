@@ -67,6 +67,8 @@
   },
   "crypto_details_popup": {
     "coins_data": "Данные монеты",
+    "exchanges": "Выберите сервис",
+    "btn": "Купить",
     "coin_data_table": {
       "market_cap": "Рыночная оценка",
       "fdv": "Полная оценка",

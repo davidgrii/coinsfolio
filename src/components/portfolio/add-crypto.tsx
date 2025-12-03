@@ -21,6 +21,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 import { DialogTitle } from '@radix-ui/react-dialog'
+import { ANIMATE_CRYPTOS_LIST } from '@/constants'
 
 interface IProps {
   isOpen: boolean;
@@ -145,7 +146,7 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout>
       }
-      className='!bg-base-background !h-dvh !z-50 !min-h-dvh'
+      className='!bg-base-background !h-dvh !z-50'
     >
       <VisuallyHidden>
         <DialogTitle>
@@ -218,37 +219,50 @@ export const AddCrypto: React.FC<IProps> = ({
                         <SearchCryptoSkeleton key={index} />
                       ))
                     ) : (
-                      cryptos?.map((crypto) => (
-                        <React.Fragment key={crypto.id}>
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1}}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <div
-                              className='flex items-center gap-3 px-4 py-2 hover:bg-muted-foreground transition-colors duration-100 cursor-pointer hover:bg-neutral-04'
+                      cryptos?.map((crypto) => {
+                        const isPercentagePositive = crypto.price_change_percentage_24h >= 0;
+                        const currentPercentage = crypto.price_change_percentage_24h.toFixed(2);
+
+                        return (
+                          <React.Fragment key={crypto.id}>
+                            <motion.div
+                              initial={ANIMATE_CRYPTOS_LIST.initial}
+                              animate={ANIMATE_CRYPTOS_LIST.animate}
+                              exit={ANIMATE_CRYPTOS_LIST.exit}
+                              transition={ANIMATE_CRYPTOS_LIST.transition}
+                              className='flex justify-between items-center px-4 py-2 hover:bg-muted-foreground select-none transition-colors duration-100 cursor-pointer hover:bg-neutral-04'
                               onClick={() => handleCryptoSelect(crypto)}
                             >
-                              <div className='rounded-full overflow-hidden'>
-                                <Avatar
-                                  size={28}
-                                  src={crypto.image}
-                                  alt={crypto.name}
-                                  className='!bg-transparent'
-                                />
+                              <div
+                                className='flex items-center gap-3'
+                              >
+                                <div className='rounded-full overflow-hidden'>
+                                  <Avatar
+                                    size={28}
+                                    src={crypto.image}
+                                    alt={crypto.name}
+                                    className='!bg-transparent'
+                                  />
+                                </div>
+
+                                <p className='text-[13px] text-nowrap'>
+                                  {crypto.name.length > 18
+                                    ? crypto.name.slice(0, 18) + '...'
+                                    : crypto.name}{' '}
+                                  ({crypto.symbol.toUpperCase()})
+                                </p>
                               </div>
 
-                              <p className='text-[13px] text-nowrap'>
-                                {crypto.name.length > 18
-                                  ? crypto.name.slice(0, 18) + '...'
-                                  : crypto.name}{' '}
-                                ({crypto.symbol.toUpperCase()})
-                              </p>
-                            </div>
-                          </motion.div>
-                          <Divider />
-                        </React.Fragment>
-                      ))
+                              <div
+                                className={`w-16 text-[13px] text-right ${isPercentagePositive ? 'text-specials-success' : 'text-specials-danger'}`}
+                              >
+                                <span className='font-semibold'>{currentPercentage} %</span>
+                              </div>
+                            </motion.div>
+                            <Divider />
+                          </React.Fragment>
+                        )
+                      })
                     )}
                   </div>
                 </div>

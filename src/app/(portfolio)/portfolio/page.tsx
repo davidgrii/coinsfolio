@@ -23,6 +23,7 @@ import { AddCrypto } from '@/components/portfolio/add-crypto'
 import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 import { useUser } from '@/app/_providers/user-provider'
+import { ANIMATE_CRYPTOS_LIST } from '@/constants'
 
 export default function PortfolioPage() {
   const { userId } = useUser();
@@ -160,10 +161,10 @@ export default function PortfolioPage() {
       ) : (
         <>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
+            initial={ANIMATE_CRYPTOS_LIST.initial}
+            animate={ANIMATE_CRYPTOS_LIST.animate}
+            exit={ANIMATE_CRYPTOS_LIST.exit}
+            transition={ANIMATE_CRYPTOS_LIST.transition}
           >
             <List
               className={cn('grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-4 !pt-0 !px-0',
