@@ -22,6 +22,7 @@ import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 import { DialogTitle } from '@radix-ui/react-dialog'
 import { ANIMATE_CRYPTOS_LIST } from '@/constants'
+import { isValidNumericInput, parseNumericInput } from '@/lib/utils'
 
 interface IProps {
   isOpen: boolean;
@@ -75,11 +76,19 @@ export const AddCrypto: React.FC<IProps> = ({
   const { data: cryptos, isLoading: isCryptosLoading, isFetching: isCryptosFetching } = useSearchCrypto(cryptoQueryParams);
 
   const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantity(e.target.value);
+    const value = e.target.value;
+
+    if (!isValidNumericInput(value)) return;
+
+    setQuantity(value)
   };
 
   const handleChangePurchase = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPurchase(e.target.value);
+    const value = e.target.value;
+
+    if (!isValidNumericInput(value)) return;
+
+    setPurchase(value)
   };
 
   const handleCryptoSelect = (crypto: ICrypto) => {
@@ -95,12 +104,9 @@ export const AddCrypto: React.FC<IProps> = ({
   const handleSubmit = () => {
     if (selectedCrypto && quantity && purchase) {
       const cryptoId = selectedCrypto.id;
-      const numericQuantity = Number(
-        quantity.replace(/\s/g, '').replace(',', '.'),
-      );
-      const purchasePrice = Number(
-        purchase.replace(/\s/g, '').replace(',', '.'),
-      );
+
+      const numericQuantity = parseNumericInput(quantity)
+      const purchasePrice = parseNumericInput(purchase)
 
       if (
         isNaN(numericQuantity) ||
@@ -220,8 +226,8 @@ export const AddCrypto: React.FC<IProps> = ({
                       ))
                     ) : (
                       cryptos?.map((crypto) => {
-                        const isPercentagePositive = crypto.price_change_percentage_24h >= 0;
-                        const currentPercentage = crypto.price_change_percentage_24h.toFixed(2);
+                        const isPercentagePositive = crypto?.price_change_percentage_24h >= 0;
+                        const currentPercentage = crypto?.price_change_percentage_24h?.toFixed(2) || 0;
 
                         return (
                           <React.Fragment key={crypto.id}>
@@ -272,8 +278,9 @@ export const AddCrypto: React.FC<IProps> = ({
 
         <div className='w-full relative'>
           <Input
-            type='number'
+            type='text'
             inputMode={'decimal'}
+            pattern='[0-9]*'
             placeholder={t('add_crypto.quantity')}
             value={quantity}
             onChange={handleChangeQuantity}
@@ -293,8 +300,9 @@ export const AddCrypto: React.FC<IProps> = ({
 
         <div className='w-full relative'>
           <Input
-            type='number'
+            type='text'
             inputMode={'decimal'}
+            pattern='[0-9]*'
             placeholder={t('add_crypto.purchase')}
             value={purchase}
             onChange={handleChangePurchase}

@@ -20,7 +20,7 @@ export const CryptoTableHeader: React.FC<IProps> = ({
       {isSearchEnabled ? (
         <div
           className={clsx(
-            'flex justify-between text-[12.5px] font-medium text-neutral-03 mt-3 mb-4',
+            'flex justify-between text-[12.5px] font-medium text-neutral-03 my-3',
           )}
         >
           <div className='flex gap-5'>

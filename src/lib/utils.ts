@@ -83,3 +83,18 @@ export const formattedBalance = (totalBalance: number) => {
     maximumFractionDigits: 2,
   });
 };
+
+// -------- //
+
+export const isValidNumericInput = (value: string) => {
+  return /^[0-9.,]*$/.test(value)
+};
+
+export const parseNumericInput = (value: string) => {
+  return parseFloat(
+    value
+      .replace(/,/g, '.')       // все запятые -> точки
+      .replace(/(\..*)\./g, '$1') // убрать вторые точки
+      .replace(/(?!^)\./g, '')  // убрать точки-разделители тысяч
+  );
+}

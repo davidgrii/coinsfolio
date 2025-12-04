@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Icons } from '@/components/icons';
 import { useTranslation } from 'react-i18next';
-import { formatNumber } from '@/lib/utils';
+import { formatNumber, isValidNumericInput, parseNumericInput } from '@/lib/utils'
 import type { IPortfolio, IUpdatedCrypto } from '@/types';
 import {
   Avatar,
@@ -40,23 +40,30 @@ export const EditCrypto: React.FC<IProps> = ({
   const { t } = useTranslation();
 
   const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const formattedValue = formatNumber(value);
-    setQuantity(formattedValue);
+    const value = e.target.value;
+
+    if (!isValidNumericInput(value)) return;
+
+    setQuantity(value);
   };
 
   const handleChangePurchase = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const formattedValue = formatNumber(value);
-    setPurchase(formattedValue);
+    const value = e.target.value;
+
+    if (!isValidNumericInput(value)) return;
+    setPurchase(value);
   };
 
   const handleSubmit = () => {
     if (selectedCrypto && quantity && purchase) {
+
+      const numericQuantity = parseNumericInput(quantity)
+      const purchasePrice = parseNumericInput(purchase)
+
       const updatedData = {
         cryptoId: selectedCrypto.cryptoId,
-        quantity: Number(quantity.replace(/\s/g, '').replace(',', '.')),
-        purchasePrice: Number(purchase.replace(/\s/g, '').replace(',', '.')),
+        quantity: numericQuantity,
+        purchasePrice: purchasePrice,
         notice: notice.trim() || '',
       };
 

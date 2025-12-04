@@ -24,6 +24,7 @@ import { useFavorites } from '@/hooks/queries/use-crypto';
 import { useDebounceValue } from 'usehooks-ts';
 import { useUser } from '@/app/_providers/user-provider'
 import { ANIMATE_CRYPTOS_LIST } from '@/constants'
+import { popup } from '@tma.js/sdk-react'
 
 export default function MarketPage() {
   const { userId } = useUser();

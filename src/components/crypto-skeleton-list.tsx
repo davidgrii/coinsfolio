@@ -34,17 +34,18 @@ export const CryptoSkeletonList: React.FC<IProps> = ({
             <Skeleton className='h-4 w-full rounded' />
             <Skeleton className='h-1.5 w-[100px] rounded' />
           </div>
-          <motion.button
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className='p-1 pb-[6px]'
-          >
-            <Icons.favorites
-              className={'w-4 h-4 animate-pulse text-neutral-04'}
-            />
-          </motion.button>
+
+            {!isPortfolio ? (
+              <button
+                className='p-1 pb-[6px]'
+              >
+              <Icons.favorites
+                className={'w-4 h-4 animate-pulse text-neutral-04'}
+              />
+              </button>
+            ) : (
+              <Icons.portfolioArrow className={'w-3 h-3 animate-pulse text-neutral-04'} />
+            )}
         </div>
       ))}
     </List>

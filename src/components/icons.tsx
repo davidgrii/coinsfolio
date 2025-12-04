@@ -304,7 +304,7 @@ export const Icons = {
       xmlns='http://www.w3.org/2000/svg'
       {...props}
     >
-      <path d='M13.5 18L0.942631 0L26.0574 0L13.5 18Z' fill='#007BFF' />
+      <path d='M13.5 18L0.942631 0L26.0574 0L13.5 18Z' fill='currentColor' />
     </svg>
   ),
   logo: (props: IconProps) => (
