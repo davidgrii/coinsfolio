@@ -35,7 +35,7 @@ const AccordionTrigger = React.forwardRef<
     >
       {children}
       <span className={'transition-transform'}>
-        <Icons.portfolioArrow className={'w-3 h-3'} />
+        <Icons.portfolioArrow className={'w-3 h-3 text-primary'} />
       </span>
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>

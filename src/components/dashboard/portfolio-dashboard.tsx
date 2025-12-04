@@ -27,7 +27,7 @@ import { Divider } from '@telegram-apps/telegram-ui'
 
 function PortfolioDashboardSkeleton() {
   return (
-    <Skeleton className={'animate-pulse h-[80px] w-full rounded-xl mb-2'} />
+    <Skeleton className={'animate-pulse h-[80px] w-full rounded-xl'} />
   )
 }
 

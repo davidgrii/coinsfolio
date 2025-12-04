@@ -1,11 +1,11 @@
 'use client';
 
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 import { AppRoot } from '@telegram-apps/telegram-ui';
 import { useDidMount } from '@/hooks/use-did-mount';
 import ErrorPage from '@/app/error'
 import { ErrorBoundary } from '@/components/error-boundary'
-import { init, backButton, useLaunchParams, initData, useSignal } from '@tma.js/sdk-react'
+import { init, backButton, useLaunchParams, initData, useSignal, miniApp } from '@tma.js/sdk-react'
 
 export const TelegramProviderInner = ({ children }: PropsWithChildren) => {
   const lp = useLaunchParams();
@@ -15,9 +15,10 @@ export const TelegramProviderInner = ({ children }: PropsWithChildren) => {
   // const isDark = useSignal(miniApp.isDark);
   // const initDataUser = useSignal(initData.user);
 
-  // useEffect(() => {
-  //   initDataUser && setLocale(initDataUser.language_code);
-  // }, [initDataUser]);
+  useEffect(() => {
+    miniApp.mount()
+    miniApp.setHeaderColor("#17212b")
+  }, []);
 
   return <AppRoot
     appearance='dark'

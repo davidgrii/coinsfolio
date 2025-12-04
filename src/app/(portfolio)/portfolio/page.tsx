@@ -24,6 +24,7 @@ import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 import { useUser } from '@/app/_providers/user-provider'
 import { ANIMATE_CRYPTOS_LIST } from '@/constants'
+import { PortfolioSkeletonList } from '@/components/portfolio/portfolio-skeleton-list'
 
 export default function PortfolioPage() {
   const { userId } = useUser();
@@ -157,7 +158,7 @@ export default function PortfolioPage() {
       <BalanceTableHeader onSort={handleSortPortfolio} />
 
       {!sortedPortfolio || isPortfolioLoading ? (
-        <CryptoSkeletonList isPortfolio={true} itemsCount={10} />
+        <PortfolioSkeletonList isPortfolio={true} itemsCount={10} />
       ) : (
         <>
           <motion.div
@@ -167,7 +168,7 @@ export default function PortfolioPage() {
             transition={ANIMATE_CRYPTOS_LIST.transition}
           >
             <List
-              className={cn('grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-4 !pt-0 !px-0',
+              className={cn('grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-2 !pt-0 !px-0',
                 (platform === 'ios' || platform === 'macos') ? '!pb-16' : '!pb-19'
               )}
             >

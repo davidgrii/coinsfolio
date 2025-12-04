@@ -20,7 +20,7 @@ export const BalanceTableHeader = ({ onSort }: IProps) => {
   return (
     <div
       className={
-        'flex justify-between text-[12.5px] font-medium text-neutral-03 mt-3 mb-4'
+        'flex justify-between text-[12.5px] font-medium text-neutral-03 my-3'
       }
     >
       <h2 className='select-none'>{t('balance_table_header.coin')}</h2>
