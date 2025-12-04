@@ -130,6 +130,7 @@ export const AddCrypto: React.FC<IProps> = ({
 
   return (
     <Modal
+      scrollLockTimeout={2}
       open={isOpen}
       dismissible={!isPortfolioEmpty}
       onOpenChange={setIsOpen}
@@ -152,7 +153,7 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout>
       }
-      className='!bg-base-background !h-lvh !z-50'
+      className='!bg-base-background !h-full !z-50'
     >
       <VisuallyHidden>
         <DialogTitle>

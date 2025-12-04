@@ -150,12 +150,6 @@ body {
     background-color: transparent !important;
 }
 
-[vaul-drawer] {
-    touch-action: none;
-     transition: none !important;
-     /*transition: transform .5s cubic-bezier(.32, .72, 0, 1); */
-}
-
 .input-box-shadow {
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
