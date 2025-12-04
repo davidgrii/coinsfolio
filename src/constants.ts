@@ -86,7 +86,7 @@ export const APP_NAV_ITEMS = [
   {
     id: 'settings',
     label: 'Settings',
-    href: '/',
+    href: '/settings',
     key: 'settings',
     Icon: Icons.settings,
   },
