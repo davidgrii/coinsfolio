@@ -119,8 +119,8 @@ export const EditCrypto: React.FC<IProps> = ({
 
           <div className='w-full relative'>
             <Input
-              type='number'
-              inputMode={'decimal'}
+              type='text'
+              // inputMode={'decimal'}
               placeholder={t('add_crypto.quantity')}
               value={quantity}
               onChange={handleChangeQuantity}
@@ -139,8 +139,8 @@ export const EditCrypto: React.FC<IProps> = ({
 
           <div className='w-full relative'>
             <Input
-              type='number'
-              inputMode={'decimal'}
+              type='text'
+              // inputMode={'decimal'}
               placeholder={t('add_crypto.purchase')}
               value={purchase}
               onChange={handleChangePurchase}
