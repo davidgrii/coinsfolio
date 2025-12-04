@@ -152,7 +152,7 @@ export const AddCrypto: React.FC<IProps> = ({
           </Button>
         </FixedLayout>
       }
-      className='!bg-base-background !h-dvh !z-50'
+      className='!bg-base-background !h-lvh !z-50'
     >
       <VisuallyHidden>
         <DialogTitle>
@@ -280,7 +280,6 @@ export const AddCrypto: React.FC<IProps> = ({
           <Input
             type='text'
             // inputMode={'decimal'}
-            pattern='[0-9]*'
             placeholder={t('add_crypto.quantity')}
             value={quantity}
             onChange={handleChangeQuantity}
@@ -302,7 +301,6 @@ export const AddCrypto: React.FC<IProps> = ({
           <Input
             type='text'
             // inputMode={'decimal'}
-            pattern='[0-9]*'
             placeholder={t('add_crypto.purchase')}
             value={purchase}
             onChange={handleChangePurchase}
