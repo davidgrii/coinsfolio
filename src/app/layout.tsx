@@ -1,19 +1,13 @@
 import React from 'react';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { cn } from '@/components/ui/utils';
 import QueryProvider from '@/app/_providers/query-provider';
 import { Analytics } from '@vercel/analytics/next';
 import '@telegram-apps/telegram-ui/dist/styles.css';
 import { TelegramProvider } from '@/app/_providers/telegram-provider';
 import { UserProvider } from '@/app/_providers/user-provider'
-
-const inter = Inter({
-  weight: ['200', '300', '400', '500', '600', '700', '800'],
-  subsets: ['latin'],
-  display: 'swap',
-});
+import { I18nProvider } from '@/app/_providers/i18n-provider'
 
 export const metadata: Metadata = {
   title: 'Coins Folio',
@@ -29,14 +23,16 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={cn(`bg-base-background overflow-hidden ${inter.className}`)}
+        className={cn(`bg-base-background overflow-hidden`)}
       >
         <QueryProvider>
-          <TelegramProvider>
-            <UserProvider>
-              {children}
-            </UserProvider>
-          </TelegramProvider>
+          <I18nProvider>
+            <TelegramProvider>
+              <UserProvider>
+                {children}
+              </UserProvider>
+            </TelegramProvider>
+          </I18nProvider>
         </QueryProvider>
         <Analytics />
       </body>
