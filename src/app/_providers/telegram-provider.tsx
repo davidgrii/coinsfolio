@@ -18,6 +18,7 @@ export const TelegramProviderInner = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     miniApp.mount()
     miniApp.setHeaderColor("#17212b")
+    miniApp.setBgColor("#17212b")
   }, []);
 
   return <AppRoot

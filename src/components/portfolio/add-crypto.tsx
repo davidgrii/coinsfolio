@@ -279,7 +279,7 @@ export const AddCrypto: React.FC<IProps> = ({
         <div className='w-full relative'>
           <Input
             type='text'
-            inputMode={'decimal'}
+            // inputMode={'decimal'}
             pattern='[0-9]*'
             placeholder={t('add_crypto.quantity')}
             value={quantity}
@@ -301,7 +301,7 @@ export const AddCrypto: React.FC<IProps> = ({
         <div className='w-full relative'>
           <Input
             type='text'
-            inputMode={'decimal'}
+            // inputMode={'decimal'}
             pattern='[0-9]*'
             placeholder={t('add_crypto.purchase')}
             value={purchase}
