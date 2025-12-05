@@ -150,6 +150,17 @@ body {
     background-color: transparent !important;
 }
 
+[vaul-drawer]:after {
+    content: '' !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: -10;
+    background-color:  rgba(23, 33, 43) !important;;
+}
+
 .input-box-shadow {
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
