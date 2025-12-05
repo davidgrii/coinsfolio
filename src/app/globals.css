@@ -150,10 +150,6 @@ body {
     background-color: transparent !important;
 }
 
-[vaul-drawer] {
-    max-height: calc(96 * var(--vh));
-}
-
 .input-box-shadow {
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
