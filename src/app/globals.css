@@ -150,15 +150,8 @@ body {
     background-color: transparent !important;
 }
 
-[vaul-drawer]:after {
-    content: '' !important;
-    width: 100% !important;
+[vaul-drawer] {
     max-height: calc(96 * var(--vh));
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    z-index: -10;
-    background-color:  rgba(23, 33, 43) !important;;
 }
 
 .input-box-shadow {
