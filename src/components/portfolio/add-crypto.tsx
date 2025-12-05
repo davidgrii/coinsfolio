@@ -64,6 +64,14 @@ export const AddCrypto: React.FC<IProps> = ({
 
   const isFormCompleted = quantity && purchase && selectedCrypto;
 
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  setVh();
+  window.addEventListener('resize', setVh);
+
   const cryptoQueryParams = useMemo(
     () => ({
       query: debouncedSearchValue || '',
