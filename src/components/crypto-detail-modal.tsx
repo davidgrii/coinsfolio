@@ -3,7 +3,7 @@
 import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store'
 import React from 'react'
 import Image from 'next/image'
-import { formatPrice, getDynamicFontSize } from '@/lib/utils'
+import { formatPriceWithDecimals, getDynamicFontSize } from '@/lib/utils'
 import {
   Avatar,
   Button, Divider,
@@ -114,7 +114,7 @@ export const CryptoItemModal = () => {
                   <p
                     className={`${getDynamicFontSize(cryptoPrice)} text-foreground font-bold whitespace-nowrap`}
                   >
-                    {formatPrice(cryptoPrice)} $
+                    {formatPriceWithDecimals(cryptoPrice)} $
                   </p>
                 </div>
               </div>
@@ -207,21 +207,21 @@ const DetailsCoinsData = ({ cryptoMarketCoinData }: { cryptoMarketCoinData: IMar
       >
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.market_cap')}</p>
-          <p>{formatPrice(cryptoMarketCoinData?.market_cap)} $</p>
+          <p>{formatPriceWithDecimals(cryptoMarketCoinData?.market_cap)} $</p>
         </div>
 
         <Divider />
 
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.fdv')}</p>
-          <p>{formatPrice(cryptoMarketCoinData?.fdv)} $</p>
+          <p>{formatPriceWithDecimals(cryptoMarketCoinData?.fdv)} $</p>
         </div>
 
         <Divider />
 
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.volume_24h')}</p>
-          <p>{formatPrice(cryptoMarketCoinData?.volume_24h)} $</p>
+          <p>{formatPriceWithDecimals(cryptoMarketCoinData?.volume_24h)} $</p>
         </div>
 
         <Divider />
@@ -229,7 +229,7 @@ const DetailsCoinsData = ({ cryptoMarketCoinData }: { cryptoMarketCoinData: IMar
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.circulation_supply')}</p>
           <p>
-            {formatPrice(Number(cryptoMarketCoinData?.circulating_supply) || 0)} $
+            {formatPriceWithDecimals(Number(cryptoMarketCoinData?.circulating_supply) || 0)} $
           </p>
         </div>
 
@@ -238,7 +238,7 @@ const DetailsCoinsData = ({ cryptoMarketCoinData }: { cryptoMarketCoinData: IMar
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.total_supply')}</p>
           <p>
-            {formatPrice(Number(cryptoMarketCoinData?.total_supply) || 0)} $
+            {formatPriceWithDecimals(Number(cryptoMarketCoinData?.total_supply) || 0)} $
           </p>
         </div>
 
@@ -246,7 +246,7 @@ const DetailsCoinsData = ({ cryptoMarketCoinData }: { cryptoMarketCoinData: IMar
 
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.ath')}</p>
-          <p>{formatPrice(cryptoMarketCoinData?.all_time_high)} $</p>
+          <p>{formatPriceWithDecimals(cryptoMarketCoinData?.all_time_high)} $</p>
         </div>
       </div>
     </div>
@@ -276,7 +276,7 @@ const DetailsMarketsData = ({ cryptoMarketsData }: { cryptoMarketsData: ICoinGlo
           <React.Fragment key={index}>
             <div className={`flex justify-between mb-1 pb-1`}>
               <p>{item.exchange}</p>
-              <p>{formatPrice(item.volume_24h)} $</p>
+              <p>{formatPriceWithDecimals(item.volume_24h)} $</p>
             </div>
 
             {index !== cryptoMarketsData.length - 1 ? <Divider /> : ''}

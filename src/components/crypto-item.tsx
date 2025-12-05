@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { formatPrice, getDynamicFontSize } from '@/lib/utils';
+import { formatPriceWithDecimals, getDynamicFontSize } from '@/lib/utils';
 import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store';
 import { CardContent } from '@/components/ui/card';
 import { Icons } from './icons';
@@ -77,13 +77,13 @@ export const CryptoItem: React.FC<IProps> = ({
             <p
               className={`${getDynamicFontSize(crypto?.price.toString().length)} text-foreground font-bold whitespace-nowrap`}
             >
-              {formatPrice(crypto.price)} $
+              {formatPriceWithDecimals(crypto.price)} $
             </p>
           ) : (
             <p
               className={`${getDynamicFontSize(crypto.current_price.toString().length)} text-foreground font-bold whitespace-nowrap`}
             >
-              {formatPrice(crypto.current_price)} $
+              {formatPriceWithDecimals(crypto.current_price)} $
             </p>
           )}
 

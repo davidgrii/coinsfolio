@@ -5,7 +5,7 @@ import { cn } from '@/components/ui/utils'
 import { usePortfolioStore } from '@/store'
 import { useTranslation } from 'react-i18next'
 import {
-  formatPrice,
+  formatPriceWithDecimals,
   formattedBalance,
   getClassedBasedOnValue,
   getClassesBalance
@@ -110,7 +110,7 @@ export const PortfolioDashboard = () => {
                     className={'flex gap-1.5'}
                   >
                     <p className={'text-sm font-semibold transition-colors'}>
-                      {formatPrice(Number(totalInvestedUSD.toFixed(2)))} $
+                      {formatPriceWithDecimals(Number(totalInvestedUSD.toFixed(2)))} $
                     </p>
                   </motion.div>
                 </div>
@@ -142,7 +142,7 @@ export const PortfolioDashboard = () => {
                         'text-sm font-semibold transition-colors'
                       )}
                     >
-                      {formatPrice(Number(totalPriceChange24h.toFixed(2)))} $
+                      {formatPriceWithDecimals(Number(totalPriceChange24h.toFixed(2)))} $
                     </p>
 
                     <p
@@ -182,7 +182,7 @@ export const PortfolioDashboard = () => {
                         'text-sm font-semibold transition-colors'
                       )}
                     >
-                      {formatPrice(Number(totalProfitLoss.toFixed(2)))} $
+                      {formatPriceWithDecimals(Number(totalProfitLoss.toFixed(2)))} $
                     </p>
                     <p
                       className={cn(

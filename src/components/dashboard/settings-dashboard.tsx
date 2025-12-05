@@ -1,28 +1,11 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
-import { cn } from '@/components/ui/utils'
-import { usePortfolioStore } from '@/store'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  formatPrice,
-  formattedBalance,
-  getClassedBasedOnValue,
-  getClassesBalance
-} from '@/lib/utils'
-import { motion } from 'framer-motion'
-import Autoplay from 'embla-carousel-autoplay'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem
-} from '@/components/ui/carousel'
 import {
   Card,
   CardContent
 } from '@/components/ui/card'
-import { usePortfolio } from '@/hooks/queries/use-portfolio'
-import { Skeleton } from '@/components/ui/skeleton'
 import { Avatar, Caption, Divider, Headline, Select, Subheadline } from '@telegram-apps/telegram-ui'
 import { useUser } from '@/app/_providers/user-provider'
 
