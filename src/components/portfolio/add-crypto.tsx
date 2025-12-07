@@ -163,21 +163,21 @@ export const AddCrypto: React.FC<IProps> = (
           </Button>
         </FixedLayout>
       }
-      className="!bg-base-background !h-full !z-50"
+      className="!bg-base-background !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
     >
       <VisuallyHidden>
         <DialogTitle>
-          Open Add Portfolio Modal
+          Add Portfolio Modal
         </DialogTitle>
       </VisuallyHidden>
 
       <Placeholder header={t('add_crypto.add_coin')} />
 
-      <form className="w-full flex flex-col gap-6 items-center justify-between px-3">
+      <form className="w-full flex flex-col gap-6 items-center justify-between px-3 pb-3">
         {selectedCrypto ? (
           <div
             className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[48px] !bg-neutral-04 rounded-xl',
-              !(platform === 'ios' || platform === 'macos') && 'input-box-shadow'
+              !(platform === 'ios' || platform === 'macos') && 'shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
             )}>
             <div className="flex items-center gap-3">
               <div className="rounded-full overflow-hidden">
@@ -312,8 +312,7 @@ export const AddCrypto: React.FC<IProps> = (
                 onClick={() => alert('Enter your total crypto quantity Example: 123,450.32 or 0.00213')}
                 className="size-5 mr-0.5 text-neutral-03 cursor-pointer duration-200 transition-opacity ease-out hover:opacity-80"
               />
-            )
-            }
+            )}
             className="!bg-neutral-04 !w-full"
           />
         </div>
@@ -357,7 +356,7 @@ export const AddCrypto: React.FC<IProps> = (
           disabled={!isFormCompleted}
           onClick={handleSubmit}
           className={
-            'bg-foreground py-8 rounded-xl text-lg text-background font-semibold mx-auto w-full transition-colors hover:bg-foreground/75'
+            'w-full'
           }
         >
           {t('add_crypto.btn')} {selectedCrypto?.symbol?.toUpperCase()}

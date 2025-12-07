@@ -150,6 +150,24 @@ body {
     background-color: transparent !important;
 }
 
-.input-box-shadow {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+.tgui-8e15431b81f6601e .tgui-db9be63c4fecf79b {
+    background-color: var(--color-neutral-04) !important;
+}
+
+.ahn_5Da1oc93tekLh6BQ {
+    background-color: var(--color-neutral-04) !important;
+}
+
+/* SELECT */
+.tgui-a0742fd4c73756f7 {
+    background: initial !important;
+}
+
+/* CELL */
+.tgui-4b78bed6e925088e {
+    background: initial !important;
+}
+
+.tgui-8e15431b81f6601e .tgui-db9be63c4fecf79b {
+    background: transparent !important;
 }

@@ -57,6 +57,7 @@ export const SettingsDashboard = () => {
           <Select
             defaultValue={i18n.language.toUpperCase() || 'EN'}
             onChange={handleLanguageChange}
+            className='!bg-transparent shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
           >
             <option>EN</option>
             <option>RU</option>

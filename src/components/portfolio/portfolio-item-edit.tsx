@@ -7,7 +7,7 @@ import {
 import { Icons } from '@/components/icons';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider } from '@telegram-apps/telegram-ui';
+import { Divider, IconButton } from '@telegram-apps/telegram-ui'
 
 interface IProps {
   isOpen: boolean;
@@ -24,36 +24,28 @@ export const PortfolioEdit: React.FC<IProps> = ({
   itemId,
   onDelete,
 }) => {
-  const { t } = useTranslation();
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className={'p-1 select-none cursor-pointer focus:outline-none'}>
-        <Icons.edit />
-      </DropdownMenuTrigger>
+   <div className={'flex flex-col justify-between mt-px gap-5'}>
+     <IconButton
+       mode='outline'
+       size='m'
+       onClick={() => onEdit(itemId)}
 
-      <DropdownMenuContent className='bg-base-background rounded-xl border border-neutral-04 min-w-[8rem]'>
-        <DropdownMenuItem
-          onClick={() => onEdit(itemId)}
-          className={'flex text-sm text-primary justify-between cursor-pointer'}
-        >
-          {t('my_portfolio_page.edit')} <Icons.editV2 className='size-5' />
-        </DropdownMenuItem>
+     >
+       <Icons.editV2 className='size-5 text-primary' />
+     </IconButton>
 
-        <Divider className='!border-neutral-04 !border-1' />
-
-        <DropdownMenuItem
-          className={
-            'flex text-sm text-specials-danger justify-between cursor-pointer '
-          }
-          onClick={() => {
-            setIsOpen(!isOpen);
-            onDelete(itemId);
-          }}
-        >
-          {t('my_portfolio_page.delete')} <Icons.delete className='size-5' />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+     <IconButton
+       mode='outline'
+       size='m'
+       onClick={() => {
+         setIsOpen(!isOpen);
+         onDelete(itemId);
+       }}
+     >
+       <Icons.delete className='size-5 text-specials-danger' />
+     </IconButton>
+   </div>
   );
 };
