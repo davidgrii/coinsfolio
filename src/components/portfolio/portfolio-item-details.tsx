@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/components/ui/utils';
 import { useTranslation } from 'react-i18next';
 import { Icons } from '@/components/icons';
-import { formatPrice } from '@/lib/utils';
+import { formatPriceWithDecimals } from '@/lib/utils';
 import { Divider } from '@telegram-apps/telegram-ui';
 
 interface IProps {
@@ -31,7 +31,7 @@ export const PortfolioDetails: React.FC<IProps> = ({
       <div className={'flex justify-between'}>
         <p>{t('my_portfolio_page.purchase')}</p>
         <p className={'text-foreground font-bold'}>
-          {formatPrice(purchasePrice)} $
+          {formatPriceWithDecimals(purchasePrice)} $
         </p>
       </div>
 
@@ -40,7 +40,7 @@ export const PortfolioDetails: React.FC<IProps> = ({
       <div className={'flex justify-between'}>
         <p>{t('my_portfolio_page.invested')}</p>
         <p className={'text-foreground font-bold'}>
-          {formatPrice(investedUSD)} $
+          {formatPriceWithDecimals(investedUSD)} $
         </p>
       </div>
 
@@ -56,7 +56,7 @@ export const PortfolioDetails: React.FC<IProps> = ({
             'font-bold',
           )}
         >
-          {formatPrice(profitLossUSD)} $
+          {formatPriceWithDecimals(profitLossUSD)} $
         </p>
       </div>
 
@@ -72,7 +72,7 @@ export const PortfolioDetails: React.FC<IProps> = ({
             'font-bold',
           )}
         >
-          {formatPrice(Number(profitLossPercentage.toFixed(2)))} %
+          {formatPriceWithDecimals(Number(profitLossPercentage.toFixed(2)))} %
         </p>
       </div>
 

@@ -1,15 +1,44 @@
-export const formatPrice = (price?: number): string => {
-  if (price === undefined) {
+// -- FORMATTERS
+export const formatPriceWithDecimals = (value?: number): string => {
+  if (value === undefined) {
     return '0';
   }
 
   return new Intl.NumberFormat('en-US', {
-    style: 'decimal',
     minimumFractionDigits: 0,
     maximumFractionDigits: 6,
-  }).format(price);
+  }).format(value);
 };
 
+export const formatPriceWithoutDecimals = (value: number) => {
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+};
+
+export const formatPriceWithCommas = (value: number) => {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+export const formattedBalance = (value: number) => {
+  return value.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
+
+export const isValidNumericInput = (value: string) => {
+  return /^[0-9.,]*$/.test(value)
+};
+
+export const parseNumericInput = (value: string) => {
+  return parseFloat(
+    value
+  );
+}
+
+// -- CLASSES
 export const getDynamicFontSize = (priceLength: number): string => {
   if (priceLength > 5 && priceLength <= 8) {
     return 'text-[13px]';
@@ -18,40 +47,6 @@ export const getDynamicFontSize = (priceLength: number): string => {
   } else {
     return 'text-[13px]';
   }
-};
-
-export const formatPriceWithoutDecimals = (price: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
-
-export const formatNumber = (value: string) => {
-  let cleanedValue = value.replace(/,/g, '.');
-
-  cleanedValue = cleanedValue.replace(/\s/g, '');
-
-  const [integerPart, decimalPart] = cleanedValue.split('.');
-
-  const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-
-  return decimalPart !== undefined
-    ? `${formattedInteger}.${decimalPart}`
-    : formattedInteger;
-};
-
-export const formatWitDecimals = (price: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
-
-export const formatPriceWithCommas = (price: number) => {
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 export const getMarketCapChangeClass = (marketCapChange24h: number) => {
@@ -76,25 +71,3 @@ export const getClassesBalance = (
     return 'text-specials-danger';
   }
 };
-
-export const formattedBalance = (totalBalance: number) => {
-  return totalBalance.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-};
-
-// -------- //
-
-export const isValidNumericInput = (value: string) => {
-  return /^[0-9.,]*$/.test(value)
-};
-
-export const parseNumericInput = (value: string) => {
-  return parseFloat(
-    value
-      .replace(/,/g, '.')       // все запятые -> точки
-      .replace(/(\..*)\./g, '$1') // убрать вторые точки
-      .replace(/(?!^)\./g, '')  // убрать точки-разделители тысяч
-  );
-}

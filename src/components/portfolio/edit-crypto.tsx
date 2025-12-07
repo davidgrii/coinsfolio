@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Icons } from '@/components/icons';
 import { useTranslation } from 'react-i18next';
-import { formatNumber, isValidNumericInput, parseNumericInput } from '@/lib/utils'
+import { isValidNumericInput, parseNumericInput } from '@/lib/utils'
 import type { IPortfolio, IUpdatedCrypto } from '@/types';
 import {
   Avatar,
@@ -10,13 +10,14 @@ import {
   Modal,
   Placeholder,
   Tappable,
-  Textarea
+  Textarea, VisuallyHidden
 } from '@telegram-apps/telegram-ui'
 import {
   ModalHeader
 } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader'
 import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
+import { DialogTitle } from '@radix-ui/react-dialog'
 
 interface IProps {
   isOpen: boolean;
@@ -40,17 +41,22 @@ export const EditCrypto: React.FC<IProps> = ({
   const { t } = useTranslation();
 
   const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(/(\..*?)\./g, '$1')
 
-    if (!isValidNumericInput(value)) return;
+    if (!isValidNumericInput(value)) return
+    if (value[0] === '0') return setQuantity(value.replace(',', '.'))
+    if (value[0] === '.' || value[0] === ',') return setQuantity('')
 
-    setQuantity(value);
+    setQuantity(value)
   };
 
   const handleChangePurchase = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(/(\..*?)\./g, '$1')
 
-    if (!isValidNumericInput(value)) return;
+    if (!isValidNumericInput(value)) return
+    if (value[0] === '0') return setPurchase(value.replace(',', '.'))
+    if (value[0] === '.' || value[0] === ',') return setPurchase('')
+
     setPurchase(value);
   };
 
@@ -86,14 +92,20 @@ export const EditCrypto: React.FC<IProps> = ({
         open={isOpen}
         onOpenChange={setIsOpen}
         header={<ModalHeader />}
-        className='!bg-base-background !h-[96dvh] !min-h-[96dvh] !max-h-[96dvh] !z-50'
+        className='!bg-base-background !z-50'
       >
+        <VisuallyHidden>
+          <DialogTitle>
+            Edit Portfolio Modal
+          </DialogTitle>
+        </VisuallyHidden>
+
         <Placeholder header={t('edit_crypto.edit_coin')} />
 
-        <form className='w-full flex flex-col gap-6 items-center justify-between px-3'>
+        <form className='w-full flex flex-col gap-6 items-center justify-between px-3 pb-3'>
           {selectedCrypto && (
             <div className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl',
-              !(platform === 'ios' || platform === 'macos') && 'input-box-shadow'
+              !(platform === 'ios' || platform === 'macos') && 'shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
             )}>
               <div className='flex items-center gap-3'>
                 <div className='rounded-full overflow-hidden'>
@@ -120,11 +132,10 @@ export const EditCrypto: React.FC<IProps> = ({
           <div className='w-full relative'>
             <Input
               type='text'
-              // inputMode={'decimal'}
               placeholder={t('add_crypto.quantity')}
               value={quantity}
               onChange={handleChangeQuantity}
-              after={quantity && (
+              after={quantity ? (
                 <Tappable
                   Component='div'
                   className='bg-neutral-04  rounded-xl'
@@ -132,6 +143,11 @@ export const EditCrypto: React.FC<IProps> = ({
                 >
                   <Icons.close />
                 </Tappable>
+              ) : (
+                <Icons.question
+                  onClick={() => alert('Enter your total crypto quantity Example: 123,450.32 or 0.00213')}
+                  className="size-5 mr-0.5 text-neutral-03 cursor-pointer duration-200 transition-opacity ease-out hover:opacity-80"
+                />
               )}
               className='!bg-neutral-04 !w-full'
             />
@@ -140,11 +156,10 @@ export const EditCrypto: React.FC<IProps> = ({
           <div className='w-full relative'>
             <Input
               type='text'
-              // inputMode={'decimal'}
               placeholder={t('add_crypto.purchase')}
               value={purchase}
               onChange={handleChangePurchase}
-              after={purchase && (
+              after={purchase ? (
                 <Tappable
                   Component='button'
                   className='bg-neutral-04 rounded-full'
@@ -152,6 +167,11 @@ export const EditCrypto: React.FC<IProps> = ({
                 >
                   <Icons.close />
                 </Tappable>
+              ) : (
+                <Icons.question
+                  onClick={() => alert('Enter your crypto purchase price Example: 123,450.32 or 0.00213')}
+                  className="size-5 mr-0.5 text-neutral-03 cursor-pointer duration-200 transition-opacity ease-out hover:opacity-80"
+                />
               )}
               className='!bg-neutral-04 !w-full'
             />

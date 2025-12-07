@@ -6,7 +6,7 @@ import {
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import type { IPortfolio } from '@/types'
-import { formatPrice, formatPriceWithoutDecimals } from '@/lib/utils'
+import { formatPriceWithDecimals, formatPriceWithoutDecimals } from '@/lib/utils'
 import { PortfolioEdit } from '@/components/portfolio/portfolio-item-edit'
 import { PortfolioDetails } from '@/components/portfolio/portfolio-item-details'
 import { Avatar } from '@telegram-apps/telegram-ui'
@@ -75,7 +75,7 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
                 <p
                   className={`text-sm text-foreground font-semibold  whitespace-nowrap`}
                 >
-                  {formatPrice(currentPrice)} $
+                  {formatPriceWithDecimals(currentPrice)} $
                 </p>
                 <p
                   className={`${
@@ -108,7 +108,7 @@ export const PortfolioItem: React.FC<IProps> = ({ item, onEdit, onDelete }) => {
                     'text-neutral-03 text-[8.7px] text-right font-semibold'
                   }
                 >
-                  {formatPrice(quantity)} {item.crypto.symbol.toUpperCase()}
+                  {formatPriceWithDecimals(quantity)} {item.crypto.symbol.toUpperCase()}
                 </p>
               </div>
             </div>
