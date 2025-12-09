@@ -74,8 +74,8 @@ export interface ICrypto {
 }
 
 export interface ICryptoDetails extends ICrypto {
-  markets_coin_data: IMarketsCoinData;
-  markets: ICoinGlobalMarketsData[];
+  coin_market_stats: IMarketsCoinData;
+  exchanges: ICoinGlobalMarketsData[];
 }
 
 export interface ICoinGlobalMarketsData {
