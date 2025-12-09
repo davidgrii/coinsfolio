@@ -1,20 +1,13 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Icons } from '@/components/icons';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Divider, IconButton } from '@telegram-apps/telegram-ui'
+import { IconButton } from '@telegram-apps/telegram-ui'
 
 interface IProps {
   isOpen: boolean;
   setIsOpen: (prev: boolean) => void;
-  onEdit: (_id: string) => void;
+  onEdit: (id: string) => void;
   itemId: string;
-  onDelete: (_id: string) => void;
+  onDelete: (id: string) => void;
 }
 
 export const PortfolioEdit: React.FC<IProps> = ({

@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 interface IProps {
   item: IPortfolio;
-  onEdit: (_id: string) => void;
+  onEdit: (id: string) => void;
   onDelete: (id: string) => void;
 }
 
