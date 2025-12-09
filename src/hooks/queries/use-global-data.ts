@@ -14,7 +14,6 @@ export const useGlobalData = (): UseQueryResult<IGlobalMarketData, Error> => {
 
       return await res.json();
     },
-    select: (result) => result.data,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
   });
 };

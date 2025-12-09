@@ -37,8 +37,7 @@ export const GlobalDashboard = () => {
 
   const totalMarketCapUSD = Math.floor(globalData?.total_market_cap?.usd || 0);
   const totalVolume24hUSD = Math.floor(globalData?.total_volume?.usd || 0);
-  const marketCapChange24h =
-    globalData?.market_cap_change_percentage_24h_usd || 0;
+  const marketCapChange24h = globalData?.market_cap_change_percentage_24h_usd || 0;
   const marketCapPercentageBTC = globalData?.market_cap_percentage?.btc || 0;
 
   if (!globalData || isGlobalDataLoading) return <GlobalDashboardSkeleton />;
