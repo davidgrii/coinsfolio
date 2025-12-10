@@ -163,7 +163,7 @@ export const AddCrypto: React.FC<IProps> = (
           </Button>
         </FixedLayout>
       }
-      className="!bg-base-background !h-auto !min-h-[300px] !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
+      className="!bg-base-background !h-dvh !min-h-[300px] !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
     >
       <VisuallyHidden>
         <DialogTitle>
@@ -210,7 +210,6 @@ export const AddCrypto: React.FC<IProps> = (
         ) : (
           <div className="relative w-full">
             <Input
-              autoFocus={true}
               type={'text'}
               inputMode={'text'}
               placeholder={t('add_crypto.choose')}
