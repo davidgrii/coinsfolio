@@ -51,6 +51,10 @@ export default function PortfolioPage() {
     calculateTotalPriceChange24h
   } = usePortfolioStore()
 
+  const handlePortfolioChange = () => {
+    alert('This feature is coming')
+  }
+
   const handleSortPortfolio = useCallback(() => {
     setSortedPortfolio((prev) => {
       if (!prev) return prev
@@ -156,23 +160,23 @@ export default function PortfolioPage() {
 
   return (
     <Container back={true}>
-      <SegmentedControl className="!bg-neutral-04 !p-1">
+      <SegmentedControl className="!bg-neutral-04 !p-1 !rounded-xl !h-11">
         <SegmentedControl.Item
-          onClick={() => setCurrentPortfolio('1')}
+          onClick={handlePortfolioChange}
           selected={currentPortfolio === '1'}
         >
           Profile 1
         </SegmentedControl.Item>
 
         <SegmentedControl.Item
-          onClick={() => setCurrentPortfolio('2')}
+          onClick={handlePortfolioChange}
           selected={currentPortfolio === '2'}
         >
           Profile 2
         </SegmentedControl.Item>
 
         <SegmentedControl.Item
-          onClick={() => setCurrentPortfolio('3')}
+          onClick={handlePortfolioChange}
           selected={currentPortfolio === '3'}
         >
           Profile 3
