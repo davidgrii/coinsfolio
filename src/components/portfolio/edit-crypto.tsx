@@ -100,7 +100,7 @@ export const EditCrypto: React.FC<IProps> = ({
           </DialogTitle>
         </VisuallyHidden>
 
-        <div className='flex flex-col items-center overflow-y-auto max-h-[500px] scrollbar-none pt-0.5'>
+        <div className='flex flex-col items-center overflow-y-auto max-h-[450px] scrollbar-none pt-0.5'>
           <Placeholder header={t('edit_crypto.edit_coin')} />
 
           <form className={cn('w-full flex flex-col gap-6 items-center justify-between px-3', platform === 'ios' ? 'pb-5' : 'pb-3')}>
