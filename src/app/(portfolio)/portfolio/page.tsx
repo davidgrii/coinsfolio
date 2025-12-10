@@ -7,7 +7,7 @@ import { usePortfolioStore } from '@/store/portfolio/portfolio.store'
 
 import { Container } from '@/components/container'
 import { Accordion } from '@/components/ui/accordion'
-import { List } from '@telegram-apps/telegram-ui'
+import { List, SegmentedControl, TabsList } from '@telegram-apps/telegram-ui'
 import { BalanceTableHeader } from '@/components/portfolio/balance-table-header'
 import { CryptoSkeletonList } from '@/components/crypto-skeleton-list'
 import { PortfolioItem } from '@/components/portfolio/portfolio-item'
@@ -39,6 +39,7 @@ export default function PortfolioPage() {
   const [isEditCryptoOpen, setIsEditCryptoOpen] = useState<boolean>(false)
   const [activeCryptoId, setActiveCryptoId] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+  const [currentPortfolio, setCurrentPortfolio] = useState<'1' | '2' | '3'>('1')
 
   const platform = usePlatform()
 
@@ -155,6 +156,29 @@ export default function PortfolioPage() {
 
   return (
     <Container back={true}>
+      <SegmentedControl className="!bg-neutral-04 !p-1">
+        <SegmentedControl.Item
+          onClick={() => setCurrentPortfolio('1')}
+          selected={currentPortfolio === '1'}
+        >
+          Profile 1
+        </SegmentedControl.Item>
+
+        <SegmentedControl.Item
+          onClick={() => setCurrentPortfolio('2')}
+          selected={currentPortfolio === '2'}
+        >
+          Profile 2
+        </SegmentedControl.Item>
+
+        <SegmentedControl.Item
+          onClick={() => setCurrentPortfolio('3')}
+          selected={currentPortfolio === '3'}
+        >
+          Profile 3
+        </SegmentedControl.Item>
+      </SegmentedControl>
+
       <BalanceTableHeader onSort={handleSortPortfolio} />
 
       {!sortedPortfolio || isPortfolioLoading ? (

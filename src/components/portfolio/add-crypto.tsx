@@ -163,7 +163,7 @@ export const AddCrypto: React.FC<IProps> = (
           </Button>
         </FixedLayout>
       }
-      className="!bg-base-background !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
+      className="!bg-base-background !min-h-[50vh] !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
     >
       <VisuallyHidden>
         <DialogTitle>
@@ -173,7 +173,7 @@ export const AddCrypto: React.FC<IProps> = (
 
       <Placeholder header={t('add_crypto.add_coin')} />
 
-      <form className="w-full flex flex-col gap-6 items-center justify-between px-3 pb-3">
+      <form className={cn('w-full flex flex-col gap-6 items-center justify-between px-3', platform === 'ios' ? 'pb-5' : 'pb-3')}>
         {selectedCrypto ? (
           <div
             className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[48px] !bg-neutral-04 rounded-xl',
