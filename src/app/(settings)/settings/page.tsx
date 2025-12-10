@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 
 import { Container } from '@/components/container'
-import { Accordion, Cell, IconContainer, List, Section } from '@telegram-apps/telegram-ui'
+import { Accordion, Cell, IconContainer, List, Section, Switch } from '@telegram-apps/telegram-ui'
 import { Icon28Chat } from '@telegram-apps/telegram-ui/dist/icons/28/chat'
 import { Icon28Stats } from '@telegram-apps/telegram-ui/dist/icons/28/stats'
 import { Icons } from '@/components'
@@ -15,8 +15,8 @@ import { PercentageAlerts } from '@/components/settings/percentage-alerts'
 import { VolatilityAlerts } from '@/components/settings/volatility-alerts'
 
 export default function SettingsPage() {
-  const [isPriceAlertsOpen, setIsPriceAlertsOpen] = useState(false)
   const [isExpended, setIsExpended] = useState(false)
+  const [isSmartAlertsActive, setIsSmartAlertsActive] = useState(true)
 
   const { mutateAsync: createPremiumInvoice } = useCreatePremiumInvoice()
 
@@ -31,63 +31,66 @@ export default function SettingsPage() {
   return (
     <Container back={true}>
       <List
-        className="!pt-2 !px-0 grid overflow-y-auto max-h-[76vh] scrollbar-none "
+        className="!pt-2 !px-0 grid overflow-y-auto max-h-[76vh] scrollbar-none"
       >
-        <Accordion
-          expanded={isExpended}
-          onChange={() => setIsExpended(!isExpended)}
-        >
-          <Accordion.Summary
-            before={<IconContainer><Icons.notifications className="size-7" /></IconContainer>}
-            className='bg-neutral-04 rounded-xl'
-          >
-            <span>Smart Alerts</span>
-          </Accordion.Summary>
+         <Accordion
+           expanded={isExpended}
+           onChange={() => setIsExpended(!isExpended)}
+         >
+           <Accordion.Summary
+             before={<IconContainer><Icons.notifications className="size-7" /></IconContainer>}
+             className='bg-neutral-04 rounded-xl'
+           >
+             <span>Smart Alerts</span>
+           </Accordion.Summary>
 
-          <Accordion.Content className="!bg-transparent !overflow-hidden">
-            <Section
-              header="Smart Alerts"
-              className={cn('!rounded-xl !overflow-hidden !bg-neutral-04', isExpended && '!mb-3')}
-            >
-              <PriceAlerts
-                isOpen={isPriceAlertsOpen}
-                setIsOpen={setIsPriceAlertsOpen}
-                children={
-                  <Cell
-                    before={<IconContainer><Icons.price className="size-7" /></IconContainer>}>
-                    Price Alerts
-                  </Cell>
-                }
-              />
+           <Cell
+             className='bg-neutral-04 rounded-xl'
+             Component="label"
+             after={<Switch defaultChecked onChange={() => setIsSmartAlertsActive(!isSmartAlertsActive)} />}
+             multiline
+           >
+             Turn {isSmartAlertsActive ? 'on' : 'off'} Smart Alerts
+           </Cell>
 
-              <PercentageAlerts
-                isOpen={isPriceAlertsOpen}
-                setIsOpen={setIsPriceAlertsOpen}
-                children={
-                  <Cell
-                    before={<IconContainer><Icons.percent className="size-7" /></IconContainer>}>
-                    Percentage Alerts
-                  </Cell>
-                }
-              />
+           <Accordion.Content className="!bg-transparent !overflow-hidden">
+             <Section
+               header="Smart Alerts"
+               className={cn('!rounded-xl !overflow-hidden !bg-neutral-04', isExpended && '!mb-3')}
+             >
+               <PriceAlerts
+                 children={
+                   <Cell
+                     before={<IconContainer><Icons.price className="size-7" /></IconContainer>}>
+                     Price Alerts
+                   </Cell>
+                 }
+               />
 
-              <VolatilityAlerts
-                isOpen={isPriceAlertsOpen}
-                setIsOpen={setIsPriceAlertsOpen}
-                children={
-                  <Cell
-                    before={<IconContainer><Icons.volatility className="size-7" /></IconContainer>}>
-                    Volatility Alerts
-                  </Cell>
-                }
-              />
-            </Section>
-          </Accordion.Content>
-        </Accordion>
+               <PercentageAlerts
+                 children={
+                   <Cell
+                     before={<IconContainer><Icons.percent className="size-7" /></IconContainer>}>
+                     Percentage Alerts
+                   </Cell>
+                 }
+               />
+
+               <VolatilityAlerts
+                 children={
+                   <Cell
+                     before={<IconContainer><Icons.volatility className="size-7" /></IconContainer>}>
+                     Volatility Alerts
+                   </Cell>
+                 }
+               />
+             </Section>
+           </Accordion.Content>
+         </Accordion>
 
         <Section
           header="Main Settings"
-          className="!rounded-xl !overflow-hidden !bg-neutral-04 -mt-3"
+          className="!rounded-xl !overflow-hidden !bg-neutral-04"
         >
           <Cell
             onClick={handleClickPremium}

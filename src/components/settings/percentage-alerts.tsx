@@ -29,15 +29,11 @@ import { usePortfolio } from '@/hooks/queries/use-portfolio'
 import type { MultiselectOption } from '@telegram-apps/telegram-ui/dist/components/Form/Multiselect/types'
 
 interface IProps {
-  isOpen: boolean;
-  setIsOpen: (state: boolean) => void;
   children: React.ReactNode;
 }
 
 export const PercentageAlerts: React.FC<IProps> = (
   {
-    isOpen,
-    setIsOpen,
     children
   }) => {
   const [percentage, setPercentage] = useState(10)
@@ -63,8 +59,6 @@ export const PercentageAlerts: React.FC<IProps> = (
 
   return (
     <Modal
-      open={isOpen}
-      onOpenChange={setIsOpen}
       header={<ModalHeader />}
       trigger={children}
       className="!bg-base-background backdrop-blur-lg !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
