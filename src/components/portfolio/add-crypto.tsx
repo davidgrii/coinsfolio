@@ -210,7 +210,6 @@ export const AddCrypto: React.FC<IProps> = (
         ) : (
           <div className="relative w-full">
             <Input
-              autoFocus={true}
               type={'text'}
               inputMode={'text'}
               placeholder={t('add_crypto.choose')}
