@@ -61,7 +61,7 @@ export const AddCrypto: React.FC<IProps> = (
   const [searchValue, setSearchValue] = useState('')
   const [selectedCrypto, setSelectedCrypto] = useState<ICrypto | null>(null)
   const [debouncedSearchValue] = useDebounceValue(searchValue, 300)
-  const [forceRender, setForceRender] = useState(false);
+  const [initialHeight, setInitialHeight] = useState(0);
 
   const platform = usePlatform()
   const { t } = useTranslation()
@@ -141,14 +141,18 @@ export const AddCrypto: React.FC<IProps> = (
   }
 
   useEffect(() => {
-    const handler = () => setForceRender(x => !x)
-    window.addEventListener("focusout", handler)
-    return () => window.removeEventListener("focusout", handler)
-  }, [])
+    if (isOpen) {
+      // Сохраняем высоту до того как iOS начнёт её ломать
+      setInitialHeight(window.innerHeight);
+    }
+  }, [isOpen]);
 
   return (
     <Modal
-
+      style={{
+        minHeight: initialHeight * 0.5 + "px",
+        height: initialHeight * 0.5 + "px",
+      }}
       open={isOpen}
       dismissible={!isPortfolioEmpty}
       onOpenChange={setIsOpen}
