@@ -31,7 +31,7 @@ export default function SettingsPage() {
   return (
     <Container back={true}>
       <List
-        className="!pt-2 !px-0 grid overflow-y-auto max-h-[76vh] scrollbar-none"
+        className="!pt-1 !px-0 grid overflow-y-auto max-h-[76vh] scrollbar-none !pb-[80px]"
       >
          <Accordion
            expanded={isExpended}

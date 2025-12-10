@@ -1,32 +1,20 @@
 import React, { type ChangeEvent, useMemo, useState } from 'react'
-import { CirclePlus } from 'lucide-react'
-import { ICrypto } from '@/types'
 import { useTranslation } from 'react-i18next'
 import { Icons } from '@/components/icons'
 import {
-  Avatar,
   Button,
-  Divider,
-  FixedLayout,
   Input,
-  Modal, Multiselect,
-  Placeholder, Section, Select, Slider,
-  Tappable, Textarea, VisuallyHidden
+  Modal,
+  Placeholder, Select, Slider,
+  Tappable, VisuallyHidden
 } from '@telegram-apps/telegram-ui'
 import {
   ModalHeader
 } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader'
-import { useSearchCrypto } from '@/hooks/queries/use-crypto'
-import { motion } from 'framer-motion'
-import { useDebounceValue } from 'usehooks-ts'
-import { Skeleton } from '@/components/ui/skeleton'
-import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 import { DialogTitle } from '@radix-ui/react-dialog'
-import { ANIMATE_CRYPTOS_LIST } from '@/constants'
-import { isValidNumericInput, parseNumericInput } from '@/lib/utils'
 import { usePortfolio } from '@/hooks/queries/use-portfolio'
-import type { MultiselectOption } from '@telegram-apps/telegram-ui/dist/components/Form/Multiselect/types'
+import { useCreatePriceAlerts } from '@/hooks/queries/use-smart-alerts'
 
 interface IProps {
   children: React.ReactNode;
@@ -41,7 +29,7 @@ export const PriceAlerts: React.FC<IProps> = (
   const platform = usePlatform()
   const { t } = useTranslation()
   const { data: portfolio, isLoading: isLoadingPortfolio } = usePortfolio()
-
+  const { data } = useCreatePriceAlerts()
 
   const portfolioOptions = portfolio?.map((item, index) => ({
     name: item.crypto.name,

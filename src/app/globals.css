@@ -174,5 +174,6 @@ body {
 
 /* TABS */
 .tgui-31f461ccfea23ec3 {
+    border-radius: var(--radius-xl) !important;
     background: rgb(0, 122, 255) !important;
 }
