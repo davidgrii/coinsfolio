@@ -61,7 +61,6 @@ export const AddCrypto: React.FC<IProps> = (
   const [searchValue, setSearchValue] = useState('')
   const [selectedCrypto, setSelectedCrypto] = useState<ICrypto | null>(null)
   const [debouncedSearchValue] = useDebounceValue(searchValue, 300)
-  const [initialHeight, setInitialHeight] = useState(0);
 
   const platform = usePlatform()
   const { t } = useTranslation()
@@ -140,19 +139,8 @@ export const AddCrypto: React.FC<IProps> = (
     }
   }
 
-  useEffect(() => {
-    if (isOpen) {
-      // Сохраняем высоту до того как iOS начнёт её ломать
-      setInitialHeight(window.innerHeight);
-    }
-  }, [isOpen]);
-
   return (
     <Modal
-      style={{
-        minHeight: initialHeight * 0.5 + "px",
-        height: initialHeight * 0.5 + "px",
-      }}
       open={isOpen}
       dismissible={!isPortfolioEmpty}
       onOpenChange={setIsOpen}
@@ -175,7 +163,7 @@ export const AddCrypto: React.FC<IProps> = (
           </Button>
         </FixedLayout>
       }
-      className="!bg-base-background !min-h-[50dvh] !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
+      className="!bg-base-background !min-h-[500px] !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
     >
       <VisuallyHidden>
         <DialogTitle>
