@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { CirclePlus } from 'lucide-react'
 import { ICrypto } from '@/types'
 import { useTranslation } from 'react-i18next'
@@ -61,6 +61,7 @@ export const AddCrypto: React.FC<IProps> = (
   const [searchValue, setSearchValue] = useState('')
   const [selectedCrypto, setSelectedCrypto] = useState<ICrypto | null>(null)
   const [debouncedSearchValue] = useDebounceValue(searchValue, 300)
+  const [forceRender, setForceRender] = useState(false);
 
   const platform = usePlatform()
   const { t } = useTranslation()
@@ -139,8 +140,15 @@ export const AddCrypto: React.FC<IProps> = (
     }
   }
 
+  useEffect(() => {
+    const handler = () => setForceRender(x => !x)
+    window.addEventListener("focusout", handler)
+    return () => window.removeEventListener("focusout", handler)
+  }, [])
+
   return (
     <Modal
+
       open={isOpen}
       dismissible={!isPortfolioEmpty}
       onOpenChange={setIsOpen}
