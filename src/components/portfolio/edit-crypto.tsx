@@ -99,9 +99,10 @@ export const EditCrypto: React.FC<IProps> = ({
             Edit Portfolio Modal
           </DialogTitle>
         </VisuallyHidden>
-        <div className='flex flex-col items-center overflow-y-auto max-h-[500px] scrollbar-none'>
-          <Placeholder header={t('edit_crypto.edit_coin')} />
 
+        <Placeholder header={t('edit_crypto.edit_coin')} />
+
+        <div className='flex flex-col items-center overflow-y-auto max-h-full scrollbar-none pt-0.5'>
           <form className={cn('w-full flex flex-col gap-6 items-center justify-between px-3', platform === 'ios' ? 'pb-5' : 'pb-3')}>
             {selectedCrypto && (
               <div className={cn('relative flex items-center justify-between w-full px-3 py-4 h-[50px] !bg-neutral-04 rounded-xl',
