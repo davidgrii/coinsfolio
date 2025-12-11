@@ -1,83 +1,82 @@
-'use client'
+'use client';
 
-import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store'
-import React from 'react'
-import Image from 'next/image'
-import { formatPriceWithDecimals, getDynamicFontSize } from '@/lib/utils'
+import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store';
+import React from 'react';
+import Image from 'next/image';
+import { formatPriceWithDecimals, getDynamicFontSize } from '@/lib/utils';
 import {
   Avatar,
-  Button, Divider,
+  Button,
+  Divider,
   FixedLayout,
   IconButton,
-  Modal, Placeholder, VisuallyHidden
-} from '@telegram-apps/telegram-ui'
-import {
-  ModalHeader
-} from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader'
-import { useCrypto, useFavorites } from '@/hooks/queries/use-crypto'
-import { Skeleton } from '@/components/ui/skeleton'
+  Modal,
+  Placeholder,
+  VisuallyHidden,
+} from '@telegram-apps/telegram-ui';
+import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
+import { useCrypto, useFavorites } from '@/hooks/queries/use-crypto';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   useAddFavorite,
-  useDeleteFavorite
-} from '@/hooks/queries/use-favorite-mutation'
-import { motion } from 'framer-motion'
-import { Icons } from '@/components/icons'
-import { useTranslation } from 'react-i18next'
-import { ICoinGlobalMarketsData, IMarketsCoinData } from '@/types'
-import { BINANCE_REF_URL, COINGEKO_URL, EXCHANGE_REF_URLS } from '@/constants'
-import { cn } from '@/components/ui/utils'
-import { usePlatform } from '@/hooks/use-platfrom'
-import { DialogTitle } from '@radix-ui/react-dialog'
-import { useUser } from '@/app/_providers/user-provider'
+  useDeleteFavorite,
+} from '@/hooks/queries/use-favorite-mutation';
+import { motion } from 'framer-motion';
+import { Icons } from '@/components/icons';
+import { useTranslation } from 'react-i18next';
+import { ICoinGlobalMarketsData, IMarketsCoinData } from '@/types';
+import { BINANCE_REF_URL, COINGEKO_URL, EXCHANGE_REF_URLS } from '@/constants';
+import { cn } from '@/components/ui/utils';
+import { usePlatform } from '@/hooks/use-platfrom';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { useUser } from '@/app/_providers/user-provider';
 
 function CryptoItemModalSkeleton() {
   return (
-    <div className="flex flex-col items-center justify-center px-3">
+    <div className='flex flex-col items-center justify-center px-3'>
       <Skeleton className={'animate-pulse h-[70px] w-full rounded-xl mb-8'} />
 
       <Skeleton className={'animate-pulse h-[200px] w-full rounded-xl mb-8'} />
       <Skeleton className={'animate-pulse h-[200px] w-full rounded-xl '} />
     </div>
-  )
+  );
 }
 
 // TODO: delete selectedCrypto instead of Crypto
 
 export const CryptoItemModal = () => {
-  const { userId } = useUser()
-  const { t } = useTranslation()
+  const { userId } = useUser();
+  const { t } = useTranslation();
 
-  const { isOpen, selectedCrypto, setIsOpen } = useCryptoModalStore()
-  const { data: crypto, isLoading } = useCrypto(selectedCrypto?.id || '')
-  const { data: favoriteCryptos, isLoading: isFavoriteLoading } = useFavorites()
+  const { isOpen, selectedCrypto, setIsOpen } = useCryptoModalStore();
+  const { data: crypto, isLoading } = useCrypto(selectedCrypto?.id || '');
+  const { data: favoriteCryptos, isLoading: isFavoriteLoading } = useFavorites();
 
-  const { mutate: addFavorite } = useAddFavorite()
-  const { mutate: deleteFavorite } = useDeleteFavorite()
+  const { mutate: addFavorite } = useAddFavorite();
+  const { mutate: deleteFavorite } = useDeleteFavorite();
 
-  const platform = usePlatform()
+  const platform = usePlatform();
 
-  const cryptoPrice = selectedCrypto?.current_price || selectedCrypto?.price || 0
-  const favorites = favoriteCryptos?.favorites || []
-  const isFavorite = favorites.includes(selectedCrypto?.id || '')
+  const cryptoPrice =
+    selectedCrypto?.current_price || selectedCrypto?.price || 0;
+  const favorites = favoriteCryptos?.favorites || [];
+  const isFavorite = favorites.includes(selectedCrypto?.id || '');
 
   const handleFavoriteToggle = async (cryptoId: string) => {
     if (favorites.includes(cryptoId)) {
-      deleteFavorite({ userId, cryptoId })
+      deleteFavorite({ userId, cryptoId });
     } else {
-      addFavorite({ userId, cryptoId })
+      addFavorite({ userId, cryptoId });
     }
-  }
+  };
 
   return (
     <>
       <Modal
-        header={
-          <ModalHeader
-          />
-        }
+        header={<Modal.Header />}
         open={isOpen}
         onOpenChange={setIsOpen}
-        className="!h-screen !bg-base-background"
+        className='!h-screen !bg-base-background'
       >
         <VisuallyHidden>
           <DialogTitle>Open Detail Crypto Modal</DialogTitle>
@@ -86,27 +85,31 @@ export const CryptoItemModal = () => {
         {!crypto || !selectedCrypto || isLoading ? (
           <CryptoItemModalSkeleton />
         ) : (
-          <div className={cn('px-3 scrollbar-none', platform === 'ios' || platform === 'macos' ? 'pb-16' : 'pb-24')}>
-            <div
-              className="flex justify-between w-full bg-neutral-04 items-center gap-3 px-6 py-3.5 rounded-xl select-none mb-10">
+          <div
+            className={cn(
+              'px-3 scrollbar-none',
+              platform === 'ios' || platform === 'macos' ? 'pb-16' : 'pb-24',
+            )}
+          >
+            <div className='flex justify-between w-full bg-neutral-04 items-center gap-3 px-6 py-3.5 rounded-xl select-none mb-10'>
               <div className={'flex items-center gap-2'}>
-                <div className="rounded-full overflow-hidden">
+                <div className='rounded-full overflow-hidden'>
                   <Avatar
                     size={40}
                     src={selectedCrypto.image}
                     alt={selectedCrypto.name}
-                    className="!bg-transparent"
+                    className='!bg-transparent'
                   />
                 </div>
 
-                <div className="flex flex-col items-start">
+                <div className='flex flex-col items-start'>
                   <div className={'flex gap-1 h-4 text-neutral-03'}>
-                    <p className="text-[11px] font-semibold truncate">
+                    <p className='text-[11px] font-semibold truncate'>
                       {selectedCrypto.name.length > 10
                         ? `${selectedCrypto.name.slice(0, 14)}...`
                         : selectedCrypto.name}
                     </p>
-                    <span className="w-5 text-[11px] text-muted-foreground font-medium">
+                    <span className='w-5 text-[11px] text-muted-foreground font-medium'>
                       #{selectedCrypto.market_cap_rank}
                     </span>
                   </div>
@@ -125,7 +128,7 @@ export const CryptoItemModal = () => {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.8, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="p-1 pb-[6px]"
+                  className='p-1 pb-[6px]'
                   onClick={() => handleFavoriteToggle(selectedCrypto.id)}
                 >
                   {isFavorite ? (
@@ -135,9 +138,12 @@ export const CryptoItemModal = () => {
                   )}
                 </motion.button>
 
-                <a href={`${COINGEKO_URL}${'/' + selectedCrypto.id}`}
-                   rel="noreferrer" target="_blank">
-                  <IconButton mode="bezeled" size="s">
+                <a
+                  href={`${COINGEKO_URL}${'/' + selectedCrypto.id}`}
+                  rel='noreferrer'
+                  target='_blank'
+                >
+                  <IconButton mode='bezeled' size='s'>
                     <Icons.globus />
                   </IconButton>
                 </a>
@@ -151,22 +157,23 @@ export const CryptoItemModal = () => {
             ) : null}
 
             <Modal
-              header={
-                <ModalHeader
-                />
-              }
+              header={<ModalHeader />}
               trigger={
-                <FixedLayout className={cn('px-3',
-                  (platform === 'macos') && '!bottom-18' ||
-                  (platform === 'ios') && '!bottom-22' ||
-                  '!bottom-24'
-                )}>
-                  <Button size="l" stretched mode="filled">
-                    {t('crypto_details_popup.btn')} {selectedCrypto.symbol.toUpperCase()}
+                <FixedLayout
+                  className={cn(
+                    'px-3',
+                    (platform === 'macos' && '!bottom-18') ||
+                      (platform === 'ios' && '!bottom-22') ||
+                      '!bottom-24',
+                  )}
+                >
+                  <Button size='l' stretched mode='filled'>
+                    {t('crypto_details_popup.btn')}{' '}
+                    {selectedCrypto.symbol.toUpperCase()}
                   </Button>
                 </FixedLayout>
               }
-              className="!h-[92%] !bg-base-background"
+              className='!h-[92%] !bg-base-background'
             >
               <VisuallyHidden>
                 <DialogTitle>Choose service</DialogTitle>
@@ -174,11 +181,12 @@ export const CryptoItemModal = () => {
 
               <Placeholder header={t('crypto_details_popup.exchanges')} />
 
-              <div className="flex flex-col gap-4 px-3">
+              <div className='flex flex-col gap-4 px-3'>
                 {EXCHANGE_REF_URLS.map(({ label, url }) => (
-                  <a href={url} target="_blank" rel="noreferrer" key={label}>
-                    <Button size="l" stretched mode='filled'>
-                      {t('crypto_details_popup.btn')} {selectedCrypto.symbol.toUpperCase()} on {label}
+                  <a href={url} target='_blank' rel='noreferrer' key={label}>
+                    <Button size='l' stretched mode='filled'>
+                      {t('crypto_details_popup.btn')}{' '}
+                      {selectedCrypto.symbol.toUpperCase()} on {label}
                     </Button>
                   </a>
                 ))}
@@ -188,11 +196,15 @@ export const CryptoItemModal = () => {
         )}
       </Modal>
     </>
-  )
-}
+  );
+};
 
-const DetailsCoinsData = ({ cryptoMarketStats }: { cryptoMarketStats: IMarketsCoinData }) => {
-  const { t } = useTranslation()
+const DetailsCoinsData = ({
+  cryptoMarketStats,
+}: {
+  cryptoMarketStats: IMarketsCoinData;
+}) => {
+  const { t } = useTranslation();
 
   return (
     <div className={'flex flex-col items-center justify-center w-full mb-10'}>
@@ -229,7 +241,10 @@ const DetailsCoinsData = ({ cryptoMarketStats }: { cryptoMarketStats: IMarketsCo
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.circulation_supply')}</p>
           <p>
-            {formatPriceWithDecimals(Number(cryptoMarketStats?.circulating_supply) || 0)} $
+            {formatPriceWithDecimals(
+              Number(cryptoMarketStats?.circulating_supply) || 0,
+            )}{' '}
+            $
           </p>
         </div>
 
@@ -238,7 +253,10 @@ const DetailsCoinsData = ({ cryptoMarketStats }: { cryptoMarketStats: IMarketsCo
         <div className={'flex justify-between'}>
           <p>{t('crypto_details_popup.coin_data_table.total_supply')}</p>
           <p>
-            {formatPriceWithDecimals(Number(cryptoMarketStats?.total_supply) || 0)} $
+            {formatPriceWithDecimals(
+              Number(cryptoMarketStats?.total_supply) || 0,
+            )}{' '}
+            $
           </p>
         </div>
 
@@ -250,12 +268,15 @@ const DetailsCoinsData = ({ cryptoMarketStats }: { cryptoMarketStats: IMarketsCo
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-const DetailsMarketsData = ({ cryptoMarketsData }: { cryptoMarketsData: ICoinGlobalMarketsData[] }) => {
-  const { t } = useTranslation()
+const DetailsMarketsData = ({
+  cryptoMarketsData,
+}: {
+  cryptoMarketsData: ICoinGlobalMarketsData[];
+}) => {
+  const { t } = useTranslation();
 
   return (
     <div className={'flex flex-col items-center justify-center w-full mb-16'}>
@@ -284,5 +305,5 @@ const DetailsMarketsData = ({ cryptoMarketsData }: { cryptoMarketsData: ICoinGlo
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

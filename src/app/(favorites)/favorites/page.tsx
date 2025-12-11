@@ -14,13 +14,13 @@ import {
   useDeleteFavorite,
 } from '@/hooks/queries/use-favorite-mutation';
 import { EmptyFavorites } from '@/components/favorites/empty-favorites';
-import { cn } from '@/components/ui/utils'
-import { useUser } from '@/app/_providers/user-provider'
-import { ANIMATE_CRYPTOS_LIST } from '@/constants'
+import { cn } from '@/components/ui/utils';
+import { useUser } from '@/app/_providers/user-provider';
+import { ANIMATE_CRYPTOS_LIST } from '@/constants';
+import { CryptoList } from '@/components/ui/crypto-list'
 
 export default function FavoritesPage() {
   const { userId } = useUser();
-
 
   const { data: favoriteCryptos, isLoading: isFavoriteCryptoLoading } =
     useFavorites();
@@ -47,34 +47,21 @@ export default function FavoritesPage() {
       {!favoriteCryptos || isFavoriteCryptoLoading ? (
         <CryptoSkeletonList itemsCount={10} />
       ) : (
-        <motion.div
-          initial={ANIMATE_CRYPTOS_LIST.initial}
-          animate={ANIMATE_CRYPTOS_LIST.animate}
-          exit={ANIMATE_CRYPTOS_LIST.exit}
-          transition={ANIMATE_CRYPTOS_LIST.transition}
-        >
-          <List
-            className={cn(
-              'grid gap-2 overflow-y-auto max-h-[70vh] !pb-[80px] scrollbar-none !pt-0 !px-0'
-
-            )}
-          >
-            {showEmptyMessage ? (
-              <EmptyFavorites isFavoritesEmpty={true} />
-            ) : (
-              favoriteCryptos.data.map((crypto, index) => (
-                <CryptoItem
-                  userId={userId}
-                  key={crypto.id}
-                  crypto={crypto}
-                  index={index}
-                  favorites={favoriteCryptos.favorites}
-                  onToggleFavorite={handleFavoriteToggle}
-                />
-              ))
-            )}
-          </List>
-        </motion.div>
+        <CryptoList>
+          {showEmptyMessage ? (
+            <EmptyFavorites isFavoritesEmpty={true} />
+          ) : (
+            favoriteCryptos.data.map((crypto, index) => (
+              <CryptoItem
+                key={crypto.id}
+                crypto={crypto}
+                index={index}
+                favorites={favoriteCryptos.favorites}
+                onToggleFavorite={handleFavoriteToggle}
+              />
+            ))
+          )}
+        </CryptoList>
       )}
     </Container>
   );

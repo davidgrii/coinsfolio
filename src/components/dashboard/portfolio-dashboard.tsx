@@ -1,39 +1,33 @@
-'use client'
+'use client';
 
-import React, { useEffect, useRef } from 'react'
-import { cn } from '@/components/ui/utils'
-import { usePortfolioStore } from '@/store'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useRef } from 'react';
+import { cn } from '@/components/ui/utils';
+import { usePortfolioStore } from '@/store';
+import { useTranslation } from 'react-i18next';
 import {
   formatPriceWithDecimals,
   formattedBalance,
   getClassedBasedOnValue,
-  getClassesBalance
-} from '@/lib/utils'
-import { motion } from 'framer-motion'
-import Autoplay from 'embla-carousel-autoplay'
+  getClassesBalance,
+} from '@/lib/utils';
+import { motion } from 'framer-motion';
+import Autoplay from 'embla-carousel-autoplay';
 import {
   Carousel,
   CarouselContent,
-  CarouselItem
-} from '@/components/ui/carousel'
-import {
-  Card,
-  CardContent,
-} from '@/components/ui/card'
-import { usePortfolio } from '@/hooks/queries/use-portfolio'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Divider } from '@telegram-apps/telegram-ui'
+  CarouselItem,
+} from '@/components/ui/carousel';
+import { Card, CardContent } from '@/components/ui/card';
+import { usePortfolio } from '@/hooks/queries/use-portfolio';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Divider } from '@telegram-apps/telegram-ui';
 
 function PortfolioDashboardSkeleton() {
-  return (
-    <Skeleton className={'animate-pulse h-[80px] w-full rounded-xl'} />
-  )
+  return <Skeleton className={'animate-pulse h-[80px] w-full rounded-xl'} />;
 }
 
 export const PortfolioDashboard = () => {
-
-  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio()
+  const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio();
 
   const {
     setPortfolio,
@@ -43,28 +37,29 @@ export const PortfolioDashboard = () => {
     totalPercentageChange24h,
     totalPriceChange24h,
     totalInvestedUSD,
-    calculateTotalInvestedUSD
-  } = usePortfolioStore()
+    calculateTotalInvestedUSD,
+  } = usePortfolioStore();
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const carouselRef = useRef(
-    Autoplay({ delay: 9000, stopOnInteraction: true })
-  )
+    Autoplay({ delay: 9000, stopOnInteraction: true }),
+  );
 
-  const balance = formattedBalance(Number(totalBalance.toFixed(2)))
+  const balance = formattedBalance(Number(totalBalance.toFixed(2)));
 
   useEffect(() => {
     if (portfolio) {
-      setPortfolio(portfolio)
-      calculateTotalInvestedUSD()
+      setPortfolio(portfolio);
+      calculateTotalInvestedUSD();
     }
-  }, [calculateTotalInvestedUSD, portfolio, setPortfolio])
+  }, [calculateTotalInvestedUSD, portfolio, setPortfolio]);
 
-  if (!portfolio || portfolio.length === 0 || isPortfolioLoading) return <PortfolioDashboardSkeleton />
+  if (!portfolio || portfolio.length === 0 || isPortfolioLoading)
+    return <PortfolioDashboardSkeleton />;
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <Carousel plugins={[carouselRef.current]} opts={{ loop: true }}>
         <CarouselContent className={'select-none'}>
           <CarouselItem>
@@ -88,7 +83,7 @@ export const PortfolioDashboard = () => {
                     <p
                       className={cn(
                         getClassesBalance(totalBalance, totalInvestedUSD),
-                        'text-sm font-semibold transition-colors'
+                        'text-sm font-semibold transition-colors',
                       )}
                     >
                       {balance} $
@@ -110,7 +105,10 @@ export const PortfolioDashboard = () => {
                     className={'flex gap-1.5'}
                   >
                     <p className={'text-sm font-semibold transition-colors'}>
-                      {formatPriceWithDecimals(Number(totalInvestedUSD.toFixed(2)))} $
+                      {formatPriceWithDecimals(
+                        Number(totalInvestedUSD.toFixed(2)),
+                      )}{' '}
+                      $
                     </p>
                   </motion.div>
                 </div>
@@ -139,16 +137,19 @@ export const PortfolioDashboard = () => {
                     <p
                       className={cn(
                         getClassedBasedOnValue(totalPriceChange24h),
-                        'text-sm font-semibold transition-colors'
+                        'text-sm font-semibold transition-colors',
                       )}
                     >
-                      {formatPriceWithDecimals(Number(totalPriceChange24h.toFixed(2)))} $
+                      {formatPriceWithDecimals(
+                        Number(totalPriceChange24h.toFixed(2)),
+                      )}{' '}
+                      $
                     </p>
 
                     <p
                       className={cn(
                         getClassedBasedOnValue(totalPercentageChange24h),
-                        'text-sm font-semibold w-20 text-right transition-colors'
+                        'text-sm font-semibold w-20 text-right transition-colors',
                       )}
                     >
                       {totalPercentageChange24h !== null
@@ -179,15 +180,18 @@ export const PortfolioDashboard = () => {
                     <p
                       className={cn(
                         getClassedBasedOnValue(totalProfitLoss),
-                        'text-sm font-semibold transition-colors'
+                        'text-sm font-semibold transition-colors',
                       )}
                     >
-                      {formatPriceWithDecimals(Number(totalProfitLoss.toFixed(2)))} $
+                      {formatPriceWithDecimals(
+                        Number(totalProfitLoss.toFixed(2)),
+                      )}{' '}
+                      $
                     </p>
                     <p
                       className={cn(
                         getClassedBasedOnValue(totalProfitLossPercentage),
-                        'text-sm font-semibold w-20 text-right transition-colors'
+                        'text-sm font-semibold w-20 text-right transition-colors',
                       )}
                     >
                       {totalProfitLossPercentage !== null
@@ -205,14 +209,14 @@ export const PortfolioDashboard = () => {
 
       {portfolio.length > 0 && (
         <div
-          className={
-            'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'
-          }
+          className={'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'}
         >
           <span className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'} />
-          <span className={'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'} />
+          <span
+            className={'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'}
+          />
         </div>
       )}
     </div>
-  )
-}
+  );
+};

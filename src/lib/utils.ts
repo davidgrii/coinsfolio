@@ -29,14 +29,12 @@ export const formattedBalance = (value: number) => {
 };
 
 export const isValidNumericInput = (value: string) => {
-  return /^[0-9.,]*$/.test(value)
+  return /^[0-9.,]*$/.test(value);
 };
 
 export const parseNumericInput = (value: string) => {
-  return parseFloat(
-    value
-  );
-}
+  return parseFloat(value);
+};
 
 // -- CLASSES
 export const getDynamicFontSize = (priceLength: number): string => {

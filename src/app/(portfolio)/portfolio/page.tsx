@@ -9,7 +9,6 @@ import { Container } from '@/components/container'
 import { Accordion } from '@/components/ui/accordion'
 import { List, SegmentedControl, TabsList } from '@telegram-apps/telegram-ui'
 import { BalanceTableHeader } from '@/components/portfolio/balance-table-header'
-import { CryptoSkeletonList } from '@/components/crypto-skeleton-list'
 import { PortfolioItem } from '@/components/portfolio/portfolio-item'
 import type { IUpdatedCrypto } from '@/types'
 import { usePortfolio } from '@/hooks/queries/use-portfolio'
@@ -17,7 +16,7 @@ import {
   useAddCrypto,
   useDeleteCrypto,
   useUpdateCrypto
-} from '@/hooks/queries/use-portfolio-mutation'
+} from '@/hooks/queries/use-portfolio'
 import { EditCrypto } from '@/components/portfolio/edit-crypto'
 import { AddCrypto } from '@/components/portfolio/add-crypto'
 import { cn } from '@/components/ui/utils'
@@ -25,9 +24,10 @@ import { usePlatform } from '@/hooks/use-platfrom'
 import { useUser } from '@/app/_providers/user-provider'
 import { ANIMATE_CRYPTOS_LIST } from '@/constants'
 import { PortfolioSkeletonList } from '@/components/portfolio/portfolio-skeleton-list'
+import { PortfolioSwitcher } from '@/components/portfolio/portfolio-swicther'
 
 export default function PortfolioPage() {
-  const { userId } = useUser();
+  const { userId } = useUser()
 
   const { data: portfolio, isLoading: isPortfolioLoading } = usePortfolio()
   const { mutate: deleteCrypto } = useDeleteCrypto()
@@ -39,7 +39,9 @@ export default function PortfolioPage() {
   const [isEditCryptoOpen, setIsEditCryptoOpen] = useState<boolean>(false)
   const [activeCryptoId, setActiveCryptoId] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
-  const [currentPortfolio, setCurrentPortfolio] = useState<'1' | '2' | '3'>('1')
+  const [currentPortfolio, setCurrentPortfolio] = useState<'1' | '2' | '3'>(
+    '1'
+  )
 
   const platform = usePlatform()
 
@@ -50,10 +52,6 @@ export default function PortfolioPage() {
     calculateTotalProfitLossPercentage,
     calculateTotalPriceChange24h
   } = usePortfolioStore()
-
-  const handlePortfolioChange = () => {
-    alert('This feature is coming')
-  }
 
   const handleSortPortfolio = useCallback(() => {
     setSortedPortfolio((prev) => {
@@ -76,9 +74,14 @@ export default function PortfolioPage() {
     purchasePrice: number,
     notice?: string
   ) => {
-    const isDuplicateCrypto = portfolio?.find((item) => item.cryptoId === cryptoId)
+    const isDuplicateCrypto = portfolio?.find(
+      (item) => item.cryptoId === cryptoId
+    )
 
-    if (isDuplicateCrypto) return alert('This crypto is already in your portfolio, soon we will add this feature')
+    if (isDuplicateCrypto)
+      return alert(
+        'This crypto is already in your portfolio, soon we will add this feature'
+      )
 
     const data = {
       purchasePrice,
@@ -160,28 +163,7 @@ export default function PortfolioPage() {
 
   return (
     <Container back={true}>
-      <SegmentedControl className="!bg-neutral-04 !p-1 !rounded-xl !h-11">
-        <SegmentedControl.Item
-          onClick={handlePortfolioChange}
-          selected={currentPortfolio === '1'}
-        >
-          Profile 1
-        </SegmentedControl.Item>
-
-        <SegmentedControl.Item
-          onClick={handlePortfolioChange}
-          selected={currentPortfolio === '2'}
-        >
-          Profile 2
-        </SegmentedControl.Item>
-
-        <SegmentedControl.Item
-          onClick={handlePortfolioChange}
-          selected={currentPortfolio === '3'}
-        >
-          Profile 3
-        </SegmentedControl.Item>
-      </SegmentedControl>
+      <PortfolioSwitcher />
 
       <BalanceTableHeader onSort={handleSortPortfolio} />
 
@@ -196,8 +178,11 @@ export default function PortfolioPage() {
             transition={ANIMATE_CRYPTOS_LIST.transition}
           >
             <List
-              className={cn('grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-2 !pt-0 !px-0',
-                (platform === 'ios' || platform === 'macos') ? '!pb-16' : '!pb-19'
+              className={cn(
+                'grid gap-2 overflow-y-auto max-h-[70vh] scrollbar-none -mt-2 !pt-0 !px-0',
+                platform === 'ios' || platform === 'macos'
+                  ? '!pb-16'
+                  : '!pb-19'
               )}
             >
               <Accordion type="single" collapsible className="w-full">
@@ -210,15 +195,20 @@ export default function PortfolioPage() {
                   />
                 ))}
               </Accordion>
-
             </List>
           </motion.div>
 
           <EditCrypto
             isOpen={isEditCryptoOpen}
             setIsOpen={setIsEditCryptoOpen}
-            item={sortedPortfolio.find((crypto) => crypto.cryptoId === activeCryptoId) || null}
-            onEditCrypto={(updatedData) => handleUpdateCrypto(userId, updatedData)}
+            item={
+              sortedPortfolio.find(
+                (crypto) => crypto.cryptoId === activeCryptoId
+              ) || null
+            }
+            onEditCrypto={(updatedData) =>
+              handleUpdateCrypto(userId, updatedData)
+            }
           />
         </>
       )}

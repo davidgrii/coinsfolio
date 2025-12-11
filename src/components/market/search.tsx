@@ -3,11 +3,11 @@
 import React from 'react';
 import { useSearchStore } from '@/store';
 import { useTranslation } from 'react-i18next';
-import { Input, Tappable } from '@telegram-apps/telegram-ui'
+import { Input, Tappable } from '@telegram-apps/telegram-ui';
 import { SearchIcon } from 'lucide-react';
 import { Icons } from '../icons';
-import { usePlatform } from '@/hooks/use-platfrom'
-import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom';
+import { cn } from '@/components/ui/utils';
 
 interface IProps {
   searchValue: string;
@@ -24,7 +24,7 @@ export const SearchInput: React.FC<IProps> = ({
   const { t } = useTranslation();
   const platform = usePlatform();
 
-  console.log(platform)
+  console.log(platform);
 
   const clearInput = () => {
     setSearchValue('');
@@ -45,15 +45,17 @@ export const SearchInput: React.FC<IProps> = ({
           placeholder={t('input_search.search')}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          after={searchValue && (
-            <Tappable
-              Component='div'
-              className='bg-neutral-04  rounded-xl'
-              onClick={clearInput}
-            >
-              <Icons.close />
-            </Tappable>
-          )}
+          after={
+            searchValue && (
+              <Tappable
+                Component='div'
+                className='bg-neutral-04  rounded-xl'
+                onClick={clearInput}
+              >
+                <Icons.close />
+              </Tappable>
+            )
+          }
           className={cn('outline-2 !pl-14 outline-neutral-04 !bg-transparent')}
         />
       </div>

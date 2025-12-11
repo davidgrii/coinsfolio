@@ -1,9 +1,14 @@
-import { useMutation, type UseMutationResult, useQuery, type UseQueryResult } from '@tanstack/react-query'
-import { BASE_URL } from '@/constants'
-import { useUser } from '@/app/_providers/user-provider'
+import {
+  useMutation,
+  type UseMutationResult,
+  useQuery,
+  type UseQueryResult,
+} from '@tanstack/react-query';
+import { BASE_URL } from '@/constants';
+import { useUser } from '@/app/_providers/user-provider';
 
 export const usePremium = () => {
-  const { userId } = useUser()
+  const { userId } = useUser();
 
   return useQuery({
     queryKey: ['premium', userId],
@@ -33,5 +38,5 @@ export const useCreatePremiumInvoice = () => {
 
       return await res.json();
     },
-  })
-}
+  });
+};

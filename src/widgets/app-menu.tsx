@@ -5,8 +5,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { APP_NAV_ITEMS } from '@/constants';
 import { Tabbar } from '@telegram-apps/telegram-ui';
-import { usePlatform } from '@/hooks/use-platfrom'
-import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom';
+import { cn } from '@/components/ui/utils';
 
 export const AppMenu = () => {
   const currentPage = usePathname();
@@ -29,8 +29,8 @@ export const AppMenu = () => {
             selected={href === currentPage}
             onClick={() => handleNavClick(href)}
             className={cn(
-              platform === 'ios' && '!pb-6' ||
-              platform === 'macos' && '!pb-2'
+              (platform === 'ios' && '!pb-6') ||
+                (platform === 'macos' && '!pb-2'),
             )}
           >
             <Icon className={'w-6 h-6'} />

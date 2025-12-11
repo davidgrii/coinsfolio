@@ -35,17 +35,17 @@ export const CryptoSkeletonList: React.FC<IProps> = ({
             <Skeleton className='h-1.5 w-[100px] rounded' />
           </div>
 
-            {!isPortfolio ? (
-              <button
-                className='p-1 pb-[6px]'
-              >
+          {!isPortfolio ? (
+            <button className='p-1 pb-[6px]'>
               <Icons.favorites
                 className={'w-4 h-4 animate-pulse text-neutral-04'}
               />
-              </button>
-            ) : (
-              <Icons.portfolioArrow className={'w-3 h-3 animate-pulse text-neutral-04'} />
-            )}
+            </button>
+          ) : (
+            <Icons.portfolioArrow
+              className={'w-3 h-3 animate-pulse text-neutral-04'}
+            />
+          )}
         </div>
       ))}
     </List>

@@ -10,7 +10,6 @@ import { motion } from 'framer-motion';
 import type { ICrypto } from '@/types';
 
 interface IProps {
-  userId: string;
   index: number;
   crypto: ICrypto;
   isTrendingCrypto?: boolean;
@@ -60,14 +59,12 @@ export const CryptoItem: React.FC<IProps> = ({
             <p className='text-sm leading-none'>
               {crypto.symbol.length > 10
                 ? `${crypto.symbol.slice(0, 8).toUpperCase()}...`
-                : crypto.symbol.toUpperCase()
-              }
+                : crypto.symbol.toUpperCase()}
             </p>
             <p className='text-[8.5px] font-semibold text-neutral-03 truncate'>
               {crypto.name.length > 10
                 ? `${crypto.name.slice(0, 14)}...`
-                : crypto.name
-              }
+                : crypto.name}
             </p>
           </div>
         </div>

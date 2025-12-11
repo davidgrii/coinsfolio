@@ -10,9 +10,15 @@
     "includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
   },
   "formatter": {
+    "formatWithErrors": true,
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2,
+    "indentWidth": 2
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   },
   "javascript": {
     "formatter": {
