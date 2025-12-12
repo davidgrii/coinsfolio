@@ -207,16 +207,16 @@ export const PortfolioDashboard = () => {
         </CarouselContent>
       </Carousel>
 
-      {portfolio.length > 0 && (
-        <div
-          className={'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'}
-        >
-          <span className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'} />
-          <span
-            className={'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'}
-          />
-        </div>
-      )}
+      {/*{portfolio.length > 0 && (*/}
+      {/*  <div*/}
+      {/*    className={'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'}*/}
+      {/*  >*/}
+      {/*    <span className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'} />*/}
+      {/*    <span*/}
+      {/*      className={'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </div>
   );
 };

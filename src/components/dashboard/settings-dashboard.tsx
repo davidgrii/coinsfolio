@@ -46,7 +46,8 @@ export const SettingsDashboard = () => {
                 {user.username || user.first_name}
               </Subheadline>
               <Caption level='2' weight='3' className='text-neutral-03'>
-                Premium: 30 days
+                {/*Premium: 30 days*/}
+                Beta Test: Enabled
               </Caption>
             </div>
           </div>

@@ -127,14 +127,14 @@ export const GlobalDashboard = () => {
         </CarouselContent>
       </Carousel>
 
-      <div
-        className={'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'}
-      >
-        <span className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'}></span>
-        <span
-          className={'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'}
-        ></span>
-      </div>
+      {/*<div*/}
+      {/*  className={'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'}*/}
+      {/*>*/}
+      {/*  <span className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'}></span>*/}
+      {/*  <span*/}
+      {/*    className={'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'}*/}
+      {/*  ></span>*/}
+      {/*</div>*/}
     </div>
   );
 };

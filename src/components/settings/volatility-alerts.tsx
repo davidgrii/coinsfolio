@@ -4,9 +4,9 @@ import {
   Modal,
   Placeholder,
   Select,
-  Slider,
-  VisuallyHidden,
-} from '@telegram-apps/telegram-ui';
+  Slider, Spinner,
+  VisuallyHidden
+} from '@telegram-apps/telegram-ui'
 import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
 import { cn } from '@/components/ui/utils';
 import { usePlatform } from '@/hooks/use-platfrom';
@@ -32,7 +32,7 @@ export const VolatilityAlerts: React.FC<IProps> = ({
   portfolio,
 }) => {
   const platform = usePlatform();
-  const { mutate: createPriceAlertMutation } = useCreateVolatilityAlert();
+  const { mutate: createPriceAlertMutation, isPending: isCreateAlertPending } = useCreateVolatilityAlert();
 
   const [percentage, setPercentage] = useState(5);
   const [conditionType, setConditionType] = useState<ConditionType>('above');
@@ -64,7 +64,7 @@ export const VolatilityAlerts: React.FC<IProps> = ({
         onSuccess: () => {
           setPercentage(10);
           setIsOpen(false);
-          alert('Price alert added successfully');
+          alert('Volatility alert added successfully');
         },
       },
     );
@@ -111,6 +111,19 @@ export const VolatilityAlerts: React.FC<IProps> = ({
         </div>
 
         <div className='w-full relative'>
+          <Select
+            onChange={(e) => {
+              e.target.blur()
+              setConditionType(e.target.value as ConditionType)
+            }}
+            className='!bg-neutral-04'
+          >
+            <option value='above'>Percentage Above +({percentage}) %</option>
+            <option value='below'>Percentage Below -{percentage} %</option>
+          </Select>
+        </div>
+
+        <div className='w-full relative'>
           <Select className='!bg-neutral-04'>
             {volatilityOptions.map((option, index) => (
               <option key={index} value={option}>Volatility ({option}) — {percentage}%</option>
@@ -136,7 +149,7 @@ export const VolatilityAlerts: React.FC<IProps> = ({
           disabled={!isFormCompleted}
           className='w-full'
         >
-          Save
+          {isCreateAlertPending ? <Spinner size='s' /> : 'Save'}
         </Button>
       </form>
     </Modal>

@@ -114,6 +114,7 @@ export interface IPriceAlert {
   cryptoId: string;
   condition_type: ConditionType;
   price: string;
+  is_active: boolean
 }
 
 export interface IPercentageAlert {
@@ -121,6 +122,7 @@ export interface IPercentageAlert {
   cryptoId: string;
   condition_type: ConditionType;
   percentage: string;
+  is_active: boolean
 }
 
 export interface IVolatilityAlert {
@@ -128,6 +130,7 @@ export interface IVolatilityAlert {
   cryptoId: string;
   condition_type: '1m' | '5m' | '10m' | '1h';
   percentage: string;
+  is_active: boolean
 }
 
 export type ConditionType = 'above' | 'below';

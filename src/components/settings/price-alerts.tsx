@@ -1,14 +1,14 @@
-import React, { type ChangeEvent, useEffect, useMemo, useState } from 'react';
+import React, { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { Icons } from '@/components/icons';
 import {
   Button,
   Input,
   Modal,
   Placeholder,
-  Select,
+  Select, Spinner,
   Tappable,
-  VisuallyHidden,
-} from '@telegram-apps/telegram-ui';
+  VisuallyHidden
+} from '@telegram-apps/telegram-ui'
 import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { useCreatePriceAlert } from '@/hooks/queries/use-smart-alerts';
@@ -30,7 +30,7 @@ export const PriceAlerts: React.FC<IProps> = ({
   portfolio,
 }) => {
   const platform = usePlatform();
-  const { mutate: createPriceAlertMutation } = useCreatePriceAlert();
+  const { mutate: createPriceAlertMutation, isPending: isCreateAlertPending } = useCreatePriceAlert();
 
   const [price, setPrice] = useState('');
   const [conditionType, setConditionType] = useState<ConditionType>('above');
@@ -100,8 +100,11 @@ export const PriceAlerts: React.FC<IProps> = ({
       >
         <div className='w-full relative'>
           <Select
-            onChange={(e) => setCryptoId(e.target.value)}
-            className='!bg-neutral-04'
+            onChange={(e) => {
+              setCryptoId(e.target.value)
+              e.target.blur()
+            }}
+            className='!bg-neutral-04 !focus-within:outline-none'
           >
             {portfolioOptions.map(({ name, symbol }, index) => (
               <option key={index}>
@@ -113,8 +116,11 @@ export const PriceAlerts: React.FC<IProps> = ({
 
         <div className='w-full relative'>
           <Select
-            onChange={(e) => setConditionType(e.target.value as ConditionType)}
-            className='!bg-neutral-04'
+            onChange={(e) => {
+              setConditionType(e.target.value as ConditionType)
+              e.target.blur()
+            }}
+            className='!bg-neutral-04 !focus-within:outline-none'
           >
             <option value='above'>Price Above ({price ? price : 'X'}) $</option>
             <option value='below'>Price Below ({price ? price : 'X'}) $</option>
@@ -158,7 +164,7 @@ export const PriceAlerts: React.FC<IProps> = ({
           disabled={!isFormCompleted}
           className='w-full'
         >
-          Save
+          {isCreateAlertPending ? <Spinner size='s' /> : 'Save'}
         </Button>
       </form>
     </Modal>
