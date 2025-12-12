@@ -72,6 +72,7 @@ export const PercentageAlerts: React.FC<IProps> = ({
     const data = {
       id: '',
       cryptoId,
+      is_active: true,
       percentage: String(percentage),
       condition_type: conditionType,
     };

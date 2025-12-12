@@ -52,6 +52,7 @@ export const PriceAlerts: React.FC<IProps> = ({
     const data = {
       id: '',
       cryptoId,
+      is_active: true,
       price: price,
       condition_type: conditionType,
     };
