@@ -3,13 +3,9 @@ import {
   useQuery,
   type UseQueryResult,
 } from '@tanstack/react-query';
-import type {
-  ICrypto,
-  ICryptoDetails,
-  IFavorite,
-} from '@/types';
+import type { ICrypto, ICryptoDetails, IFavorite } from '@/types';
 import { BASE_URL } from '@/constants';
-import { useUser } from '@/app/_providers/user-provider'
+import { useUser } from '@/app/_providers/user-provider';
 
 export const useInfiniteCryptos = () => {
   return useInfiniteQuery({

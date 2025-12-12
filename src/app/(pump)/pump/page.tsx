@@ -14,8 +14,9 @@ import {
   useAddFavorite,
   useDeleteFavorite,
 } from '@/hooks/queries/use-favorite-mutation';
-import { useUser } from '@/app/_providers/user-provider'
-import { ANIMATE_CRYPTOS_LIST } from '@/constants'
+import { useUser } from '@/app/_providers/user-provider';
+import { ANIMATE_CRYPTOS_LIST } from '@/constants';
+import { CryptoList } from '@/components/ui/crypto-list'
 
 export default function PumpPage() {
   const { userId } = useUser();
@@ -49,29 +50,17 @@ export default function PumpPage() {
       isFavoriteCryptosLoading ? (
         <CryptoSkeletonList itemsCount={10} />
       ) : (
-        <motion.div
-          initial={ANIMATE_CRYPTOS_LIST.initial}
-          animate={ANIMATE_CRYPTOS_LIST.animate}
-          exit={ANIMATE_CRYPTOS_LIST.exit}
-          transition={ANIMATE_CRYPTOS_LIST.transition}
-        >
-          <List
-            className={
-              'grid gap-2 overflow-y-auto max-h-[70vh] !pb-[80px] scrollbar-none !pt-0 !px-0'
-            }
-          >
-            {pumpCryptos.map((crypto, index) => (
-              <CryptoItem
-                userId={userId}
-                key={crypto.id}
-                crypto={crypto}
-                index={index}
-                favorites={favorites}
-                onToggleFavorite={handleFavoriteToggle}
-              />
-            ))}
-          </List>
-        </motion.div>
+        <CryptoList>
+          {pumpCryptos.map((crypto, index) => (
+            <CryptoItem
+              key={crypto.id}
+              crypto={crypto}
+              index={index}
+              favorites={favorites}
+              onToggleFavorite={handleFavoriteToggle}
+            />
+          ))}
+        </CryptoList>
       )}
     </Container>
   );

@@ -1,7 +1,7 @@
-import { useLaunchParams } from '@tma.js/sdk-react'
+import { useLaunchParams } from '@tma.js/sdk-react';
 
 export const usePlatform = () => {
-  const lp = useLaunchParams()
+  const lp = useLaunchParams();
 
-  return lp.tgWebAppPlatform
-}
+  return lp.tgWebAppPlatform;
+};

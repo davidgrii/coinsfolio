@@ -41,6 +41,14 @@
     "start_inviting": "Start inviting your friends and earn points for each one! The more friends you invite, the higher your rank will be, unlocking exclusive rewards and status.",
     "share": "Share your personal link below to get started!"
   },
+  "settings_page": {
+    "premium": "Premium",
+    "smart_alerts": "Smart Alerts",
+    "price_alerts": "Price ALerts",
+    "percentage_alerts": "Percentage Alerts",
+    "volatility_alerts": "Volatility Alerts"
+
+  },
   "my_portfolio_page": {
     "edit": "Edit",
     "delete": "Delete",

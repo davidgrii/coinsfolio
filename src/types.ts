@@ -1,15 +1,15 @@
 import React from 'react';
 
 export interface IUser {
-  first_name: string
-  id: number
-  is_bot?: boolean | undefined
-  is_premium?: boolean | undefined
-  last_name?: string | undefined
-  language_code?: string | undefined
-  photo_url?: string | undefined
-  username?: string | undefined
-};
+  first_name: string;
+  id: number;
+  is_bot?: boolean | undefined;
+  is_premium?: boolean | undefined;
+  last_name?: string | undefined;
+  language_code?: string | undefined;
+  photo_url?: string | undefined;
+  username?: string | undefined;
+}
 
 export interface INavItem {
   id: string;
@@ -58,8 +58,6 @@ export interface IGlobalMarketData {
   market_cap_percentage: { btc: number };
 }
 
-
-
 export interface ICrypto {
   id: string;
   name: string;
@@ -100,4 +98,40 @@ export interface IPortfolio {
   crypto: ICrypto;
 }
 
+export interface ISmartAlert {
+  id: string;
+  userId: number;
+  price_alerts: IPriceAlert[];
+  percentage_alerts: IPercentageAlert[];
+  volatility_alerts: IVolatilityAlert[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface IPriceAlert {
+  id: string;
+  cryptoId: string;
+  condition_type: ConditionType;
+  price: string;
+  is_active: boolean
+}
+
+export interface IPercentageAlert {
+  id: string;
+  cryptoId: string;
+  condition_type: ConditionType;
+  percentage: string;
+  is_active: boolean
+}
+
+export interface IVolatilityAlert {
+  id: string;
+  cryptoId: string;
+  condition_type: '1m' | '5m' | '10m' | '1h';
+  percentage: string;
+  is_active: boolean
+}
+
+export type ConditionType = 'above' | 'below';
 export type IconProps = React.HTMLAttributes<SVGElement>;

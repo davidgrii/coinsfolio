@@ -5,8 +5,6 @@ import { CATEGORIES_NAV_ITEMS } from '@/constants';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { InlineButtons } from '@telegram-apps/telegram-ui';
-import { InlineButtonsItem } from '@telegram-apps/telegram-ui/dist/components/Blocks/InlineButtons/components/InlineButtonsItem/InlineButtonsItem';
-import { QrCode } from 'lucide-react';
 import { cn } from '@/components/ui/utils';
 
 export const Categories = () => {
@@ -22,7 +20,7 @@ export const Categories = () => {
     <>
       <InlineButtons mode='gray' className='!gap-2'>
         {CATEGORIES_NAV_ITEMS.map(({ id, href, key, Icon }) => (
-          <InlineButtonsItem
+          <InlineButtons.Item
             key={id}
             text={t(`CATEGORIES_NAV_ITEMS.${key}`)}
             onClick={() => handleClick(href)}
@@ -33,7 +31,7 @@ export const Categories = () => {
             ) : (
               <Icon className='w-5 h-5' />
             )}
-          </InlineButtonsItem>
+          </InlineButtons.Item>
         ))}
       </InlineButtons>
     </>

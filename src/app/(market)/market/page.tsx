@@ -1,80 +1,81 @@
-'use client';
+'use client'
 
-import { useSearchStore } from 'src/store';
-import React, { useMemo, useRef, useState } from 'react';
+import { useSearchStore } from 'src/store'
+import React, { useMemo, useRef, useState } from 'react'
 
-import { useIntersection } from '@/hooks/use-intersection';
-import { Container } from '@/components/container';
-import { Categories } from '@/components/categories';
-import { SearchInput } from '@/components/market/search';
-import { CryptoTableHeader } from '@/components/crypto-table-header';
-import { CryptoSkeletonList } from '@/components/crypto-skeleton-list';
-import { CryptoItem, Icons } from '@/components';
-import { List, Spinner } from '@telegram-apps/telegram-ui';
-import { motion } from 'framer-motion';
+import { useIntersection } from '@/hooks/use-intersection'
+import { Container } from '@/components/container'
+import { Categories } from '@/components/categories'
+import { SearchInput } from '@/components/market/search'
+import { CryptoTableHeader } from '@/components/crypto-table-header'
+import { CryptoSkeletonList } from '@/components/crypto-skeleton-list'
+import { CryptoItem, Icons } from '@/components'
+import { List, Spinner } from '@telegram-apps/telegram-ui'
+import { motion } from 'framer-motion'
 import {
   useInfiniteCryptos,
-  useSearchCrypto,
-} from '@/hooks/queries/use-crypto';
+  useSearchCrypto
+} from '@/hooks/queries/use-crypto'
 import {
   useAddFavorite,
-  useDeleteFavorite,
-} from '@/hooks/queries/use-favorite-mutation';
-import { useFavorites } from '@/hooks/queries/use-crypto';
-import { useDebounceValue } from 'usehooks-ts';
+  useDeleteFavorite
+} from '@/hooks/queries/use-favorite-mutation'
+import { useFavorites } from '@/hooks/queries/use-crypto'
+import { useDebounceValue } from 'usehooks-ts'
 import { useUser } from '@/app/_providers/user-provider'
 import { ANIMATE_CRYPTOS_LIST } from '@/constants'
+import { CryptoList } from '@/components/ui/crypto-list'
 
 export default function MarketPage() {
-  const { userId } = useUser();
+  const { userId } = useUser()
 
-  const [searchValue, setSearchValue] = useState('');
-  const [debouncedSearchValue] = useDebounceValue(searchValue, 300);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [searchValue, setSearchValue] = useState('')
+  const [debouncedSearchValue] = useDebounceValue(searchValue, 300)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const cryptoQueryParams = useMemo(
     () => ({
       query: debouncedSearchValue || '',
       pageParam: 1,
-      limit: 50,
+      limit: 50
     }),
-    [debouncedSearchValue],
-  );
+    [debouncedSearchValue]
+  )
 
   const {
     data: rawCryptoPages,
     isLoading: isCryptosLoading,
     fetchNextPage,
     hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteCryptos();
+    isFetchingNextPage
+  } = useInfiniteCryptos()
   const { data: searchResults, isLoading: isSearchResultsLoading } =
-    useSearchCrypto(cryptoQueryParams);
+    useSearchCrypto(cryptoQueryParams)
   const { data: favoriteCryptos, isLoading: isFavoriteLoading } =
-    useFavorites();
-  const { isSearchOpen } = useSearchStore();
+    useFavorites()
+  const { isSearchOpen } = useSearchStore()
 
-  const { mutate: addFavorite } = useAddFavorite();
-  const { mutate: deleteFavorite } = useDeleteFavorite();
+  const { mutate: addFavorite } = useAddFavorite()
+  const { mutate: deleteFavorite } = useDeleteFavorite()
 
-  const favorites = favoriteCryptos?.favorites || [];
+  const favorites = favoriteCryptos?.favorites || []
 
   const cursorRef = useIntersection(async () => {
-    await fetchNextPage();
-  });
+    await fetchNextPage()
+  })
 
   const cryptosItems = useMemo(
     () => rawCryptoPages?.pages.flatMap((page) => page.data) ?? [],
-    [rawCryptoPages],
-  );
+    [rawCryptoPages]
+  )
 
   const handleFavoriteToggle = async (cryptoId: string) => {
     if (favorites.includes(cryptoId)) {
-      deleteFavorite({ userId, cryptoId });
+      deleteFavorite({ userId, cryptoId })
     } else {
-      addFavorite({ userId, cryptoId });
+      addFavorite({ userId, cryptoId })
     }
-  };
+  }
 
   return (
     <Container back={false}>
@@ -93,54 +94,41 @@ export default function MarketPage() {
       {!cryptosItems || isCryptosLoading ? (
         <CryptoSkeletonList itemsCount={10} />
       ) : (
-        <motion.div
-          initial={ANIMATE_CRYPTOS_LIST.initial}
-          animate={ANIMATE_CRYPTOS_LIST.animate}
-          exit={ANIMATE_CRYPTOS_LIST.exit}
-          transition={ANIMATE_CRYPTOS_LIST.transition}
-        >
-          <List
-            className={
-              'grid gap-2 overflow-y-auto overflow-x-hidden max-h-[70vh] !pb-[80px] scrollbar-none !pt-0 !px-0'
-            }
-          >
-            {searchResults
-              ? searchResults.map((crypto, index) => (
-                  <CryptoItem
-                    userId={userId}
-                    key={crypto.id}
-                    crypto={crypto}
-                    index={index}
-                    favorites={favorites}
-                    onToggleFavorite={handleFavoriteToggle}
-                  />
-                ))
-              : cryptosItems.map((crypto, index) => (
-                  <CryptoItem
-                    userId={userId}
-                    key={crypto.id}
-                    crypto={crypto}
-                    index={index}
-                    favorites={favorites}
-                    onToggleFavorite={handleFavoriteToggle}
-                  />
-                )
-              )
-            }
+        <CryptoList>
+          {searchResults ? (
+            searchResults.map((crypto, index) => (
+              <CryptoItem
+                key={crypto.id}
+                crypto={crypto}
+                index={index}
+                favorites={favorites}
+                onToggleFavorite={handleFavoriteToggle}
+              />
+            ))
+          ) : (
+            cryptosItems.map((crypto, index) => (
+              <CryptoItem
+                key={crypto.id}
+                crypto={crypto}
+                index={index}
+                favorites={favorites}
+                onToggleFavorite={handleFavoriteToggle}
+              />
+            ))
+          )}
 
-            {!searchValue ? (
-              <div ref={cursorRef}>
-                <LoadMoreIndicator
-                  hasNextPage={hasNextPage}
-                  isFetchingNextPage={isFetchingNextPage}
-                />
-              </div>
-            ) : null}
-          </List>
-        </motion.div>
+          {!searchValue ? (
+            <div ref={cursorRef}>
+              <LoadMoreIndicator
+                hasNextPage={hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+              />
+            </div>
+          ) : null}
+        </CryptoList>
       )}
     </Container>
-  );
+  )
 }
 
 interface IProps {
@@ -150,10 +138,15 @@ interface IProps {
 }
 
 const LoadMoreIndicator: React.FC<IProps> = ({
-  hasNextPage,
-  isFetchingNextPage,
-}) => {
-  if (hasNextPage && !isFetchingNextPage) return <div className='mx-auto w-fit'><Spinner size='m' /></div>
+                                               hasNextPage,
+                                               isFetchingNextPage
+                                             }) => {
+  if (hasNextPage && !isFetchingNextPage)
+    return (
+      <div className="mx-auto w-fit">
+        <Spinner size="m" />
+      </div>
+    )
 
   return (
     <motion.div
@@ -164,9 +157,9 @@ const LoadMoreIndicator: React.FC<IProps> = ({
     >
       {!hasNextPage ? (
         <div className={'flex justify-center gap-2 items-center'}>
-          <span className='relative flex h-3 w-3'>
-            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75'></span>
-            <span className='relative inline-flex rounded-full h-3 w-3 bg-[#007AFF]'></span>
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#007AFF]"></span>
           </span>
 
           <span className={'text-sm'}>No more data...</span>
@@ -181,5 +174,5 @@ const LoadMoreIndicator: React.FC<IProps> = ({
         )
       )}
     </motion.div>
-  );
-};
+  )
+}

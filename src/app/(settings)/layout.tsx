@@ -1,14 +1,11 @@
 import React from 'react';
-import { AppDashboard, AppMenu } from '@/components';
-import { CryptoItemModal } from '@/components/crypto-detail-modal'
+import { AppDashboard } from '@/components';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AppDashboard variant={'settings'} />
       {children}
-      <AppMenu />
-      <CryptoItemModal />
     </>
   );
 }

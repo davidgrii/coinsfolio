@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { type IPortfolio } from '@/types'
+import { type IPortfolio } from '@/types';
 
 export interface IPortfolioStore {
   portfolio: IPortfolio[];

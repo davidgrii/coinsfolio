@@ -22,9 +22,7 @@ import { formatPriceWithCommas, getMarketCapChangeClass } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function GlobalDashboardSkeleton() {
-  return (
-    <Skeleton className={'animate-pulse h-[70px] w-full rounded-xl'} />
-  );
+  return <Skeleton className={'animate-pulse h-[70px] w-full rounded-xl'} />;
 }
 
 export const GlobalDashboard = () => {
@@ -37,7 +35,8 @@ export const GlobalDashboard = () => {
 
   const totalMarketCapUSD = Math.floor(globalData?.total_market_cap?.usd || 0);
   const totalVolume24hUSD = Math.floor(globalData?.total_volume?.usd || 0);
-  const marketCapChange24h = globalData?.market_cap_change_percentage_24h_usd || 0;
+  const marketCapChange24h =
+    globalData?.market_cap_change_percentage_24h_usd || 0;
   const marketCapPercentageBTC = globalData?.market_cap_percentage?.btc || 0;
 
   if (!globalData || isGlobalDataLoading) return <GlobalDashboardSkeleton />;
@@ -110,13 +109,13 @@ export const GlobalDashboard = () => {
                   transition={{ duration: 1.1 }}
                   className={'text-right leading-none space-y-0.5'}
                 >
-                <span
-                  className={
-                    'flex justify-end font-semibold tracking-tight text-xs text-neutral-03 h-4'
-                  }
-                >
-                  {t('dashboard.dominance')}
-                </span>
+                  <span
+                    className={
+                      'flex justify-end font-semibold tracking-tight text-xs text-neutral-03 h-4'
+                    }
+                  >
+                    {t('dashboard.dominance')}
+                  </span>
 
                   <p className={'text-sm text-foreground font-semibold'}>
                     BTC {marketCapPercentageBTC.toFixed(2)} %
@@ -128,18 +127,14 @@ export const GlobalDashboard = () => {
         </CarouselContent>
       </Carousel>
 
-      <div
-        className={
-          'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'
-        }
-      >
-        <span className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'}></span>
-        <span
-          className={
-            'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'
-          }
-        ></span>
-      </div>
+      {/*<div*/}
+      {/*  className={'flex gap-2 absolute bottom-1.5 left-1/2 -translate-x-1/2'}*/}
+      {/*>*/}
+      {/*  <span className={'w-1.5 h-1.5 rounded-full bg-[#D9D9D9]'}></span>*/}
+      {/*  <span*/}
+      {/*    className={'w-1.5 h-1.5 rounded-full border-[#D9D9D9]/65 border'}*/}
+      {/*  ></span>*/}
+      {/*</div>*/}
     </div>
   );
 };

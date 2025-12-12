@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Icons } from '@/components/icons';
 import {
   Avatar,
-  Button,
+  Button, Cell, Checkbox,
   Divider,
-  FixedLayout,
+  FixedLayout, IconContainer,
   Input,
   Modal,
   Multiselect,
@@ -35,6 +35,7 @@ import {
   useCreatePercentageAlert,
   useCreatePriceAlert,
 } from '@/hooks/queries/use-smart-alerts';
+import { Icon28Stats } from '@telegram-apps/telegram-ui/dist/icons/28/stats'
 
 interface IProps {
   isOpen: boolean;
@@ -43,7 +44,7 @@ interface IProps {
   portfolio: IPortfolio[] | undefined;
 }
 
-export const PercentageAlerts: React.FC<IProps> = ({
+export const ActiveSmartAlerts: React.FC<IProps> = ({
   isOpen,
   setIsOpen,
   children,
@@ -52,48 +53,13 @@ export const PercentageAlerts: React.FC<IProps> = ({
   const platform = usePlatform();
   const { mutate: createPercentageAlertMutation, isPending: isCreateAlertPending } = useCreatePercentageAlert();
 
-  const [percentage, setPercentage] = useState(10);
-  const [cryptoId, setCryptoId] = useState('');
-  const [conditionType, setConditionType] = useState<ConditionType>('above');
+  const [cryptoId, setCryptoId] = useState('')
 
-  const portfolioOptions =
-    portfolio?.map((item, index) => ({
-      name: item.crypto.name,
-      symbol: item.crypto.symbol,
-    })) || [];
-
-  const isFormCompleted = percentage && cryptoId && conditionType;
-
-  const handleChangePercentage = (value: number) => {
-    setPercentage(value);
-  };
+  const isFormCompleted = true
 
   const handleSubmit = () => {
-    const data = {
-      id: '',
-      cryptoId,
-      is_active: true,
-      percentage: String(percentage),
-      condition_type: conditionType,
-    };
 
-    createPercentageAlertMutation(
-      { data: data },
-      {
-        onSuccess: () => {
-          setPercentage(10);
-          setIsOpen(false);
-          alert('Percentage alert added successfully');
-        },
-      },
-    );
   };
-
-  useEffect(() => {
-    if (portfolio?.length) {
-      setCryptoId(portfolio?.[0]?.cryptoId);
-    }
-  }, [portfolio]);
 
   return (
     <Modal
@@ -107,7 +73,7 @@ export const PercentageAlerts: React.FC<IProps> = ({
         <DialogTitle>Add Portfolio Modal</DialogTitle>
       </VisuallyHidden>
 
-      <Placeholder header={'Percentage Alerts'} />
+      <Placeholder header={'Active Smart Alerts'}/>
 
       <form
         onSubmit={(e) => {
@@ -119,55 +85,29 @@ export const PercentageAlerts: React.FC<IProps> = ({
           platform === 'ios' ? 'pb-5' : 'pb-3',
         )}
       >
-        <div className='w-full relative'>
-          <Select
-            onChange={(e) => {
-              e.target.blur()
-              setCryptoId(e.target.value)
-            }}
-            className='!bg-neutral-04'
+        <Section
+          className='!rounded-xl !overflow-hidden !bg-neutral-04 !w-full'
+        >
+          <Cell
+            before={
+              <IconContainer>
+                <Icons.premium className='size-[24px] m-0.5' />
+              </IconContainer>
+            }
+            after={<Checkbox name="checkbox" value={cryptoId}/>}
           >
-            {portfolioOptions.map(({ name, symbol }, index) => (
-              <option key={index}>
-                {name} - ({symbol.toUpperCase()})
-              </option>
-            ))}
-          </Select>
-        </div>
-
-        <div className='w-full relative'>
-          <Select
-            autoFocus={false}
-            onChange={(e) => {
-              e.target.blur()
-              setConditionType(e.target.value as ConditionType)
-            }}
-            className='!bg-neutral-04'
-          >
-            <option value='above'>Percentage Above +({percentage}) %</option>
-            <option value='below'>Percentage Below -{percentage} %</option>
-          </Select>
-        </div>
-
-        <div className='w-full relative'>
-          <Slider
-            step={5}
-            min={5}
-            max={100}
-            defaultValue={percentage}
-            onChange={handleChangePercentage}
-            className='!bg-neutral-04 rounded-xl'
-          />
-        </div>
+            Bitcoin
+          </Cell>
+        </Section>
 
         <Button
           size='l'
-          type='submit'
           mode='filled'
+          type='submit'
           disabled={!isFormCompleted}
           className='w-full'
         >
-          {isCreateAlertPending ? <Spinner size='s' /> : 'Save'}
+          {isCreateAlertPending ? <Spinner size='s' /> : 'Delete'}
         </Button>
       </form>
     </Modal>

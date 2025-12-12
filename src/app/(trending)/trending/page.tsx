@@ -1,7 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
-
 import { Container } from '@/components/container'
 import { Categories } from '@/components/categories'
 import { CryptoTableHeader } from '@/components/crypto-table-header'
@@ -11,22 +9,23 @@ import {
   useAddFavorite,
   useDeleteFavorite
 } from '@/hooks/queries/use-favorite-mutation'
-import { List } from '@telegram-apps/telegram-ui'
 import { CryptoItem } from '@/components'
 import React from 'react'
 import { useUser } from '@/app/_providers/user-provider'
-import { ANIMATE_CRYPTOS_LIST } from '@/constants'
+import { CryptoList } from '@/components/ui/crypto-list'
 
 export default function TrendingPage() {
   const { userId } = useUser()
 
-  const { data: trendingCryptos, isLoading: isTrendingCryptosLoading } = useTrendingCryptos()
-  const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } = useFavorites()
+  const { data: trendingCryptos, isLoading: isTrendingCryptosLoading } =
+    useTrendingCryptos()
+  const { data: favoriteCryptos, isLoading: isFavoriteCryptosLoading } =
+    useFavorites()
 
   const { mutate: addFavorite } = useAddFavorite()
   const { mutate: deleteFavorite } = useDeleteFavorite()
 
-  const favorites = favoriteCryptos?.favorites || [];
+  const favorites = favoriteCryptos?.favorites || []
 
   const handleFavoriteToggle = async (cryptoId: string) => {
     if (favorites.includes(cryptoId)) {
@@ -47,30 +46,18 @@ export default function TrendingPage() {
       isFavoriteCryptosLoading ? (
         <CryptoSkeletonList itemsCount={10} />
       ) : (
-        <motion.div
-          initial={ANIMATE_CRYPTOS_LIST.initial}
-          animate={ANIMATE_CRYPTOS_LIST.animate}
-          exit={ANIMATE_CRYPTOS_LIST.exit}
-          transition={ANIMATE_CRYPTOS_LIST.transition}
-        >
-          <List
-            className={
-              'grid gap-2 overflow-y-auto max-h-[70vh] !pb-[80px] scrollbar-none !pt-0 !px-0'
-            }
-          >
-            {trendingCryptos.map((crypto, index) => (
-              <CryptoItem
-                isTrendingCrypto={true}
-                userId={userId}
-                index={index}
-                key={crypto.id}
-                crypto={crypto}
-                favorites={favorites}
-                onToggleFavorite={handleFavoriteToggle}
-              />
-            ))}
-          </List>
-        </motion.div>
+        <CryptoList>
+          {trendingCryptos.map((crypto, index) => (
+            <CryptoItem
+              isTrendingCrypto={true}
+              index={index}
+              key={crypto.id}
+              crypto={crypto}
+              favorites={favorites}
+              onToggleFavorite={handleFavoriteToggle}
+            />
+          ))}
+        </CryptoList>
       )}
     </Container>
   )

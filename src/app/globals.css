@@ -2,178 +2,180 @@
 @import "tw-animate-css";
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 @theme {
-    --font-sans: 'Aileron', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans:
+    "Aileron", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-    --color-base-background: rgba(23, 33, 43);
-    --color-base-foreground: rgb(255, 255, 255);
+  --color-base-background: rgba(23, 33, 43);
+  --color-base-foreground: rgb(255, 255, 255);
 
-    --color-primary: rgb(0, 122, 255);
-    --color-secondary: rgb(106, 179, 243);
+  --color-primary: rgb(0, 122, 255);
+  --color-secondary: rgb(106, 179, 243);
 
-    --color-neutral-01: rgb(255, 255, 255);
-    --color-neutral-02: rgb(255, 255, 255);
-    --color-neutral-03: rgb(170, 170, 170);
-    --color-neutral-04: rgba(255, 255, 255, 0.08);
-    --color-neutral-05: #78797e;
+  --color-neutral-01: rgb(255, 255, 255);
+  --color-neutral-02: rgb(255, 255, 255);
+  --color-neutral-03: rgb(170, 170, 170);
+  --color-neutral-04: rgba(255, 255, 255, 0.08);
+  --color-neutral-05: #78797e;
 
-    --color-pink-01: rgba(53, 13, 42, 0.4);
-    --color-pink-02: rgba(245, 211, 214, 1);
+  --color-pink-01: rgba(53, 13, 42, 0.4);
+  --color-pink-02: rgba(245, 211, 214, 1);
 
-    --color-specials-success: #03cc9c;
-    --color-specials-danger: rgb(236, 57, 66);
+  --color-specials-success: #03cc9c;
+  --color-specials-danger: rgb(236, 57, 66);
 
-    --text-heading-h0: 6rem;
-    --text-heading-h0--line-height: 6rem;
-    --text-heading-h0--letter-spacing: 0;
-    --text-heading-h0--font-weight: 600;
+  --text-heading-h0: 6rem;
+  --text-heading-h0--line-height: 6rem;
+  --text-heading-h0--letter-spacing: 0;
+  --text-heading-h0--font-weight: 600;
 
-    --text-heading-h1: 4rem;
-    --text-heading-h1--line-height: 4.5rem;
-    --text-heading-h1--letter-spacing: 0;
-    --text-heading-h1--font-weight: 600;
+  --text-heading-h1: 4rem;
+  --text-heading-h1--line-height: 4.5rem;
+  --text-heading-h1--letter-spacing: 0;
+  --text-heading-h1--font-weight: 600;
 
-    --text-heading-h2: 2.25rem;
-    --text-heading-h2--line-height: 2.5rem;
-    --text-heading-h2--letter-spacing: 0;
-    --text-heading-h2--font-weight: 600;
+  --text-heading-h2: 2.25rem;
+  --text-heading-h2--line-height: 2.5rem;
+  --text-heading-h2--letter-spacing: 0;
+  --text-heading-h2--font-weight: 600;
 
-    --text-heading-h3: 1.5rem;
-    --text-heading-h3--line-height: 1.5rem;
-    --text-heading-h3--letter-spacing: 0;
-    --text-heading-h3--font-weight: 600;
+  --text-heading-h3: 1.5rem;
+  --text-heading-h3--line-height: 1.5rem;
+  --text-heading-h3--letter-spacing: 0;
+  --text-heading-h3--font-weight: 600;
 
-    --text-heading-h4: 1.375rem;
-    --text-heading-h4--line-height: 1.5rem;
-    --text-heading-h4--letter-spacing: 0;
-    --text-heading-h4--font-weight: 600;
+  --text-heading-h4: 1.375rem;
+  --text-heading-h4--line-height: 1.5rem;
+  --text-heading-h4--letter-spacing: 0;
+  --text-heading-h4--font-weight: 600;
 
-    --text-body-sm: 0.875rem;
-    --text-body-sm--line-height: 1rem;
-    --text-body-sm--letter-spacing: 0;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1rem;
+  --text-body-sm--letter-spacing: 0;
 
-    --text-body-md: 1rem;
-    --text-body-md--line-height: 1.25rem;
-    --text-body-md--letter-spacing: 0;
+  --text-body-md: 1rem;
+  --text-body-md--line-height: 1.25rem;
+  --text-body-md--letter-spacing: 0;
 
-    --text-body-lg: 1.125rem;
-    --text-body-lg--line-height: 1.5rem;
-    --text-body-lg--letter-spacing: 0;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.5rem;
+  --text-body-lg--letter-spacing: 0;
 
-    --text-label: 0.75rem;
-    --text-label--line-height: 0.75rem;
-    --text-label--letter-spacing: 0;
+  --text-label: 0.75rem;
+  --text-label--line-height: 0.75rem;
+  --text-label--letter-spacing: 0;
 
-    --blur-48: 48px;
+  --blur-48: 48px;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .scrollbar::-webkit-scrollbar {
-    width: 4px;
+  width: 4px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-    border-radius: 6px;
-    background: #fff;
+  border-radius: 6px;
+  background: #fff;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    background: #dbdadd;
-    border-radius: 6px;
+  background: #dbdadd;
+  border-radius: 6px;
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #dbdadd;
+  background: #dbdadd;
 }
 
 body {
-    font-weight: 600;
-    box-sizing: border-box;
-    text-rendering: optimizeSpeed;
+  font-weight: 600;
+  box-sizing: border-box;
+  text-rendering: optimizeSpeed;
 }
 
 * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(90, 90, 90, 0.3) transparent;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(90, 90, 90, 0.3) transparent;
 }
 
 *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-    background-color: transparent;
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-    border-radius: 6px;
-    background-color: rgba(90, 90, 90, 0.3);
+  border-radius: 6px;
+  background-color: rgba(90, 90, 90, 0.3);
 }
 
 *::-webkit-scrollbar-corner {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .scrollbar-none::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .scrollbar-none {
-    -ms-overflow-style: none;  /* IE и Edge */
-    scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 /*         TG      */
 
 .tgui-8ca550c2fc85eff5 {
-    box-sizing: border-box !important;
-    padding: 0 !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
 }
 
 .tgui-8ca550c2fc85eff5 {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
 
 .tgui-8e15431b81f6601e .tgui-db9be63c4fecf79b {
-    background-color: var(--color-neutral-04) !important;
+  background-color: var(--color-neutral-04) !important;
 }
 
 .ahn_5Da1oc93tekLh6BQ {
-    background-color: var(--color-neutral-04) !important;
+  background-color: var(--color-neutral-04) !important;
 }
 
 /* SELECT */
 .tgui-a0742fd4c73756f7 {
-    background: initial !important;
+  background: initial !important;
 }
 
 /* CELL */
 .tgui-4b78bed6e925088e {
-    background: initial !important;
+  background: initial !important;
 }
 
 .tgui-8e15431b81f6601e .tgui-db9be63c4fecf79b {
-    background: transparent !important;
+  background: transparent !important;
 }
 
 /* TABS */
 .tgui-31f461ccfea23ec3 {
-    border-radius: var(--radius-xl) !important;
-    background: rgb(0, 122, 255) !important;
+  border-radius: var(--radius-xl) !important;
+  background: rgb(0, 122, 255) !important;
 }
