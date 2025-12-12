@@ -51,23 +51,23 @@ export const VolatilityAlerts: React.FC<IProps> = ({
   };
 
   const handleSubmit = () => {
-    const data = {
-      id: '',
-      cryptoId,
-      percentage: String(percentage),
-      condition_type: conditionType,
-    };
-
-    createPriceAlertMutation(
-      { data: data },
-      {
-        onSuccess: () => {
-          setPercentage(10);
-          setIsOpen(false);
-          alert('Volatility alert added successfully');
-        },
-      },
-    );
+    // const data = {
+    //   id: '',
+    //   cryptoId,
+    //   percentage: String(percentage),
+    //   condition_type: conditionType,
+    // };
+    //
+    // createPriceAlertMutation(
+    //   { data: data },
+    //   {
+    //     onSuccess: () => {
+    //       setPercentage(10);
+    //       setIsOpen(false);
+    //       alert('Volatility alert added successfully');
+    //     },
+    //   },
+    // );
   };
 
   useEffect(() => {
