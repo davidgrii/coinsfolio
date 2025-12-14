@@ -98,17 +98,6 @@ export interface IPortfolio {
   crypto: ICrypto;
 }
 
-export interface ISmartAlert {
-  id: string;
-  userId: number;
-  price_alerts: IPriceAlert[];
-  percentage_alerts: IPercentageAlert[];
-  volatility_alerts: IVolatilityAlert[];
-
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
 export interface IPriceAlert {
   id: string;
   cryptoId: string;

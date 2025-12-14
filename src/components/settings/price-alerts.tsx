@@ -38,6 +38,7 @@ export const PriceAlerts: React.FC<IProps> = ({
 
   const portfolioOptions =
     portfolio?.map((item, index) => ({
+      cryptoId: item.cryptoId,
       name: item.crypto.name,
       symbol: item.crypto.symbol,
     })) || [];
@@ -107,8 +108,8 @@ export const PriceAlerts: React.FC<IProps> = ({
             }}
             className='!bg-neutral-04 !focus-within:outline-none'
           >
-            {portfolioOptions.map(({ name, symbol }, index) => (
-              <option key={index}>
+            {portfolioOptions.map(({ cryptoId, name, symbol }, index) => (
+              <option key={index} value={cryptoId}>
                 {name} - ({symbol.toUpperCase()})
               </option>
             ))}

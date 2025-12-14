@@ -1,11 +1,7 @@
-import React, { type ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { CirclePlus } from 'lucide-react';
-import { type ConditionType, ICrypto, type IPortfolio } from '@/types';
-import { useTranslation } from 'react-i18next';
-import { Icons } from '@/components/icons';
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
-  Button, Cell, Checkbox,
+  Button, Caption, Cell, Checkbox,
   Divider,
   FixedLayout, IconContainer,
   Input,
@@ -19,47 +15,69 @@ import {
   Textarea,
   VisuallyHidden
 } from '@telegram-apps/telegram-ui'
-import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
-import { useSearchCrypto } from '@/hooks/queries/use-crypto';
-import { motion } from 'framer-motion';
-import { useDebounceValue } from 'usehooks-ts';
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/components/ui/utils';
-import { usePlatform } from '@/hooks/use-platfrom';
-import { DialogTitle } from '@radix-ui/react-dialog';
-import { ANIMATE_CRYPTOS_LIST } from '@/constants';
-import { isValidNumericInput, parseNumericInput } from '@/lib/utils';
-import { usePortfolio } from '@/hooks/queries/use-portfolio';
-import type { MultiselectOption } from '@telegram-apps/telegram-ui/dist/components/Form/Multiselect/types';
 import {
-  useCreatePercentageAlert,
-  useCreatePriceAlert,
-} from '@/hooks/queries/use-smart-alerts';
-import { Icon28Stats } from '@telegram-apps/telegram-ui/dist/icons/28/stats'
+  ModalHeader
+} from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader'
+import { cn } from '@/components/ui/utils'
+import { usePlatform } from '@/hooks/use-platfrom'
+import { DialogTitle } from '@radix-ui/react-dialog'
+import { useDeleteSmartAlert, useSmartAlerts
+} from '@/hooks/queries/use-smart-alerts'
 
 interface IProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   children: React.ReactNode;
-  portfolio: IPortfolio[] | undefined;
 }
 
-export const ActiveSmartAlerts: React.FC<IProps> = ({
-  isOpen,
-  setIsOpen,
-  children,
-  portfolio,
-}) => {
-  const platform = usePlatform();
-  const { mutate: createPercentageAlertMutation, isPending: isCreateAlertPending } = useCreatePercentageAlert();
+export const ActiveSmartAlerts: React.FC<IProps> = (
+  {
+    isOpen,
+    setIsOpen,
+    children
+  }) => {
+  const platform = usePlatform()
+  const { data: smartAlerts, isLoading: isSmartAlertsLoading } = useSmartAlerts()
+  const { mutate: deleteSmartAlertMutation, isPending: isDeleteSmartAlertPending } = useDeleteSmartAlert()
 
-  const [cryptoId, setCryptoId] = useState('')
+  const [selectedAlert, setSelectedAlert] = useState({
+    alertId: '',
+    alertType: ''
+  })
 
-  const isFormCompleted = true
+  const priceAlerts = smartAlerts?.price_alerts || []
+  const percentageAlerts = smartAlerts?.percentage_alerts || []
+  const isSelectedAlertId = selectedAlert
+
+  const handleAlertClick = (id: string, type: string) => {
+    if (selectedAlert.alertId === id) return setSelectedAlert({ alertId: '', alertType: '' })
+
+    setSelectedAlert({ alertId: id, alertType: type})
+  }
 
   const handleSubmit = () => {
+    const data = {
+      alertId: selectedAlert.alertId,
+      alertType: selectedAlert.alertType
+    }
 
-  };
+    deleteSmartAlertMutation({ data: data }, {
+      onSuccess: () => {
+        setSelectedAlert({
+          alertId: '',
+          alertType: ''
+        })
+
+        alert('Smart Alert deleted successfully')
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (priceAlerts.length === 0 && percentageAlerts.length === 0) {
+      setIsOpen(false)
+    }
+  }, [percentageAlerts, priceAlerts, isSmartAlertsLoading, setIsOpen])
 
   return (
     <Modal
@@ -67,49 +85,109 @@ export const ActiveSmartAlerts: React.FC<IProps> = ({
       onOpenChange={setIsOpen}
       header={<ModalHeader />}
       trigger={children}
-      className='!bg-base-background backdrop-blur-lg !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
+      className="!bg-base-background backdrop-blur-lg !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]"
     >
       <VisuallyHidden>
         <DialogTitle>Add Portfolio Modal</DialogTitle>
       </VisuallyHidden>
 
-      <Placeholder header={'Active Smart Alerts'}/>
+      <Placeholder header={'Active Smart Alerts'} />
 
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
+          e.preventDefault()
+          handleSubmit()
         }}
         className={cn(
           'w-full flex flex-col gap-6 items-center justify-between px-3',
-          platform === 'ios' ? 'pb-5' : 'pb-3',
+          platform === 'ios' ? 'pb-5' : 'pb-3'
         )}
       >
-        <Section
-          className='!rounded-xl !overflow-hidden !bg-neutral-04 !w-full'
-        >
-          <Cell
-            before={
-              <IconContainer>
-                <Icons.premium className='size-[24px] m-0.5' />
-              </IconContainer>
-            }
-            after={<Checkbox name="checkbox" value={cryptoId}/>}
+        {priceAlerts.length > 0 ? (
+          <Section
+            header="Price Alerts"
+            className="!rounded-xl !overflow-hidden !bg-neutral-04 !w-full select-none"
           >
-            Bitcoin
-          </Cell>
-        </Section>
+            {priceAlerts.map(({ id, cryptoId, price, condition_type }) => (
+              <Cell
+                key={id}
+                before={
+                  <div className="grid gap-0.5">
+                    <p className="text-sm">
+                      {cryptoId.length > 10
+                        ? `${cryptoId.slice(0, 8).toUpperCase()}...`
+                        : cryptoId.toUpperCase()
+                      }
+                    </p>
+                  </div>
+                }
+                after={
+                  <Checkbox
+                    name="checkbox"
+                    checked={id === selectedAlert.alertId}
+                    onChange={() => handleAlertClick(id, 'price')}
+                  />
+                }
+                onClick={() => handleAlertClick(id, 'price')}
+              >
+                <div className='flex items-center justify-between gap-1'>
+                  <Caption>
+                    {condition_type}
+                  </Caption>
+                  -
+                  <Caption>
+                    {condition_type === 'above' ? `${price}$` : `${price}$`}
+
+                  </Caption>
+                </div>
+              </Cell>
+            ))}
+          </Section>
+        ) : null}
+
+        {percentageAlerts.length > 0 ? (
+          <Section
+            header="Percentage Alerts"
+            className="!rounded-xl !overflow-hidden !bg-neutral-04 !w-full select-none"
+          >
+            {percentageAlerts.map(({ id, cryptoId, percentage, condition_type}) => (
+              <Cell
+                key={id}
+                before={
+                  <div className="grid gap-0.5">
+                    <p className="text-sm leading-none">
+                      {cryptoId.length > 10
+                        ? `${cryptoId.slice(0, 8).toUpperCase()}...`
+                        : cryptoId.toUpperCase()
+                      }
+                    </p>
+                  </div>
+                }
+                after={
+                  <Checkbox
+                    name="checkbox"
+                    checked={id === selectedAlert.alertId}
+                    onChange={() => handleAlertClick(id, 'percentage')}
+                  />
+                }
+                onClick={() => handleAlertClick(id, 'percentage')}
+              >
+                {condition_type === 'above' ? `+${percentage}%` : `-${percentage}%`}
+              </Cell>
+            ))}
+          </Section>
+        ) : null}
 
         <Button
-          size='l'
-          mode='filled'
-          type='submit'
-          disabled={!isFormCompleted}
-          className='w-full'
+          size="l"
+          mode="filled"
+          type="submit"
+          disabled={!isSelectedAlertId}
+          className="w-full"
         >
-          {isCreateAlertPending ? <Spinner size='s' /> : 'Delete'}
+          {isDeleteSmartAlertPending ? <Spinner size="s" /> : 'Delete Alert'}
         </Button>
       </form>
     </Modal>
-  );
-};
+  )
+}
