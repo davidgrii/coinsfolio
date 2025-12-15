@@ -149,7 +149,7 @@ export const VolatilityAlerts: React.FC<IProps> = ({
           disabled={!isFormCompleted}
           className='w-full'
         >
-          {isCreateAlertPending ? <Spinner size='s' /> : 'Save'}
+          {isCreateAlertPending ? <Spinner size='s' /> : 'Add'}
         </Button>
       </form>
     </Modal>

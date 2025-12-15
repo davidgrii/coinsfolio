@@ -51,6 +51,7 @@ export const PercentageAlerts: React.FC<IProps> = ({
 }) => {
   const platform = usePlatform();
   const { mutate: createPercentageAlertMutation, isPending: isCreateAlertPending } = useCreatePercentageAlert();
+  const { t } = useTranslation()
 
   const [percentage, setPercentage] = useState(10);
   const [cryptoId, setCryptoId] = useState('');
@@ -83,7 +84,6 @@ export const PercentageAlerts: React.FC<IProps> = ({
         onSuccess: () => {
           setPercentage(10);
           setIsOpen(false);
-          alert('Percentage alert added successfully');
         },
       },
     );
@@ -104,10 +104,10 @@ export const PercentageAlerts: React.FC<IProps> = ({
       className='!bg-base-background backdrop-blur-lg !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
     >
       <VisuallyHidden>
-        <DialogTitle>Add Portfolio Modal</DialogTitle>
+        <DialogTitle>Percentage Alert Modal</DialogTitle>
       </VisuallyHidden>
 
-      <Placeholder header={'Percentage Alerts'} />
+      <Placeholder header={t('settings_page.smart_alerts_modals.percentage_alerts.title')} />
 
       <form
         onSubmit={(e) => {
@@ -129,7 +129,7 @@ export const PercentageAlerts: React.FC<IProps> = ({
           >
             {portfolioOptions.map(({ name, symbol }, index) => (
               <option key={index}>
-                {name} - ({symbol.toUpperCase()})
+                {name} — ({symbol.toUpperCase()})
               </option>
             ))}
           </Select>
@@ -144,8 +144,8 @@ export const PercentageAlerts: React.FC<IProps> = ({
             }}
             className='!bg-neutral-04'
           >
-            <option value='above'>Percentage Above +({percentage}) %</option>
-            <option value='below'>Percentage Below -{percentage} %</option>
+            <option value='above'>{t('settings_page.smart_alerts_modals.percentage_alerts.condition_type_above')} +({percentage}) %</option>
+            <option value='below'>{t('settings_page.smart_alerts_modals.percentage_alerts.condition_type_below')} -{percentage} %</option>
           </Select>
         </div>
 
@@ -167,7 +167,7 @@ export const PercentageAlerts: React.FC<IProps> = ({
           disabled={!isFormCompleted}
           className='w-full'
         >
-          {isCreateAlertPending ? <Spinner size='s' /> : 'Save'}
+          {isCreateAlertPending ? <Spinner size='s' /> : t('settings_page.smart_alerts_modals.percentage_alerts.button')}
         </Button>
       </form>
     </Modal>

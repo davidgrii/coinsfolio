@@ -15,6 +15,7 @@ import { useCreatePriceAlert } from '@/hooks/queries/use-smart-alerts';
 import type { ConditionType, IPortfolio } from '@/types';
 import { usePlatform } from '@/hooks/use-platfrom';
 import { cn } from '@/components/ui/utils';
+import { useTranslation } from 'react-i18next'
 
 interface IProps {
   isOpen: boolean;
@@ -31,6 +32,7 @@ export const PriceAlerts: React.FC<IProps> = ({
 }) => {
   const platform = usePlatform();
   const { mutate: createPriceAlertMutation, isPending: isCreateAlertPending } = useCreatePriceAlert();
+  const { t } = useTranslation()
 
   const [price, setPrice] = useState('');
   const [conditionType, setConditionType] = useState<ConditionType>('above');
@@ -64,7 +66,6 @@ export const PriceAlerts: React.FC<IProps> = ({
         onSuccess: () => {
           setPrice('');
           setIsOpen(false);
-          alert('Price alert added successfully');
         },
       },
     );
@@ -85,10 +86,10 @@ export const PriceAlerts: React.FC<IProps> = ({
       className='!bg-base-background backdrop-blur-lg !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
     >
       <VisuallyHidden>
-        <DialogTitle>Add Portfolio Modal</DialogTitle>
+        <DialogTitle>Price Alert Modal</DialogTitle>
       </VisuallyHidden>
 
-      <Placeholder header={'Price Alerts'} />
+      <Placeholder header={t('settings_page.smart_alerts_modals.price_alerts.title')} />
 
       <form
         onSubmit={(e) => {
@@ -110,7 +111,7 @@ export const PriceAlerts: React.FC<IProps> = ({
           >
             {portfolioOptions.map(({ cryptoId, name, symbol }, index) => (
               <option key={index} value={cryptoId}>
-                {name} - ({symbol.toUpperCase()})
+                {name} — ({symbol.toUpperCase()})
               </option>
             ))}
           </Select>
@@ -124,15 +125,15 @@ export const PriceAlerts: React.FC<IProps> = ({
             }}
             className='!bg-neutral-04 !focus-within:outline-none'
           >
-            <option value='above'>Price Above ({price ? price : 'X'}) $</option>
-            <option value='below'>Price Below ({price ? price : 'X'}) $</option>
+            <option value='above'>{t('settings_page.smart_alerts_modals.price_alerts.condition_type_above')} ({price ? price : 'X'}) $</option>
+            <option value='below'>{t('settings_page.smart_alerts_modals.price_alerts.condition_type_below')} ({price ? price : 'X'}) $</option>
           </Select>
         </div>
 
         <div className='w-full relative'>
           <Input
             type='text'
-            placeholder='Price'
+            placeholder={t('settings_page.smart_alerts_modals.price_alerts.price')}
             value={price}
             onChange={handleChangePrice}
             after={
@@ -166,7 +167,7 @@ export const PriceAlerts: React.FC<IProps> = ({
           disabled={!isFormCompleted}
           className='w-full'
         >
-          {isCreateAlertPending ? <Spinner size='s' /> : 'Save'}
+          {isCreateAlertPending ? <Spinner size='s' /> : t('settings_page.smart_alerts_modals.price_alerts.button')}
         </Button>
       </form>
     </Modal>
