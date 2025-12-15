@@ -50,7 +50,7 @@
       "smart_alerts": "Розумні алерти",
       "price_alerts": "Алерти за ціною",
       "percentage_alerts": "Алерти за відсотками",
-      "volatility_alerts": "Алерти за волатильністю",
+      "volatility_alerts": "Алерти за волатильністю (скоро)",
       "active_alerts": "Активні алерти"
     },
     "main_settings_cells": {

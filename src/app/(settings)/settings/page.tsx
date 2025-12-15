@@ -24,6 +24,7 @@ import { ActiveAlerts } from '@/components/settings/active-alerts'
 import { useSmartAlerts } from '@/hooks/queries/use-smart-alerts'
 import { LANGUAGES } from '@/constants'
 import { usePlatform } from '@/hooks/use-platfrom'
+import { VolatilityAlerts } from '@/components/settings/volatility-alerts'
 
 const MAIN_SETTING_CELLS = [
   {
@@ -230,25 +231,25 @@ export default function SettingsPage() {
                 }
               />
 
-              {/*<VolatilityAlerts*/}
-              {/*  portfolio={portfolio}*/}
-              {/*  isOpen={isVolatilityAlertsOpen}*/}
-              {/*  setIsOpen={setIsVolatilityAlertsOpen}*/}
-              {/*  children={*/}
-              {/*    <Cell*/}
-              {/*      disabled={!isSmartAlertsActive}*/}
-              {/*      onClick={(e) => handleVolatilityAlertsClick(e)}*/}
-              {/*      before={*/}
-              {/*        <IconContainer>*/}
-              {/*          <Icons.volatility className="size-7" />*/}
-              {/*        </IconContainer>*/}
-              {/*      }*/}
-              {/*      after={volatilityAlertsCount > 0 && <Badge mode="primary" type="number">{volatilityAlertsCount}</Badge>}*/}
-              {/*    >*/}
-              {/*      {t('settings_page.volatility_alerts')}*/}
-              {/*    </Cell>*/}
-              {/*  }*/}
-              {/*/>*/}
+              <VolatilityAlerts
+                portfolio={portfolio}
+                isOpen={isVolatilityAlertsOpen}
+                setIsOpen={setIsVolatilityAlertsOpen}
+                children={
+                  <Cell
+                    disabled={true}
+                    onClick={(e) => e.preventDefault()}
+                    before={
+                      <IconContainer>
+                        <Icons.volatility className="size-7" />
+                      </IconContainer>
+                    }
+                    after={volatilityAlertsCount > 0 && <Badge mode="primary" type="number">{volatilityAlertsCount}</Badge>}
+                  >
+                    {t('settings_page.smart_alerts_cells.volatility_alerts')}
+                  </Cell>
+                }
+              />
 
               <ActiveAlerts
                 isOpen={isActiveSmartAlertsOpen}

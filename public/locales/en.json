@@ -50,7 +50,7 @@
       "smart_alerts": "Smart Alerts",
       "price_alerts": "Price Alerts",
       "percentage_alerts": "Percentage Alerts",
-      "volatility_alerts": "Volatility Alerts",
+      "volatility_alerts": "Volatility Alerts (Soon)",
       "active_alerts": "Active Alerts"
     },
     "main_settings_cells": {
@@ -77,6 +77,13 @@
         "title": "Add Percentage Alert",
         "condition_type_above": "Percentage Above",
         "condition_type_below": "Percentage Below",
+        "button": "Add"
+      },
+      "volatility_alerts": {
+        "title": "Add Volatility Alert",
+        "condition_type_above": "Volatility Above",
+        "condition_type_below": "Volatility Below",
+        "volatility_type": "Volatility",
         "button": "Add"
       },
       "active_alerts": {

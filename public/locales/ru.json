@@ -50,7 +50,7 @@
       "smart_alerts": "Умные алерты",
       "price_alerts": "Алерты по цене",
       "percentage_alerts": "Алерты по процентам",
-      "volatility_alerts": "Алерты по волатильности",
+      "volatility_alerts": "Алерты по волатильности (скоро)",
       "active_alerts": "Активные алерты"
     },
     "main_settings_cells": {

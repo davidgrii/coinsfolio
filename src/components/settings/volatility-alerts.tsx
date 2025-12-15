@@ -15,6 +15,7 @@ import type { ConditionType, IPortfolio } from '@/types';
 import {
   useCreateVolatilityAlert,
 } from '@/hooks/queries/use-smart-alerts';
+import { useTranslation } from 'react-i18next'
 
 interface IProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ export const VolatilityAlerts: React.FC<IProps> = ({
 }) => {
   const platform = usePlatform();
   const { mutate: createPriceAlertMutation, isPending: isCreateAlertPending } = useCreateVolatilityAlert();
+  const { t } = useTranslation()
 
   const [percentage, setPercentage] = useState(5);
   const [conditionType, setConditionType] = useState<ConditionType>('above');
@@ -88,7 +90,7 @@ export const VolatilityAlerts: React.FC<IProps> = ({
         <DialogTitle>Add Portfolio Modal</DialogTitle>
       </VisuallyHidden>
 
-      <Placeholder header={'Volatility Alerts'} />
+      <Placeholder header={t('settings_page.smart_alerts_modals.volatility_alerts.title')}/>
 
       <form
         onSubmit={(e) => {
@@ -104,7 +106,7 @@ export const VolatilityAlerts: React.FC<IProps> = ({
           <Select className='!bg-neutral-04'>
             {portfolioOptions.map(({ name, symbol }, index) => (
               <option key={index}>
-                {name} - ({symbol.toUpperCase()})
+                {name} — ({symbol.toUpperCase()})
               </option>
             ))}
           </Select>
@@ -118,15 +120,15 @@ export const VolatilityAlerts: React.FC<IProps> = ({
             }}
             className='!bg-neutral-04'
           >
-            <option value='above'>Percentage Above +({percentage}) %</option>
-            <option value='below'>Percentage Below -{percentage} %</option>
+            <option value='above'>{t('settings_page.smart_alerts_modals.volatility_alerts.condition_type_above')} +({percentage}) %</option>
+            <option value='below'>{t('settings_page.smart_alerts_modals.volatility_alerts.condition_type_below')} -{percentage} %</option>
           </Select>
         </div>
 
         <div className='w-full relative'>
           <Select className='!bg-neutral-04'>
             {volatilityOptions.map((option, index) => (
-              <option key={index} value={option}>Volatility ({option}) — {percentage}%</option>
+              <option key={index} value={option}>{t('settings_page.smart_alerts_modals.volatility_alerts.volatility_type')} ({option}) — {percentage}%</option>
             ))}
           </Select>
         </div>
@@ -149,7 +151,7 @@ export const VolatilityAlerts: React.FC<IProps> = ({
           disabled={!isFormCompleted}
           className='w-full'
         >
-          {isCreateAlertPending ? <Spinner size='s' /> : 'Add'}
+          {isCreateAlertPending ? <Spinner size='s' /> : t('settings_page.smart_alerts_modals.volatility_alerts.button')}
         </Button>
       </form>
     </Modal>
