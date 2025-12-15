@@ -41,6 +41,54 @@
     "start_inviting": "Почніть запрошувати друзів і отримуйте бали за кожного з них! Чим більше друзів ви запросите, тим вищим буде ваш ранг, що відкриє доступ до ексклюзивних нагород і статусів. ",
     "share": "Поділіться своєю персональною посиланням нижче, щоб почати!"
   },
+  "settings_page": {
+    "dashboard": {
+      "premium": "Бета: V2.01"
+    },
+    "smart_alerts_cells": {
+      "header": "Розумні алерти",
+      "smart_alerts": "Розумні алерти",
+      "price_alerts": "Алерти за ціною",
+      "percentage_alerts": "Алерти за відсотками",
+      "volatility_alerts": "Алерти за волатильністю (скоро)",
+      "active_alerts": "Активні алерти"
+    },
+    "main_settings_cells": {
+      "header": "Основні налаштування",
+      "language": "Мова",
+      "premium": "Преміум (скоро)",
+      "currency": "Валюта (скоро)",
+      "theme": "Тема (скоро)"
+    },
+    "community_cells": {
+      "header": "Додатково",
+      "community": "Спільнота",
+      "about": "Про проєкт"
+    },
+    "smart_alerts_modals": {
+      "price_alerts": {
+        "title": "Додати алерт за ціною",
+        "condition_type_above": "Ціна вище",
+        "condition_type_below": "Ціна нижче",
+        "price": "Ціна",
+        "button": "Додати"
+      },
+      "percentage_alerts": {
+        "title": "Додати процентний алерт",
+        "condition_type_above": "Відсоток вище",
+        "condition_type_below": "Відсоток нижче",
+        "button": "Додати"
+      },
+      "active_alerts": {
+        "title": "Активні алерти",
+        "price_alert_title": "Алерти за ціною",
+        "percentage_alert_title": "Алерти за відсотками",
+        "condition_type_above": "Вище",
+        "condition_type_below": "Нижче",
+        "button": "Видалити алерт"
+      }
+    }
+  },
   "my_portfolio_page": {
     "edit": "Змінити",
     "delete": "Видалити",

@@ -41,6 +41,54 @@
     "start_inviting": "Начните приглашать друзей и зарабатывайте баллы за каждого из них! Чем больше друзей вы пригласите, тем выше будет ваш ранг, открывая доступ к эксклюзивным наградам и статусам.",
     "share": "Поделитесь своей персональной ссылкой ниже, чтобы начать!"
   },
+  "settings_page": {
+    "dashboard": {
+      "premium": "Бета: V2.01"
+    },
+    "smart_alerts_cells": {
+      "header": "Умные алерты",
+      "smart_alerts": "Умные алерты",
+      "price_alerts": "Алерты по цене",
+      "percentage_alerts": "Алерты по процентам",
+      "volatility_alerts": "Алерты по волатильности (скоро)",
+      "active_alerts": "Активные алерты"
+    },
+    "main_settings_cells": {
+      "header": "Основные настройки",
+      "language": "Язык",
+      "premium": "Премиум (скоро)",
+      "currency": "Валюта (скоро)",
+      "theme": "Тема (скоро)"
+    },
+    "community_cells": {
+      "header": "Дополнительно",
+      "community": "Сообщество",
+      "about": "О проекте"
+    },
+    "smart_alerts_modals": {
+      "price_alerts": {
+        "title": "Добавить алерт по цене",
+        "condition_type_above": "Цена выше",
+        "condition_type_below": "Цена ниже",
+        "price": "Цена",
+        "button": "Добавить"
+      },
+      "percentage_alerts": {
+        "title": "Добавить процентный алерт",
+        "condition_type_above": "Процент выше",
+        "condition_type_below": "Процент ниже",
+        "button": "Добавить"
+      },
+      "active_alerts": {
+        "title": "Активные алерты",
+        "price_alert_title": "Алерты по цене",
+        "percentage_alert_title": "Алерты по процентам",
+        "condition_type_above": "Выше",
+        "condition_type_below": "Ниже",
+        "button": "Удалить алерт"
+      }
+    }
+  },
   "my_portfolio_page": {
     "edit": "Изменить",
     "delete": "Удалить",

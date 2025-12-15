@@ -6,20 +6,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import {
   Avatar,
   Caption,
-  Select,
   Subheadline,
 } from '@telegram-apps/telegram-ui';
 import { useUser } from '@/app/_providers/user-provider';
-import { LANGUAGES } from '@/constants'
 
 export const SettingsDashboard = () => {
   const { user } = useUser();
-  const { t, i18n } = useTranslation();
-
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    i18n.changeLanguage(e.target.value.toLowerCase());
-    localStorage.setItem('language', e.target.value.toLowerCase());
-  };
+  const { t } = useTranslation();
 
   if (!user) return null;
 
@@ -34,6 +27,7 @@ export const SettingsDashboard = () => {
           <div className={'flex items-center gap-3'}>
             <div className='rounded-full overflow-hidden'>
               <Avatar
+                fetchPriority='high'
                 size={48}
                 src={user.photo_url || '/assets/images/avatar.png'}
                 alt={user.username || 'Avatar'}
@@ -46,21 +40,10 @@ export const SettingsDashboard = () => {
                 {user.username || user.first_name}
               </Subheadline>
               <Caption level='2' weight='3' className='text-neutral-03'>
-                {/*Premium: 30 days*/}
-                Beta Test: Enabled
+                {t('settings_page.dashboard.premium')}
               </Caption>
             </div>
           </div>
-
-          <Select
-            defaultValue={i18n.language.toUpperCase() || 'EN'}
-            onChange={handleLanguageChange}
-            className='!bg-transparent shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
-          >
-            {LANGUAGES.map((lang) => (
-              <option key={lang.code}>{lang.code.toUpperCase()}</option>
-            ))}
-          </Select>
         </CardContent>
       </Card>
     </div>

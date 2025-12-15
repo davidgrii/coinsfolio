@@ -42,12 +42,59 @@
     "share": "Share your personal link below to get started!"
   },
   "settings_page": {
-    "premium": "Premium",
-    "smart_alerts": "Smart Alerts",
-    "price_alerts": "Price ALerts",
-    "percentage_alerts": "Percentage Alerts",
-    "volatility_alerts": "Volatility Alerts"
-
+    "dashboard": {
+      "premium": "Beta: V2.01"
+    },
+    "smart_alerts_cells": {
+      "header": "Smart Alerts",
+      "smart_alerts": "Smart Alerts",
+      "price_alerts": "Price Alerts",
+      "percentage_alerts": "Percentage Alerts",
+      "volatility_alerts": "Volatility Alerts (Soon)",
+      "active_alerts": "Active Alerts"
+    },
+    "main_settings_cells": {
+      "header": "Main Settings",
+      "language": "Language",
+      "premium": "Premium (Soon)",
+      "currency": "Currency (Soon)",
+      "theme": "Theme (Soon)"
+    },
+    "community_cells": {
+      "header": "Addetonational",
+      "community": "Community",
+      "about": "About"
+    },
+    "smart_alerts_modals": {
+      "price_alerts": {
+        "title": "Add Price Alert",
+        "condition_type_above": "Price Above",
+        "condition_type_below": "Price Below",
+        "price": "Price",
+        "button": "Add"
+      },
+      "percentage_alerts": {
+        "title": "Add Percentage Alert",
+        "condition_type_above": "Percentage Above",
+        "condition_type_below": "Percentage Below",
+        "button": "Add"
+      },
+      "volatility_alerts": {
+        "title": "Add Volatility Alert",
+        "condition_type_above": "Volatility Above",
+        "condition_type_below": "Volatility Below",
+        "volatility_type": "Volatility",
+        "button": "Add"
+      },
+      "active_alerts": {
+        "title": "Active Alerts",
+        "price_alert_title": "Price Alerts",
+        "percentage_alert_title": "Percentage Alerts",
+        "condition_type_above": "Price Above",
+        "condition_type_below": "Price Below",
+        "button": "Delete Alert"
+      }
+    }
   },
   "my_portfolio_page": {
     "edit": "Edit",

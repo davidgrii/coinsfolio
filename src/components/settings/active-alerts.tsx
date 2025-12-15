@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Avatar,
   Button, Caption, Cell, Checkbox,
-  Divider,
-  FixedLayout, IconContainer,
-  Input,
   Modal,
-  Multiselect,
   Placeholder,
-  Section,
-  Select,
-  Slider, Spinner,
-  Tappable,
-  Textarea,
+  Section, Spinner, Subheadline,
   VisuallyHidden
 } from '@telegram-apps/telegram-ui'
 import {
@@ -21,8 +12,11 @@ import {
 import { cn } from '@/components/ui/utils'
 import { usePlatform } from '@/hooks/use-platfrom'
 import { DialogTitle } from '@radix-ui/react-dialog'
-import { useDeleteSmartAlert, useSmartAlerts
+import {
+  useDeleteSmartAlert, useSmartAlerts
 } from '@/hooks/queries/use-smart-alerts'
+import { useTranslation } from 'react-i18next'
+import { usePortfolio } from '@/hooks/queries/use-portfolio'
 
 interface IProps {
   isOpen: boolean;
@@ -30,13 +24,15 @@ interface IProps {
   children: React.ReactNode;
 }
 
-export const ActiveSmartAlerts: React.FC<IProps> = (
+export const ActiveAlerts: React.FC<IProps> = (
   {
     isOpen,
     setIsOpen,
     children
   }) => {
   const platform = usePlatform()
+  const { t } = useTranslation()
+
   const { data: smartAlerts, isLoading: isSmartAlertsLoading } = useSmartAlerts()
   const { mutate: deleteSmartAlertMutation, isPending: isDeleteSmartAlertPending } = useDeleteSmartAlert()
 
@@ -47,12 +43,12 @@ export const ActiveSmartAlerts: React.FC<IProps> = (
 
   const priceAlerts = smartAlerts?.price_alerts || []
   const percentageAlerts = smartAlerts?.percentage_alerts || []
-  const isSelectedAlertId = selectedAlert
+  const isSelectedAlertId = selectedAlert.alertId
 
   const handleAlertClick = (id: string, type: string) => {
     if (selectedAlert.alertId === id) return setSelectedAlert({ alertId: '', alertType: '' })
 
-    setSelectedAlert({ alertId: id, alertType: type})
+    setSelectedAlert({ alertId: id, alertType: type })
   }
 
   const handleSubmit = () => {
@@ -67,8 +63,6 @@ export const ActiveSmartAlerts: React.FC<IProps> = (
           alertId: '',
           alertType: ''
         })
-
-        alert('Smart Alert deleted successfully')
       }
     })
   }
@@ -91,7 +85,7 @@ export const ActiveSmartAlerts: React.FC<IProps> = (
         <DialogTitle>Add Portfolio Modal</DialogTitle>
       </VisuallyHidden>
 
-      <Placeholder header={'Active Smart Alerts'} />
+      <Placeholder header={t('settings_page.smart_alerts_modals.active_alerts.title')} />
 
       <form
         onSubmit={(e) => {
@@ -105,14 +99,14 @@ export const ActiveSmartAlerts: React.FC<IProps> = (
       >
         {priceAlerts.length > 0 ? (
           <Section
-            header="Price Alerts"
+            header={t('settings_page.smart_alerts_modals.active_alerts.price_alert_title')}
             className="!rounded-xl !overflow-hidden !bg-neutral-04 !w-full select-none"
           >
-            {priceAlerts.map(({ id, cryptoId, price, condition_type }) => (
+            {priceAlerts.map(({ id, cryptoId, price, condition_type }, index) => (
               <Cell
                 key={id}
                 before={
-                  <div className="grid gap-0.5">
+                  <div className="flex items-center gap-2">
                     <p className="text-sm">
                       {cryptoId.length > 10
                         ? `${cryptoId.slice(0, 8).toUpperCase()}...`
@@ -121,24 +115,20 @@ export const ActiveSmartAlerts: React.FC<IProps> = (
                     </p>
                   </div>
                 }
-                after={
-                  <Checkbox
-                    name="checkbox"
-                    checked={id === selectedAlert.alertId}
-                    onChange={() => handleAlertClick(id, 'price')}
-                  />
-                }
-                onClick={() => handleAlertClick(id, 'price')}
+                after={<Checkbox name="checkbox" readOnly checked={id === selectedAlert.alertId} />}
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleAlertClick(id, 'price')
+                }}
               >
-                <div className='flex items-center justify-between gap-1'>
+                <div className="flex items-center  justify-between gap-2">
                   <Caption>
-                    {condition_type}
+                    {condition_type === 'above' ? t('settings_page.smart_alerts_modals.active_alerts.condition_type_above') : t('settings_page.smart_alerts_modals.active_alerts.condition_type_below')}
                   </Caption>
-                  -
-                  <Caption>
-                    {condition_type === 'above' ? `${price}$` : `${price}$`}
-
-                  </Caption>
+                  —
+                  <Subheadline level="1">
+                    {price}$
+                  </Subheadline>
                 </div>
               </Cell>
             ))}
@@ -147,10 +137,10 @@ export const ActiveSmartAlerts: React.FC<IProps> = (
 
         {percentageAlerts.length > 0 ? (
           <Section
-            header="Percentage Alerts"
+            header={t('settings_page.smart_alerts_modals.active_alerts.percentage_alert_title')}
             className="!rounded-xl !overflow-hidden !bg-neutral-04 !w-full select-none"
           >
-            {percentageAlerts.map(({ id, cryptoId, percentage, condition_type}) => (
+            {percentageAlerts.map(({ id, cryptoId, percentage, condition_type }) => (
               <Cell
                 key={id}
                 before={
@@ -163,14 +153,11 @@ export const ActiveSmartAlerts: React.FC<IProps> = (
                     </p>
                   </div>
                 }
-                after={
-                  <Checkbox
-                    name="checkbox"
-                    checked={id === selectedAlert.alertId}
-                    onChange={() => handleAlertClick(id, 'percentage')}
-                  />
-                }
-                onClick={() => handleAlertClick(id, 'percentage')}
+                after={<Checkbox name="checkbox" readOnly checked={id === selectedAlert.alertId} />}
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleAlertClick(id, 'percentage')
+                }}
               >
                 {condition_type === 'above' ? `+${percentage}%` : `-${percentage}%`}
               </Cell>
@@ -185,7 +172,8 @@ export const ActiveSmartAlerts: React.FC<IProps> = (
           disabled={!isSelectedAlertId}
           className="w-full"
         >
-          {isDeleteSmartAlertPending ? <Spinner size="s" /> : 'Delete Alert'}
+          {isDeleteSmartAlertPending ?
+            <Spinner size="s" /> : t('settings_page.smart_alerts_modals.active_alerts.button')}
         </Button>
       </form>
     </Modal>
