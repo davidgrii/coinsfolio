@@ -143,6 +143,11 @@ body {
 
 /*         TG      */
 
+select option {
+  background-color: var(--color-base-background) !important;
+  border-radius: var(--radius-xl) !important;
+}
+
 .tgui-8ca550c2fc85eff5 {
   box-sizing: border-box !important;
   padding: 0 !important;
@@ -170,9 +175,9 @@ body {
   background: initial !important;
 }
 
-/*.tgui-8e15431b81f6601e .tgui-db9be63c4fecf79b {*/
-/*  background: transparent !important;*/
-/*}*/
+.tgui-8e15431b81f6601e .tgui-db9be63c4fecf79b {
+  background: transparent !important;
+}
 
 /* TABS */
 .tgui-31f461ccfea23ec3 {
