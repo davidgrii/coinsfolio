@@ -76,7 +76,7 @@ export const CryptoItemModal = () => {
         header={<Modal.Header />}
         open={isOpen}
         onOpenChange={setIsOpen}
-        className='!h-screen !bg-base-background'
+        className='!h-screen !bg-base-background !z-50'
       >
         <VisuallyHidden>
           <DialogTitle>Open Detail Crypto Modal</DialogTitle>

@@ -16,6 +16,7 @@ import type { ConditionType, IPortfolio } from '@/types';
 import { usePlatform } from '@/hooks/use-platfrom';
 import { cn } from '@/components/ui/utils';
 import { useTranslation } from 'react-i18next'
+import { isValidNumericInput } from '@/lib/utils'
 
 interface IProps {
   isOpen: boolean;
@@ -47,8 +48,14 @@ export const PriceAlerts: React.FC<IProps> = ({
 
   const isFormCompleted = price && cryptoId && conditionType;
 
-  const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
-    setPrice(e.target.value);
+  const handleChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/(\..*?)\./g, '$1');
+
+    if (!isValidNumericInput(value)) return;
+    if (value[0] === '0') return setPrice(value.replace(',', '.'));
+    if (value[0] === '.' || value[0] === ',') return setPrice('');
+
+    setPrice(value);
   };
 
   const handleSubmit = () => {
