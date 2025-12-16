@@ -1,9 +1,8 @@
 'use client';
 
-import { useCryptoModalStore } from '@/store/crypto/crypto-modal.store';
+import {useCryptoModalStore} from '@/store/crypto/crypto-modal.store';
 import React from 'react';
-import Image from 'next/image';
-import { formatPriceWithDecimals, getDynamicFontSize } from '@/lib/utils';
+import {formatPriceWithDecimals, getDynamicFontSize} from '@/lib/utils';
 import {
   Avatar,
   Button,
@@ -14,22 +13,21 @@ import {
   Placeholder,
   VisuallyHidden,
 } from '@telegram-apps/telegram-ui';
-import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
-import { useCrypto, useFavorites } from '@/hooks/queries/use-crypto';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
-  useAddFavorite,
-  useDeleteFavorite,
-} from '@/hooks/queries/use-favorite-mutation';
-import { motion } from 'framer-motion';
-import { Icons } from '@/components/icons';
-import { useTranslation } from 'react-i18next';
-import { ICoinGlobalMarketsData, IMarketsCoinData } from '@/types';
-import { BINANCE_REF_URL, COINGEKO_URL, EXCHANGE_REF_URLS } from '@/constants';
-import { cn } from '@/components/ui/utils';
-import { usePlatform } from '@/hooks/use-platfrom';
-import { DialogTitle } from '@radix-ui/react-dialog';
-import { useUser } from '@/app/_providers/user-provider';
+  ModalHeader
+} from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
+import {useCrypto, useFavorites} from '@/hooks/queries/use-crypto';
+import {Skeleton} from '@/components/ui/skeleton';
+import {useAddFavorite, useDeleteFavorite,} from '@/hooks/queries/use-favorite-mutation';
+import {motion} from 'framer-motion';
+import {Icons} from '@/components/icons';
+import {useTranslation} from 'react-i18next';
+import {ICoinGlobalMarketsData, IMarketsCoinData} from '@/types';
+import {COINGEKO_URL, EXCHANGE_REF_URLS} from '@/constants';
+import {cn} from '@/components/ui/utils';
+import {usePlatform} from '@/hooks/use-platfrom';
+import {DialogTitle} from '@radix-ui/react-dialog';
+import {useUser} from '@/app/_providers/user-provider';
 
 function CryptoItemModalSkeleton() {
   return (
@@ -76,7 +74,7 @@ export const CryptoItemModal = () => {
         header={<Modal.Header />}
         open={isOpen}
         onOpenChange={setIsOpen}
-        className='!h-screen !bg-base-background !z-50'
+        className='!h-screen !bg-base-background !z-30'
       >
         <VisuallyHidden>
           <DialogTitle>Open Detail Crypto Modal</DialogTitle>

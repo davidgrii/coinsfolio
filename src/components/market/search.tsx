@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import { useSearchStore } from '@/store';
-import { useTranslation } from 'react-i18next';
-import { Input, Tappable } from '@telegram-apps/telegram-ui';
-import { SearchIcon } from 'lucide-react';
-import { Icons } from '../icons';
-import { usePlatform } from '@/hooks/use-platfrom';
-import { cn } from '@/components/ui/utils';
+import {useSearchStore} from '@/store';
+import {useTranslation} from 'react-i18next';
+import {Input, Tappable} from '@telegram-apps/telegram-ui';
+import {SearchIcon} from 'lucide-react';
+import {Icons} from '../icons';
+import {usePlatform} from '@/hooks/use-platfrom';
+import {cn} from '@/components/ui/utils';
 
 interface IProps {
   searchValue: string;
@@ -23,9 +23,7 @@ export const SearchInput: React.FC<IProps> = ({
   const { toggleSearch } = useSearchStore();
   const { t } = useTranslation();
   const platform = usePlatform();
-
-  console.log(platform);
-
+  
   const clearInput = () => {
     setSearchValue('');
     inputRef.current?.focus();
@@ -35,7 +33,7 @@ export const SearchInput: React.FC<IProps> = ({
   return (
     <div className='flex items-center mt-2'>
       <div className='relative w-full'>
-        <div className='bg-neutral-04 z-50 p-2 rounded-xl absolute top-1/2 -translate-y-1/2 left-1 cursor-pointer'>
+        <div className='bg-neutral-04 z-20 p-2 rounded-xl absolute top-1/2 -translate-y-1/2 left-1 cursor-pointer'>
           <SearchIcon width={24} height={24} className='text-primary' />
         </div>
 
