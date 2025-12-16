@@ -152,7 +152,7 @@ export default function SettingsPage() {
 
   return (
     <Container back={true}>
-      <List className="!pt-1 !px-0 grid overflow-y-auto max-h-[76vh] scrollbar-none !pb-[80px]">
+      <List className="!pt-1 !px-0 grid overflow-y-auto max-h-[80vh] scrollbar-none !pb-[80px]">
         <Accordion
           expanded={isExpended}
           onChange={() => setIsExpended(!isExpended)}

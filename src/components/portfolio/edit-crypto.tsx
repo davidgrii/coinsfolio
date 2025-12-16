@@ -93,7 +93,7 @@ export const EditCrypto: React.FC<IProps> = ({
         open={isOpen}
         onOpenChange={setIsOpen}
         header={<ModalHeader />}
-        className='!bg-base-background !h-dvh !min-h-max !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
+        className='!bg-base-background !z-50 shadow-[0_0_0_2px_rgba(255,255,255,0.1)]'
       >
         <VisuallyHidden>
           <DialogTitle>Edit Portfolio Modal</DialogTitle>
