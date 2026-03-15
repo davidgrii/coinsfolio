@@ -16,7 +16,7 @@ export const usePremium = () => {
       const res = await fetch(`${BASE_URL}/api/users/premium`);
 
       if (!res.ok) {
-        throw new Error('Ошибка при запросе квитанции');
+        throw new Error('Error retrieving receipt');
       }
 
       return await res.json();
@@ -33,7 +33,7 @@ export const useCreatePremiumInvoice = () => {
       });
 
       if (!res.ok) {
-        throw new Error('Ошибка при запросе квитанции');
+        throw new Error('Error retrieving receipt');
       }
 
       return await res.json();

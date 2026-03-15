@@ -26,7 +26,7 @@ export const useAddFavorite = () => {
       });
 
       if (!res.ok) {
-        throw new Error(`Ошибка добавления в избранное: ${res.statusText}`);
+        throw new Error(`Error adding to favorites: ${res.statusText}`);
       }
     },
     onSuccess(_, { userId }) {
@@ -57,7 +57,7 @@ export const useDeleteFavorite = () => {
       });
 
       if (!res.ok) {
-        throw new Error(`Ошибка удаления из избранного: ${res.statusText}`);
+        throw new Error(`Error removing from favorites: ${res.statusText}`);
       }
     },
     onSuccess(_, { userId }) {

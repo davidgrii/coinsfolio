@@ -18,7 +18,7 @@ export const useInfiniteCryptos = () => {
       );
 
       if (!res.ok) {
-        throw new Error('Ошибка при загрузке данных');
+        throw new Error('Error loading cryptos data');
       }
 
       return await res.json();
@@ -36,7 +36,7 @@ export const useCrypto = (
       const res = await fetch(`${BASE_URL}/api/cryptos/${cryptoId}`);
 
       if (!res.ok) {
-        throw new Error('Ошибка при получении криптовалюты');
+        throw new Error('Error loading crypto data');
       }
 
       return await res.json();
@@ -56,7 +56,7 @@ export const useFavorites = (): UseQueryResult<IFavorite, Error> => {
       const res = await fetch(`${BASE_URL}/api/users/${userId}/favorites`);
 
       if (!res.ok) {
-        throw new Error('Ошибка при загрузке данных');
+        throw new Error('Error loading favorites data');
       }
 
       return await res.json();
@@ -81,7 +81,7 @@ export const usePumpCryptos = (): UseQueryResult<ICrypto[], Error> => {
       });
 
       if (!res.ok) {
-        throw new Error('Ошибка при получении Dump данных: ' + res.statusText);
+        throw new Error('Error retrieving pump data: ' + res.statusText);
       }
 
       return await res.json();
@@ -122,7 +122,7 @@ export const useTrendingCryptos = (): UseQueryResult<ICrypto[], Error> => {
       const res = await fetch(`${BASE_URL}/api/trending`);
 
       if (!res.ok) {
-        throw new Error('Ошибка при загрузке данных');
+        throw new Error('Error loading trending data');
       }
 
       return await res.json();
@@ -148,7 +148,7 @@ export const useSearchCrypto = ({
       );
 
       if (!res.ok) {
-        throw new Error('Ошибка при поиске криптовалюты');
+        throw new Error('Error while searching for a cryptocurrency');
       }
 
       return await res.json();

@@ -7,7 +7,7 @@ import { usePortfolioStore } from '@/store/portfolio/portfolio.store'
 
 import { Container } from '@/components/container'
 import { Accordion } from '@/components/ui/accordion'
-import { List, SegmentedControl, TabsList } from '@telegram-apps/telegram-ui'
+import { List } from '@telegram-apps/telegram-ui'
 import { BalanceTableHeader } from '@/components/portfolio/balance-table-header'
 import { PortfolioItem } from '@/components/portfolio/portfolio-item'
 import type { IUpdatedCrypto } from '@/types'

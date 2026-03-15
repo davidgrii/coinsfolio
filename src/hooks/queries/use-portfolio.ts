@@ -13,7 +13,7 @@ export const usePortfolio = (): UseQueryResult<IPortfolio[], Error> => {
       const res = await fetch(`${BASE_URL}/api/users/${userId}/portfolio`);
 
       if (!res.ok) {
-        throw new Error('Ошибка при получении портфолио: ' + res.statusText);
+        throw new Error('Error retrieving portfolio: ' + res.statusText);
       }
 
       return await res.json();
@@ -44,7 +44,7 @@ export const useAddCrypto = () => {
 
       if (!res.ok) {
         throw new Error(
-          'Ошибка при добавлении криптовалюты в портфолио: ' + res.statusText,
+          'Error adding a cryptocurrency to your portfolio: ' + res.statusText,
         );
       }
     },
@@ -77,7 +77,7 @@ export const useUpdateCrypto = () => {
 
       if (!res.ok) {
         throw new Error(
-          'Ошибка при редактировании криптовалюты в портфолио: ' +
+          'Error while editing a cryptocurrency in the portfolio: ' +
             res.statusText,
         );
       }
@@ -113,7 +113,7 @@ export const useDeleteCrypto = () => {
 
       if (!res.ok) {
         throw new Error(
-          'Ошибка при удалении криптовалюты из портфолио: ' + res.statusText,
+          'Error when removing cryptocurrency from the portfolio: ' + res.statusText,
         );
       }
     },
