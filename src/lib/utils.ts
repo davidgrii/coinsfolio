@@ -1,4 +1,3 @@
-// -- FORMATTERS
 export const formatPriceWithDecimals = (value?: number): string => {
   if (value === undefined) {
     return '0';

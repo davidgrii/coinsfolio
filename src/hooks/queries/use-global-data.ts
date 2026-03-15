@@ -9,7 +9,7 @@ export const useGlobalData = (): UseQueryResult<IGlobalMarketData, Error> => {
       const res = await fetch(`${BASE_URL}/api/global`);
 
       if (!res.ok) {
-        throw new Error('Ошибка при получении данных: ' + res.statusText);
+        throw new Error('Error retrieving data: ' + res.statusText);
       }
 
       return await res.json();
