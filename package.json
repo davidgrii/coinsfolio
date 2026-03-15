@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env PORT=3009 next dev --turbo",
-    "dev:https": "cross-env PORT=3009 next dev --turbo --experimental-https -H 0.0.0.0",
+    "dev": "cross-env PORT=3009 next dev",
+    "dev:https": "cross-env PORT=3009 next dev --experimental-https -H 0.0.0.0",
     "build": "next build",
     "start": "cross-env PORT=3009 NODE_ENV=production next start",
     "lint": "biome check",
